@@ -6,23 +6,21 @@ public static class TeamApi
     {
         var group = app.MapGroup("/teams");
 
-        
         group.MapGet("/", async (AppDbContext db) =>
         {
-            return await db.Teams.Include(t => t.Players).Include(t => t.User).ToListAsync();
+            return await db.Teams.Include(t => t.Players).ToListAsync();
         });
 
         
         group.MapGet("/{id:int}", async (int id, AppDbContext db) =>
         {
-            var team = await db.Teams.Include(t => t.Players).Include(t => t.User).FirstOrDefaultAsync(t => t.Id == id);
+            var team = await db.Teams.Include(t => t.Players).FirstOrDefaultAsync(t => t.Id == id);
             if (team == null)
                 return Results.NotFound();
 
             return Results.Ok(team);
         });
 
-        
         group.MapPost("/", async (Team team, AppDbContext db) =>
         {
             db.Teams.Add(team);
@@ -30,7 +28,6 @@ public static class TeamApi
             return Results.Created($"/teams/{team.Id}", team);
         });
 
-        
         group.MapPut("/{id:int}", async (int id, Team updatedTeam, AppDbContext db) =>
         {
             var team = await db.Teams.Include(t => t.Players).FirstOrDefaultAsync(t => t.Id == id);
@@ -38,7 +35,6 @@ public static class TeamApi
                 return Results.NotFound();
 
             team.TeamName = updatedTeam.TeamName;
-            team.UserId = updatedTeam.UserId;
             team.Players = updatedTeam.Players;
 
             await db.SaveChangesAsync();
