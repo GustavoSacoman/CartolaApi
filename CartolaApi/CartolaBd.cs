@@ -1,18 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-
+namespace CartolaApi
+{
+    
 public class AppDbContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
 
-        string con = "server=localhost;port=3306;database=cartola;user=root;password=";
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .Build();
 
-        builder.UseMySQL(con).LogTo(Console.WriteLine, LogLevel.Information);
-
+        // Setup DI
+        var serviceProvider = new ServiceCollection()
+            .AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")))
+            .BuildServiceProvider();
     }
 
     public DbSet<Player> Players { get; set; }
-    public DbSet<Team> Teams { get; set; }
+
+}
 
 }

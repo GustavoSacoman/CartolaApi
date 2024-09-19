@@ -1,6 +1,9 @@
-public class Team
+namespace CartolaApi.Models
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public List<Player> Players { get; set; } = new(); 
+    public class Team
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<Player> Players { get; set; } = new(); 
+}
 }
