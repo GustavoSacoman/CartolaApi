@@ -22,5 +22,6 @@ app.UseCors(builder => builder
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapGroupPlayer();
+app.MapTeamEndpoints();
 
 app.Run();
