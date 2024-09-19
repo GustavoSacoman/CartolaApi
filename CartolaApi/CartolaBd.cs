@@ -12,5 +12,7 @@ public class AppDbContext : DbContext
 
     }
 
+    public DbSet<Player> Players { get; set; }
+
     
 }
