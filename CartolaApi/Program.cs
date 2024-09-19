@@ -1,4 +1,5 @@
 
+using CartolaApi.Endpoints;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 

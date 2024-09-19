@@ -32,7 +32,7 @@ public static class TeamApi
                 return Results.Created($"/teams/{team.Id}", team);
             });
 
-            group.MapPut("/{id:int}", async (int id, Team updatedTeam, AppDbContext db) =>
+            group.MapPut("/{id:}", async (int id, Team updatedTeam, AppDbContext db) =>
             {
                 var team = await db.Teams.Include(t => t.Players).FirstOrDefaultAsync(t => t.Id == id);
                 if (team == null)
