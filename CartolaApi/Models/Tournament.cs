@@ -1,7 +1,7 @@
 public class Tournament
 {
     public int Id { get; set; }
-    public string? tournamentName{ get; set; }
+    public string TournamentName { get; set; }
 
-    //public List<Team> Teamns { get; set; } = new(); 
+    public List<Team> Teams { get; set; } = new List<Team>();
 }
