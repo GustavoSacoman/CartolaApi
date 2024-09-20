@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-public static class TeamApi
+public static class TeamEndpoint
 {
     public static void MapTeamEndpoints(this WebApplication app)
     {

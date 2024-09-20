@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MySqlX.XDevAPI.Common;
 
-public static class TournamentApi
+public static class TournamentEndpoint
 {
    public static void MapGroupTournament(this WebApplication app)
    {
