@@ -1,8 +1,7 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 
-    public static class PlayerApi
+    public static class PlayerEndpoint
     {
         public static void MapGroupPlayer(this WebApplication app)
         {
