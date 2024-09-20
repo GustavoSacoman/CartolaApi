@@ -34,7 +34,7 @@ public static class TeamApi
             if (team == null)
                 return Results.NotFound();
 
-            team.TeamName = updatedTeam.TeamName;
+            team.Name = updatedTeam.Name;
             team.Players = updatedTeam.Players;
 
             await db.SaveChangesAsync();
