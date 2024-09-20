@@ -3,13 +3,14 @@ using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("CartolaConnection");
+
+builder.Services.AddDbContext<AppDbContext>(opts =>
+  opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddCors();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AppDbContext>();
 
 var app = builder.Build();
 
