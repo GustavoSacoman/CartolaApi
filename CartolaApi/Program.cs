@@ -1,5 +1,6 @@
 
 using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,5 +26,6 @@ app.UseSwaggerUI();
 app.MapGroupPlayer();
 app.MapTeamEndpoints();
 app.MapGroupTournament();
+app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.Run();
