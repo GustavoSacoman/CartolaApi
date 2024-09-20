@@ -23,5 +23,6 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.MapGroupPlayer();
 app.MapTeamEndpoints();
+app.MapGroupTournament();
 
 app.Run();
