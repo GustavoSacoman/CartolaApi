@@ -26,6 +26,11 @@ public class AppDbContext : DbContext
             .HasOne<Tournament>()
             .WithMany()
             .HasForeignKey(m => m.IdTournament);
+
+        builder.Entity<Season>()
+        .HasIndex(season => season.Id)
+        .IsUnique(); 
+
     }
 
     public DbSet<User> Users { get; set; }
@@ -33,5 +38,7 @@ public class AppDbContext : DbContext
     public DbSet<Team> Teams { get; set; }
     public DbSet<Tournament> Tournaments { get; set; }
     public DbSet<Match> Matches { get; set; }
-    
+
+    public DbSet<Season> Seasons { get; set; }
+
 }
