@@ -34,6 +34,11 @@ public class UserDbFunctions
         )
     {
         bool userExists = VerifyUserExistence(email, db);
+        
+        if (userExists)
+        {
+            throw new Exception("User already exists");
+        }
         var user = new User
         {
             Email = email,
