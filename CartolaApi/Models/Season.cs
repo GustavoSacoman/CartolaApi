@@ -7,6 +7,7 @@ namespace CartolaApi.Models
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime FinalDate { get; set; }
+        public List<Tournament> Tournaments { get; set;} = new List<Tournament>();
     }
 }
 
