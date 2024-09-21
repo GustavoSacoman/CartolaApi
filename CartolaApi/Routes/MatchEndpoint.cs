@@ -1,6 +1,7 @@
+using CartolaApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-
+namespace CartolaApi.Routes;
 public static class MatchEndpoint
 {
      public static void MapGroupMatch(this WebApplication app)
@@ -12,7 +13,7 @@ public static class MatchEndpoint
             group.MapGet("/", async (AppDbContext db) =>
             {
                
-                return await db.Matches.Include(m => m.Tournament).ToListAsync();
+                return await db.Matches.Include(m => m.IdTournament).ToListAsync();
             });
 
             group.MapPost("/", async (Match match, AppDbContext db) =>

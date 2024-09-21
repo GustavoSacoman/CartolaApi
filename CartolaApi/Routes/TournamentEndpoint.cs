@@ -1,3 +1,4 @@
+using CartolaApi.Models;
 using Microsoft.EntityFrameworkCore;
 using MySqlX.XDevAPI.Common;
 

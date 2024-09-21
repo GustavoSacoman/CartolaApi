@@ -11,34 +11,21 @@ public class AppDbContext : DbContext
     {
         builder.Entity<User>()
             .HasIndex(user => user.Email)
-            .IsUnique();        
+            .IsUnique();   
+        
         builder.Entity<Team>()
-            .HasMany(team => team.Players)
-            .WithOne(player => player.PlayerTeam)
-            .HasForeignKey(player => player.TeamId);
+            .HasIndex(team => team.Id)
+            .IsUnique();
+
         
         builder.Entity<Tournament>()
-            .HasMany(tournament => tournament.Teams)
-            .WithOne(team => team.Tournament)
-            .HasForeignKey(team => team.TournamentId);
-
-            builder.Entity<Match>()
+            .HasIndex(tornament => tornament.Id)
+            .IsUnique();
+        
+        builder.Entity<Match>()
             .HasOne<Tournament>()
             .WithMany()
             .HasForeignKey(m => m.IdTournament);
-
-            builder.Entity<Match>()
-            .HasOne<Team>()
-            .WithMany()
-            .HasForeignKey(m => m.IdTeam1)
-            .OnDelete(DeleteBehavior.Restrict);
-        
-        builder.Entity<Match>()
-            .HasOne<Team>()
-            .WithMany()
-            .HasForeignKey(m => m.IdTeam2)
-            .OnDelete(DeleteBehavior.Restrict);
-        
     }
 
     public DbSet<User> Users { get; set; }

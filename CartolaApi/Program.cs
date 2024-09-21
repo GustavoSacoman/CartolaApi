@@ -1,3 +1,4 @@
+using CartolaApi.Routes;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
