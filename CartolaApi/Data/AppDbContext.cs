@@ -21,11 +21,30 @@ public class AppDbContext : DbContext
             .HasMany(tournament => tournament.Teams)
             .WithOne(team => team.Tournament)
             .HasForeignKey(team => team.TournamentId);
+
+            builder.Entity<Match>()
+            .HasOne<Tournament>()
+            .WithMany()
+            .HasForeignKey(m => m.IdTournament);
+
+            builder.Entity<Match>()
+            .HasOne<Team>()
+            .WithMany()
+            .HasForeignKey(m => m.IdTeam1)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        builder.Entity<Match>()
+            .HasOne<Team>()
+            .WithMany()
+            .HasForeignKey(m => m.IdTeam2)
+            .OnDelete(DeleteBehavior.Restrict);
+        
     }
 
     public DbSet<User> Users { get; set; }
     public DbSet<Player> Players { get; set; }
     public DbSet<Team> Teams { get; set; }
     public DbSet<Tournament> Tournaments { get; set; }
-
+    public DbSet<Match> Matches { get; set; }
+    
 }

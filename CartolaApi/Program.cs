@@ -29,6 +29,7 @@ app.UseSwaggerUI();
 app.MapGroupPlayer();
 app.MapTeamEndpoints();
 app.MapGroupTournament();
+app.MapGroupMatch();
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.Run();
