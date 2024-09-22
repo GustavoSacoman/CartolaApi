@@ -1,7 +1,9 @@
-using CartolaApi.Models;
 using Microsoft.EntityFrameworkCore;
 using MySqlX.XDevAPI.Common;
+using CartolaApi.Data;
+using CartolaApi.Routes.Models;
 
+namespace CartolaApi.Routes;
 public static class TournamentEndpoint
 {
    public static void MapGroupTournament(this WebApplication app)

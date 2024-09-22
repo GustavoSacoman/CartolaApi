@@ -1,6 +1,7 @@
-﻿public class Player
+﻿namespace CartolaApi.Data.Models;
+public class Player
 {
-    public int Id { get; set; }
+    public int? Id { get; set; }
     public string? NamePlayer { get; set; }
     public string? Position { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using CartolaApi.Models;
+﻿using CartolaApi.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -11,34 +11,21 @@ public class AppDbContext : DbContext
     {
         builder.Entity<User>()
             .HasIndex(user => user.Email)
-            .IsUnique();   
-        
+            .IsUnique();        
         builder.Entity<Team>()
-            .HasIndex(team => team.Id)
-            .IsUnique();
-
+            .HasMany(team => team.Players)
+            .WithOne(player => player.PlayerTeam)
+            .HasForeignKey(player => player.TeamId);
         
         builder.Entity<Tournament>()
-            .HasIndex(tornament => tornament.Id)
-            .IsUnique();
-        
-        builder.Entity<Match>()
-            .HasOne<Tournament>()
-            .WithMany()
-            .HasForeignKey(m => m.IdTournament);
-
-        builder.Entity<Season>()
-        .HasIndex(season => season.Id)
-        .IsUnique(); 
-
+            .HasMany(tournament => tournament.Teams)
+            .WithOne(team => team.Tournament)
+            .HasForeignKey(team => team.TournamentId);
     }
 
     public DbSet<User> Users { get; set; }
     public DbSet<Player> Players { get; set; }
     public DbSet<Team> Teams { get; set; }
     public DbSet<Tournament> Tournaments { get; set; }
-    public DbSet<Match> Matches { get; set; }
-
-    public DbSet<Season> Seasons { get; set; }
 
 }
