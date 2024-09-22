@@ -1,7 +1,7 @@
 ﻿using CartolaApi.Data.Functions;
 using CartolaApi.Responses.JsonResponse;
 using CartolaApi.Routes.Models;
-using DbUser = CartolaApi.Data.Models.User;
+using DbUserModel = CartolaApi.Data.Models.User;
 
 namespace CartolaApi.Routes;
 
@@ -16,7 +16,7 @@ public static class UserEndpoint
             
             try
             {
-                List<DbUser> users = userDbFunctions.GetUsers();
+                List<DbUserModel> users = userDbFunctions.GetUsers();
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: users,
@@ -39,7 +39,7 @@ public static class UserEndpoint
         {
             try
             {
-                DbUser dbUser = DbUser.CreateUser(
+                DbUserModel dbUser = DbUserModel.CreateUser(
                     user.Email,
                     user.Password,
                     user.Name,

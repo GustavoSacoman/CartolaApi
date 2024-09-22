@@ -8,4 +8,13 @@ public class Team
 
     public int TournamentId { get; set; } 
     public Tournament? Tournament { get; set; }
+    
+    public static Team CreateTeam(string name, List<Player> players)
+    {
+        return new Team
+        {
+            Name = name,
+            Players = players,
+        };
+    }
 }
