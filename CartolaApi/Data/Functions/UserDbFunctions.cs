@@ -2,47 +2,88 @@
 using CartolaApi.Utils;
 using Microsoft.Extensions.Configuration;
 
-
 namespace CartolaApi.Data.Functions;
 
 public class UserDbFunctions
 {
-    private readonly IConfiguration _configuration;
+    private readonly Hash _hash;
+    private readonly AppDbContext _db;
 
-    public UserDbFunctions(IConfiguration configuration)
+    public UserDbFunctions(Hash hash, AppDbContext db)
     {
-        _configuration = configuration;
-    }
-
-    public bool VerifyUserExistence(
-        string email,
-        AppDbContext db
-        )
-    {
-        var user = db.Users.FirstOrDefault(user => user.Email == email);
-        if (user is null){
-            return false;
-        }
-        return true;
+        _hash = hash;
+        _db = db;
     }
     
-    public void CreateUser(
-        string email,
-        string password,
-        string name,
-        AppDbContext db
-        )
+    
+    public bool VerifyUserExistence(string email)
     {
-        bool userExists = VerifyUserExistence(email, db);
-        var user = new User
+        var user = _db.Users.FirstOrDefault(user => user.Email == email);
+        return user != null;
+    }
+
+    public void CreateUser(string email, string password, string name, string phone)
+    {
+        if (VerifyUserExistence(email))
+        {
+            throw new Exception("User already exists");
+        }
+
+        var user = new User()
         {
             Email = email,
-            Password = new Hash(_configuration).CreateHash(password),
-            Name = name
+            Password = _hash.CreateHash(password),
+            Name = name,
+            Phone = phone
         };
 
-        db.Users.Add(user);
-        db.SaveChanges();               
+        _db.Users.Add(user);
+        _db.SaveChanges();
     }
-    
+
+    public void DeleteUser(string email)
+    {
+        if (!VerifyUserExistence(email))
+        {
+            throw new Exception("User not found");
+        }
+
+        var user = _db.Users.FirstOrDefault(user => user.Email == email);
+        _db.Users.Remove(user);
+        _db.SaveChanges();
+    }
+
+    public void UpdateUser(string email, string? password, string? name, string? phone)
+    {
+        if (!VerifyUserExistence(email))
+        {
+            throw new Exception("User not found");
+        }
+
+        var user = _db.Users.FirstOrDefault(user => user.Email == email);
+        
+        if (phone != user.Phone)
+        {
+            throw new Exception("Phone not validadted");
+        }
+        
+        if (password != null)
+        {
+            user.Password = _hash.CreateHash(password);
+        }
+        if (name != null)
+        {
+            user.Name = name;
+        }
+        if (phone != null)
+        {
+            user.Phone = phone;
+        }
+        _db.SaveChanges();
+    }
+
+    public List<User> GetUsers()
+    {
+        return _db.Users.ToList();
+    }
 }
