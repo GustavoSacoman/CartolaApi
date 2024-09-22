@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace CartolaApi.Routes;
 public static class TeamEndpoint
 {
     public static void MapTeamEndpoints(this WebApplication app)

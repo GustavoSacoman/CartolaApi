@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CartolaApi.Utils;
 using CartolaApi.Data.Functions;
+using CartolaApi.Routes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,7 @@ app.UseSwaggerUI();
 app.MapGroupPlayer();
 app.MapTeamEndpoints();
 app.MapGroupTournament();
+app.MapGroupUser();
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.Run();

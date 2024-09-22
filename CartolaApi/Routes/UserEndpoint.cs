@@ -1,6 +1,7 @@
 ﻿using CartolaApi.Data.Functions;
-using CartolaApi.Models;
 using CartolaApi.Responses.JsonResponse;
+using CartolaApi.Routes.Models;
+using DbUser = CartolaApi.Data.Models.User;
 
 namespace CartolaApi.Routes;
 
@@ -12,13 +13,14 @@ public static class UserEndpoint
         
         group.MapGet("/", (UserDbFunctions userDbFunctions) =>
         {
-            List<User> users = userDbFunctions.GetUsers();
+            
             try
             {
+                List<DbUser> users = userDbFunctions.GetUsers();
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: users,
-                    status_code: 200
+                    statusCode: 200
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
             }
@@ -27,7 +29,7 @@ public static class UserEndpoint
                 var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                     status: "error",
                     data: ex.Message,
-                    status_code: 400
+                    statusCode: 400
                 );
                 return Results.Json(errorResponse, statusCode: errorStatusCode);
             }
@@ -37,11 +39,17 @@ public static class UserEndpoint
         {
             try
             {
-                userDbFunctions.CreateUser(user.Email, user.Password, user.Name, user.Phone);
+                DbUser dbUser = DbUser.CreateUser(
+                    user.Email,
+                    user.Password,
+                    user.Name,
+                    user.Phone
+                );
+                userDbFunctions.CreateUser(dbUser.Email, dbUser.Password, dbUser.Name, dbUser.Phone);
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: user,
-                    status_code: 201
+                    statusCode: 201
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
 
@@ -51,9 +59,9 @@ public static class UserEndpoint
                 var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                     status: "error",
                     data: ex.Message,
-                    status_code: 400
+                    statusCode: 400
                 );
-                return Results.Json(errorResponse, statusCode: errorStatusCode); // 400 Bad Request
+                return Results.Json(errorResponse, statusCode: errorStatusCode);
             }
             
         });
@@ -66,7 +74,7 @@ public static class UserEndpoint
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: "user updated successfully",
-                    status_code: 200
+                    statusCode: 200
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
             }
@@ -75,7 +83,7 @@ public static class UserEndpoint
                 var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                     status: "error",
                     data: ex.Message,
-                    status_code: 400
+                    statusCode: 400
                 );
                 return Results.Json(errorResponse, statusCode: errorStatusCode);
             }
@@ -89,7 +97,7 @@ public static class UserEndpoint
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: "user deleted successfully",
-                    status_code: 200
+                    statusCode: 200
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
             }
@@ -98,7 +106,7 @@ public static class UserEndpoint
                 var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                     status: "error",
                     data: ex.Message,
-                    status_code: 400
+                    statusCode: 400
                 );
                 return Results.Json(errorResponse, statusCode: errorStatusCode);
             }

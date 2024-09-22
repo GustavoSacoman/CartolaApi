@@ -1,6 +1,5 @@
-﻿using CartolaApi.Models;
-using CartolaApi.Utils;
-using Microsoft.Extensions.Configuration;
+﻿using CartolaApi.Utils;
+using CartolaApi.Data.Models;
 
 namespace CartolaApi.Data.Functions;
 

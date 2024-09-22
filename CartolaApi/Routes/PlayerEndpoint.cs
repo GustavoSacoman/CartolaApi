@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using CartolaApi.Routes.Models;
 
-
+namespace CartolaApi.Routes;
     public static class PlayerEndpoint
     {
         public static void MapGroupPlayer(this WebApplication app)

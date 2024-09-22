@@ -1,4 +1,4 @@
-﻿using CartolaApi.Models;
+﻿using CartolaApi.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 
