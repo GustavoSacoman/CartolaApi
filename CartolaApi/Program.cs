@@ -2,6 +2,7 @@ using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CartolaApi.Utils;
+using CartolaApi.Data.Functions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<Hash>();
+builder.Services.AddScoped<UserDbFunctions>();
 
 var app = builder.Build();
 
