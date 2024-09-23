@@ -4,17 +4,17 @@ public class Team
 {
     public int? Id { get; set; }
     public string Name { get; set; }
-    public List<Player> Players { get; set; } = new List<Player>();
 
+    public List<int>? PlayersId { get; set; }
     public int TournamentId { get; set; } 
     public Tournament? Tournament { get; set; }
     
-    public static Team CreateTeam(string name, List<Player> players)
+    public static Team CreateTeam(string name, List<int> playersId)
     {
         return new Team
         {
             Name = name,
-            Players = players,
+            PlayersId = playersId,
         };
     }
 }

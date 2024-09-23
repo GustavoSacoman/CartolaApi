@@ -2,6 +2,7 @@
 using CartolaApi.Data.Functions;
 using CartolaApi.Responses.JsonResponse;
 using CartolaApi.Routes.Models;
+using Microsoft.AspNetCore.Mvc;
 using DbUserModel = CartolaApi.Data.DTOs.User;
 
 namespace CartolaApi.Routes;
@@ -13,7 +14,7 @@ public static class UserEndpoint
         var group = app.MapGroup("/user");
         var userDbFunctions = new UserDbFunctions();
 
-        group.MapGet("/get-users", (IMapper mapper) =>
+        group.MapGet("/get-users", ([FromServices]IMapper mapper) =>
         {
             try
             {
@@ -37,12 +38,12 @@ public static class UserEndpoint
             }
         });
 
-        group.MapPost("/add-user", (User user, IMapper mapper) =>
+        group.MapPost("/add-user", (User user, [FromServices]IMapper mapper) =>
         {
             try
             {
                 var dbUser = mapper.Map<DbUserModel>(user);
-                userDbFunctions.CreateUser(dbUser.Email, dbUser.Password, dbUser.Name, dbUser.Phone);
+                userDbFunctions.CreateUser(dbUser);
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: user,
@@ -61,7 +62,7 @@ public static class UserEndpoint
             }
         });
 
-        group.MapPut("/update-user", (User user, IMapper mapper) =>
+        group.MapPut("/update-user", (User user, [FromServices]IMapper mapper) =>
         {
             try
             {

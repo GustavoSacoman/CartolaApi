@@ -37,25 +37,12 @@ public class UserDbFunctions
         return user != null;
     }
 
-    public void CreateUser(string email, string password, string name, string phone)
+    public void CreateUser(User user)
     {
-        Console.WriteLine("Creating user...");
-        Console.WriteLine(email);
-        Console.WriteLine(password);
-        Console.WriteLine(name);
-        Console.WriteLine(phone);
-        if (VerifyUserExistence(email))
+        if (VerifyUserExistence(user.Email))
         {
             throw new Exception("User already exists");
         }
-
-        var user = new User()
-        {
-            Email = email,
-            Password = _hash.CreateHash(password),
-            Name = name,
-            Phone = phone
-        };
 
         _db.Users.Add(user);
         _db.SaveChanges();
@@ -67,7 +54,7 @@ public class UserDbFunctions
         {
             throw new Exception("User not found");
         }
-
+        
         var user = _db.Users.FirstOrDefault(user => user.Email == email);
         _db.Users.Remove(user);
         _db.SaveChanges();

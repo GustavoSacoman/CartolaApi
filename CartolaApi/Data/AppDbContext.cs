@@ -31,19 +31,14 @@ public class AppDbContext : DbContext
             .Property(team => team.Id)
             .ValueGeneratedOnAdd();
         builder.Entity<Team>()
-            .HasMany(team => team.Players)
-            .WithOne(player => player.PlayerTeam)
-            .HasForeignKey(player => player.TeamId);
+            .HasIndex(team => team.Id)
+            .IsUnique();
 
         builder.Entity<Tournament>()
             .HasKey(tournament => tournament.Id);
         builder.Entity<Tournament>()
             .Property(tournament => tournament.Id)
             .ValueGeneratedOnAdd();
-        builder.Entity<Tournament>()
-            .HasMany(tournament => tournament.Teams)
-            .WithOne(team => team.Tournament)
-            .HasForeignKey(team => team.TournamentId);
 
         builder.Entity<Player>()
             .HasKey(player => player.Id);

@@ -1,13 +1,17 @@
-﻿namespace CartolaApi.Data.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
 
+namespace CartolaApi.Data.DTOs;
 public class Player
 {
-    public int? Id { get; set; }
+    public int? Id { get; set; } 
+    [MaxLength(50)]
+    [Required]
     public required string NamePlayer { get; set; }
-    public required string? Position { get; set; }
+    [MaxLength(50)]
+    public string? Position { get; set; }
 
+    [MaxLength(50)]
     public int? TeamId { get; set; } 
-    public Team? PlayerTeam { get; set; } 
     
     public static Player CreatePlayer(string namePlayer, string? position, int? teamId)
     {
