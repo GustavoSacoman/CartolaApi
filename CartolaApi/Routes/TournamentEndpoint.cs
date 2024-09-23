@@ -1,9 +1,12 @@
+using AutoMapper;
+
 using CartolaApi.Responses.JsonResponse;
 using CartolaApi.Routes.Models;
 using CartolaApi.Data.Functions;
-using DbTournamentModel = CartolaApi.Data.Models.Tournament;
-using DbTeamModel = CartolaApi.Data.Models.Team;
-using DbPlayerModel = CartolaApi.Data.Models.Player;
+using Microsoft.AspNetCore.Mvc;
+using DbTournamentModel = CartolaApi.Data.DTOs.Tournament;
+using DbTeamModel = CartolaApi.Data.DTOs.Team;
+using DbPlayerModel = CartolaApi.Data.DTOs.Player;
 
 namespace CartolaApi.Routes;
 
@@ -14,14 +17,15 @@ public static class TournamentEndpoint
       var group = app.MapGroup("/tournament");
       var tournamentDbFunctions = new TournamentDbFunctions();
 
-      group.MapGet("/", () =>
+      group.MapGet("/", ([FromServices]IMapper mapper) =>
       {
          try
          {
             List<DbTournamentModel> tournament = tournamentDbFunctions.GetTournaments();
+            var tournamentDtos = mapper.Map<List<Tournament>>(tournament);
             var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                status: "success",
-               data: tournament,
+               data: tournamentDtos,
                statusCode: 200
             );
             return Results.Json(successResponse, statusCode: successStatusCode);
@@ -37,38 +41,11 @@ public static class TournamentEndpoint
          }
       });
       
-      group.MapPost("/create-tournament", (Tournament tournament) =>
+      group.MapPost("/create-tournament", (Tournament tournament, [FromServices]IMapper mapper) =>
       {
          try
          {
-            List<DbTeamModel> tempTeams = new List<DbTeamModel>();
-            List<DbPlayerModel> tempPlayers = new List<DbPlayerModel>();
-            
-            foreach (Team team in tournament.Teams)
-            {
-               foreach (Player player in team.Players)
-               {
-                  if (player.NamePlayer != null && player.Position != null)
-                  {
-                     DbPlayerModel tempPlayer = DbPlayerModel.CreatePlayer(
-                        player.NamePlayer,
-                        player.Position,
-                        player.TeamId
-                     );
-                     tempPlayers.Add(tempPlayer);
-                  }
-               }
-               DbTeamModel tempTeam = DbTeamModel.CreateTeam(
-                  team.Name,
-                  tempPlayers
-                  );
-               tempTeams.Add(tempTeam);
-            }
-            
-            DbTournamentModel dbTournament = DbTournamentModel.CreateTournament(
-               tournament.TournamentName,
-               tempTeams
-            );
+            var dbTournament = mapper.Map<DbTournamentModel>(tournament);
             tournamentDbFunctions.CreateTournament(dbTournament);
             var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                status: "success",
@@ -88,47 +65,33 @@ public static class TournamentEndpoint
          }
       });
       
-      group.MapPut("/update-tournament", (Tournament tournament) =>
+      group.MapPut("/update-tournament", (
+         int tournamentId,
+         string newTournameName,
+         [FromBody]List<Team>? teams,
+         
+         [FromServices]IMapper mapper
+         ) =>
       {
          try
          {
-            List<DbTeamModel> tempTeams = new List<DbTeamModel>();
-            List<DbPlayerModel> tempPlayers = new List<DbPlayerModel>();
-            
-            foreach (Team team in tournament.Teams)
+            List<DbTeamModel>? dbTeams = null;
+            DbTeamModel? dbTeam = null;
+            if (teams != null)
             {
-               foreach (Player player in team.Players)
-               {
-                  if (player.NamePlayer != null && player.Position != null)
-                  {
-                     DbPlayerModel tempPlayer = DbPlayerModel.CreatePlayer(
-                        player.NamePlayer,
-                        player.Position,
-                        player.TeamId
-                     );
-                     tempPlayers.Add(tempPlayer);
-                  }
-               }
-               DbTeamModel tempTeam = DbTeamModel.CreateTeam(
-                  team.Name,
-                  tempPlayers
-                  );
-               tempTeams.Add(tempTeam);
+               dbTeams = mapper.Map<List<DbTeamModel>>(teams);
             }
-            
-            DbTournamentModel dbTournament = DbTournamentModel.CreateTournament(
-               tournament.TournamentName,
-               tempTeams
-            );
+
             tournamentDbFunctions.UpdateTournament(
-               dbTournament,
-               tournament.TournamentName,
-               tempTeams,
-               null
+               tournamentId,
+               newTournameName,
+               dbTeams,
+               dbTeam
             );
+            
             var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                status: "success",
-               data: tournament,
+               data: "Tournament updated successfully",
                statusCode: 200
             );
             return Results.Json(successResponse, statusCode: successStatusCode);
@@ -144,14 +107,14 @@ public static class TournamentEndpoint
          }
       });
       
-      group.MapDelete("/delete-tournament", (string tournamentName) =>
+      group.MapDelete("/delete-tournament", (int tournamentId) =>
       {
          try
          {
-            tournamentDbFunctions.DeleteTournament(tournamentName);
+            tournamentDbFunctions.DeleteTournament(tournamentId);
             var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                status: "success",
-               data: $"Tournament {tournamentName} deleted",
+               data: $"Tournament {tournamentId} deleted",
                statusCode: 200
             );
             return Results.Json(successResponse, statusCode: successStatusCode);

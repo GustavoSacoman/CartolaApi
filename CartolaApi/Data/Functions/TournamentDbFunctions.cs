@@ -1,4 +1,4 @@
-﻿using CartolaApi.Data.Models;
+﻿using CartolaApi.Data.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace CartolaApi.Data.Functions;
@@ -58,24 +58,25 @@ public class TournamentDbFunctions
         _db.SaveChanges();
     }
     
-    public void DeleteTournament(string tournamentName)
+    public void DeleteTournament(int tournamentId)
     {
-        if (!VerifyTournamentExistence(null, tournamentName))
+        if (!VerifyTournamentExistence(tournamentId, null))
         {
             throw new Exception("Tournament not found");
         }
 
-        var tournament = _db.Tournaments.FirstOrDefault(tournament => tournament.TournamentName == tournamentName);
+        var tournament = _db.Tournaments.FirstOrDefault(tournament => tournament.Id == tournamentId);
         _db.Tournaments.Remove(tournament);
         _db.SaveChanges();
     }
     
-    public void UpdateTournament(Tournament tournament, string newTournamentName, List<Team>? teams, Team? team)
+    public void UpdateTournament(int tournamentId, string newTournamentName, List<Team>? teams, Team? team)
     {
-        if (!VerifyTournamentExistence(tournament.Id ?? null, tournament.TournamentName))
+        if (!VerifyTournamentExistence(tournamentId, null))
         {
             throw new Exception("Tournament not found");
         }
+        var tournament = _db.Tournaments.FirstOrDefault(t => t.Id == tournamentId);
         if (teams != null)
         {
             foreach (var t in teams)

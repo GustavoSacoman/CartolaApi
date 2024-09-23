@@ -1,7 +1,9 @@
-﻿using CartolaApi.Data.Functions;
+﻿using AutoMapper;
+using CartolaApi.Data.Functions;
 using CartolaApi.Responses.JsonResponse;
 using CartolaApi.Routes.Models;
-using DbUserModel = CartolaApi.Data.Models.User;
+using Microsoft.AspNetCore.Mvc;
+using DbUserModel = CartolaApi.Data.DTOs.User;
 
 namespace CartolaApi.Routes;
 
@@ -11,16 +13,16 @@ public static class UserEndpoint
     {
         var group = app.MapGroup("/user");
         var userDbFunctions = new UserDbFunctions();
-        
-        group.MapGet("/", () =>
+
+        group.MapGet("/get-users", ([FromServices]IMapper mapper) =>
         {
-            
             try
             {
                 List<DbUserModel> users = userDbFunctions.GetUsers();
+                var userDtos = mapper.Map<List<User>>(users);
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
-                    data: users,
+                    data: userDtos,
                     statusCode: 200
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
@@ -35,29 +37,19 @@ public static class UserEndpoint
                 return Results.Json(errorResponse, statusCode: errorStatusCode);
             }
         });
-        
-        group.MapPost("/", (User user) =>
+
+        group.MapPost("/add-user", (User user, [FromServices]IMapper mapper) =>
         {
             try
             {
-                Console.WriteLine(user.Email);
-                Console.WriteLine(user.Password);
-                Console.WriteLine(user.Name);
-                Console.WriteLine(user.Phone);
-                DbUserModel dbUser = DbUserModel.CreateUser(
-                    user.Name,
-                    user.Email,
-                    user.Password,
-                    user.Phone
-                );
-                userDbFunctions.CreateUser(dbUser.Email, dbUser.Password, dbUser.Name, dbUser.Phone);
+                var dbUser = mapper.Map<DbUserModel>(user);
+                userDbFunctions.CreateUser(dbUser);
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: user,
                     statusCode: 201
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
-
             }
             catch (Exception ex)
             {
@@ -68,14 +60,14 @@ public static class UserEndpoint
                 );
                 return Results.Json(errorResponse, statusCode: errorStatusCode);
             }
-            
         });
 
-        group.MapPut("/", (User user) =>
+        group.MapPut("/update-user", (User user, [FromServices]IMapper mapper) =>
         {
             try
             {
-                userDbFunctions.UpdateUser(user.Email, user.Password, user.Name, user.Phone);
+                var dbUser = mapper.Map<DbUserModel>(user);
+                userDbFunctions.UpdateUser(dbUser.Email, dbUser.Password, dbUser.Name, dbUser.Phone);
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: "user updated successfully",
@@ -94,7 +86,7 @@ public static class UserEndpoint
             }
         });
 
-        group.MapDelete("/", (string email) =>
+        group.MapDelete("/delete-user", (string email) =>
         {
             try
             {

@@ -1,4 +1,4 @@
-﻿using CartolaApi.Data.Models;
+﻿using CartolaApi.Data.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace CartolaApi.Data.Functions;
@@ -81,7 +81,7 @@ public class TeamDbFunctions
         _db.SaveChanges();
     }
 
-    public void RemovePlayerFromTeam(string teamName, string playerName)
+    public void RemovePlayerFromTeam(string teamName, int playerId)
     {
         if (!VerifyTeamExistence(null, teamName))
         {
@@ -89,34 +89,24 @@ public class TeamDbFunctions
         }
 
         var team = _db.Teams.FirstOrDefault(team => team.Name == teamName);
-        var player = team.Players.FirstOrDefault(player => player.NamePlayer == playerName);
-        if (player == null)
+        if (team.PlayersId.FirstOrDefault(playerId) == null)
         {
             throw new Exception("Player not found");
         }
-        team.Players.Remove(player);
+
+        team.PlayersId.Remove(playerId);
         _db.SaveChanges();
     }
     
-    public void UpdateTeam(int teamId, string newTeamName, List<Player>? players, Player? player)
+    public void UpdateTeam(int teamId, Team updatedTeam)
     {
         if (!VerifyTeamExistence(teamId, null))
         {
             throw new Exception("Team not found");
         }
         Team team = _db.Teams.FirstOrDefault(team => team.Id == teamId);
-        if (players != null)
-        {
-            foreach (var p in players)
-            {
-                team.Players.Add(p);
-            }
-        }
-        if (player != null)
-        {
-            team.Players.Add(player);
-        }
-        team.Name = newTeamName;
+        team.Name = updatedTeam.Name;
+        team.PlayersId = updatedTeam.PlayersId;
         _db.SaveChanges();
     }
 }

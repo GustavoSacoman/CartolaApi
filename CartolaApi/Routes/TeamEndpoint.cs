@@ -1,8 +1,11 @@
-using DbTeamModel = CartolaApi.Data.Models.Team;
-using DbPlayerModel = CartolaApi.Data.Models.Player;
+using AutoMapper;
+
+using DbTeamModel = CartolaApi.Data.DTOs.Team;
+using DbPlayerModel = CartolaApi.Data.DTOs.Player;
 using CartolaApi.Data.Functions;
 using CartolaApi.Responses.JsonResponse;
 using CartolaApi.Routes.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CartolaApi.Routes;
 public static class TeamEndpoint
@@ -60,31 +63,15 @@ public static class TeamEndpoint
             }
         });
 
-        group.MapPost("/include-team", (Team team) =>
+        group.MapPost("/include-team", (Team team, [FromServices]IMapper mapper) =>
         {
             try
             {
-                List<DbPlayerModel> tempPlayers = new List<DbPlayerModel>();
-                foreach (Player player in team.Players)
-                {
-                    if (player.NamePlayer != null && player.Position != null)
-                    {
-                        DbPlayerModel tempPlayer = DbPlayerModel.CreatePlayer(
-                            player.NamePlayer,
-                            player.Position,
-                            player.TeamId
-                        );
-                        tempPlayers.Add(tempPlayer);
-                    }
-                }
-                DbTeamModel tempTeam = DbTeamModel.CreateTeam(
-                    team.Name,
-                    tempPlayers
-                );
-                teamDbFunctions.CreateTeam(tempTeam);
+                var dbTeam = mapper.Map<DbTeamModel>(team);
+                teamDbFunctions.CreateTeam(dbTeam);
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
-                    data: tempTeam,
+                    data: dbTeam,
                     statusCode: 200
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
@@ -100,31 +87,20 @@ public static class TeamEndpoint
             }            
         });
 
-        group.MapPut("/update-team", (int teamId, Team updatedTeam) =>
+        group.MapPut("/update-team", (
+            int teamToUpateId,
+            Team updatedTeam,
+            [FromServices]IMapper mapper
+            ) =>
         {
             try
             {
-                List<DbPlayerModel> tempPlayers = new List<DbPlayerModel>();
-                foreach (Player player in updatedTeam.Players)
-                {
-                    if (player.NamePlayer != null && player.Position != null)
-                    {
-                        DbPlayerModel tempPlayer = DbPlayerModel.CreatePlayer(
-                            player.NamePlayer,
-                            player.Position,
-                            player.TeamId
-                        );
-                        tempPlayers.Add(tempPlayer);
-                    }
-                }
-                DbTeamModel tempTeam = DbTeamModel.CreateTeam(
-                    updatedTeam.Name,
-                    tempPlayers
-                );
-                teamDbFunctions.UpdateTeam(teamId, updatedTeam.Name, tempPlayers, null);
+                var dbTeamUpdated = mapper.Map<DbTeamModel>(updatedTeam);
+                teamDbFunctions.UpdateTeam(teamToUpateId, dbTeamUpdated);
+                var team = teamDbFunctions.GetTeam(teamToUpateId, null);
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
-                    data: tempTeam,
+                    data: team,
                     statusCode: 200
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
