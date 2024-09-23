@@ -12,5 +12,5 @@ public class UserProfile : Profile
         CreateMap<Data.DTOs.User, Routes.Models.User>().ReverseMap();
     }
 }
-// ent é só fazer um desse pra cada DTO que vc tiver
+
 

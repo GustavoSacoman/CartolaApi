@@ -16,9 +16,6 @@ public class User
     [MaxLength(15)]
     public required string Phone { get; set; }
 
-    // Dto é isso aqui que eu fiz
-    // é um modelo pro Banco de Dados
-    // aí pra requisição a gnt faz outro
     public static User CreateUser(string name, string email, string password, string phone)
     {
         return new User
