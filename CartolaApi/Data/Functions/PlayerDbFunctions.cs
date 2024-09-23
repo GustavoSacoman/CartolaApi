@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using CartolaApi.Data.Models;
+using CartolaApi.Data.DTOs;
 namespace CartolaApi.Data.Functions;
 
 public class PlayerDbFunctions

@@ -1,5 +1,5 @@
-using DbTeamModel = CartolaApi.Data.Models.Team;
-using DbPlayerModel = CartolaApi.Data.Models.Player;
+using DbTeamModel = CartolaApi.Data.DTOs.Team;
+using DbPlayerModel = CartolaApi.Data.DTOs.Player;
 using CartolaApi.Data.Functions;
 using CartolaApi.Responses.JsonResponse;
 using CartolaApi.Routes.Models;

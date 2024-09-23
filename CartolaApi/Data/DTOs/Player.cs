@@ -1,4 +1,5 @@
-﻿namespace CartolaApi.Data.Models;
+﻿namespace CartolaApi.Data.DTOs;
+
 public class Player
 {
     public int? Id { get; set; }

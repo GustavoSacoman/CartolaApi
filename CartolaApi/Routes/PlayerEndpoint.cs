@@ -1,7 +1,7 @@
 ﻿using CartolaApi.Data.Functions;
 using CartolaApi.Responses.JsonResponse;
 using CartolaApi.Routes.Models;
-using dbPlayerModel = CartolaApi.Data.Models.Player;
+using dbPlayerModel = CartolaApi.Data.DTOs.Player;
 
 namespace CartolaApi.Routes;
     public static class PlayerEndpoint

@@ -1,5 +1,5 @@
 ﻿using CartolaApi.Utils;
-using CartolaApi.Data.Models;
+using CartolaApi.Data.DTOs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 

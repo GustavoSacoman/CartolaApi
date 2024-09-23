@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using CartolaApi.Utils;
 using CartolaApi.Data.Functions;
@@ -9,6 +10,7 @@ var connectionString = builder.Configuration.GetConnectionString("CartolaConnect
 
 builder.Services.AddDbContext<AppDbContext>(opts =>
     opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddCors();
 builder.Services.AddEndpointsApiExplorer();
@@ -18,7 +20,6 @@ builder.Services.AddSingleton<Hash>();
 builder.Services.AddScoped<UserDbFunctions>();
 builder.Services.AddScoped<TeamDbFunctions>(); // Register TeamDbFunctions
 builder.Services.AddScoped<TournamentDbFunctions>();
-
 var app = builder.Build();
 
 app.UseCors(builder => builder

@@ -1,9 +1,9 @@
 using CartolaApi.Responses.JsonResponse;
 using CartolaApi.Routes.Models;
 using CartolaApi.Data.Functions;
-using DbTournamentModel = CartolaApi.Data.Models.Tournament;
-using DbTeamModel = CartolaApi.Data.Models.Team;
-using DbPlayerModel = CartolaApi.Data.Models.Player;
+using DbTournamentModel = CartolaApi.Data.DTOs.Tournament;
+using DbTeamModel = CartolaApi.Data.DTOs.Team;
+using DbPlayerModel = CartolaApi.Data.DTOs.Player;
 
 namespace CartolaApi.Routes;
 

@@ -1,4 +1,4 @@
-namespace CartolaApi.Data.Models;
+namespace CartolaApi.Data.DTOs;
 
 public class Tournament
 {
