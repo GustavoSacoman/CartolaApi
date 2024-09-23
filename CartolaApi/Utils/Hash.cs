@@ -8,8 +8,9 @@ public class Hash
 {
     private readonly string _saltKey;
 
-    public Hash(IConfiguration configuration)
+    public Hash()
     {
+        var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
         _saltKey = configuration["SALT_KEY"];
     }
 

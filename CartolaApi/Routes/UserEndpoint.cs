@@ -10,8 +10,9 @@ public static class UserEndpoint
     public static void MapGroupUser(this WebApplication app)
     {
         var group = app.MapGroup("/user");
+        var userDbFunctions = new UserDbFunctions();
         
-        group.MapGet("/", (UserDbFunctions userDbFunctions) =>
+        group.MapGet("/", () =>
         {
             
             try
@@ -35,14 +36,18 @@ public static class UserEndpoint
             }
         });
         
-        group.MapPost("/", (User user, UserDbFunctions userDbFunctions) =>
+        group.MapPost("/", (User user) =>
         {
             try
             {
+                Console.WriteLine(user.Email);
+                Console.WriteLine(user.Password);
+                Console.WriteLine(user.Name);
+                Console.WriteLine(user.Phone);
                 DbUserModel dbUser = DbUserModel.CreateUser(
+                    user.Name,
                     user.Email,
                     user.Password,
-                    user.Name,
                     user.Phone
                 );
                 userDbFunctions.CreateUser(dbUser.Email, dbUser.Password, dbUser.Name, dbUser.Phone);
@@ -66,7 +71,7 @@ public static class UserEndpoint
             
         });
 
-        group.MapPut("/", (User user, UserDbFunctions userDbFunctions) =>
+        group.MapPut("/", (User user) =>
         {
             try
             {
@@ -89,7 +94,7 @@ public static class UserEndpoint
             }
         });
 
-        group.MapDelete("/", (string email, UserDbFunctions userDbFunctions) =>
+        group.MapDelete("/", (string email) =>
         {
             try
             {

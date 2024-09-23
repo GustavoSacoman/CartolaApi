@@ -1,4 +1,5 @@
 ﻿using CartolaApi.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CartolaApi.Data.Functions;
 
@@ -6,9 +7,22 @@ public class TournamentDbFunctions
 {
     private readonly AppDbContext _db;
 
-    public TournamentDbFunctions( AppDbContext db)
+    public TournamentDbFunctions()
     {
-        _db = db;
+        var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();
+
+        var connectionString = configuration.GetConnectionString("CartolaConnection");
+        if (connectionString == null)
+        {
+            throw new Exception("Database connection string not found");
+        }
+        
+        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+        optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        _db = new AppDbContext(optionsBuilder.Options);
+
     }
     
     public bool VerifyTournamentExistence(int? tournamentId, string? tournamentName)

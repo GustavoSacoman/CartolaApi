@@ -12,7 +12,9 @@ public static class TournamentEndpoint
    public static void MapGroupTournament(this WebApplication app)
    {
       var group = app.MapGroup("/tournament");
-      group.MapGet("/", (TournamentDbFunctions tournamentDbFunctions) =>
+      var tournamentDbFunctions = new TournamentDbFunctions();
+
+      group.MapGet("/", () =>
       {
          try
          {
@@ -35,7 +37,7 @@ public static class TournamentEndpoint
          }
       });
       
-      group.MapPost("/create-tournament", (Tournament tournament, TournamentDbFunctions tournamentDbFunctions) =>
+      group.MapPost("/create-tournament", (Tournament tournament) =>
       {
          try
          {
@@ -50,7 +52,8 @@ public static class TournamentEndpoint
                   {
                      DbPlayerModel tempPlayer = DbPlayerModel.CreatePlayer(
                         player.NamePlayer,
-                        player.Position
+                        player.Position,
+                        player.TeamId
                      );
                      tempPlayers.Add(tempPlayer);
                   }
@@ -85,7 +88,7 @@ public static class TournamentEndpoint
          }
       });
       
-      group.MapPut("/update-tournament", (Tournament tournament, TournamentDbFunctions tournamentDbFunctions) =>
+      group.MapPut("/update-tournament", (Tournament tournament) =>
       {
          try
          {
@@ -100,7 +103,8 @@ public static class TournamentEndpoint
                   {
                      DbPlayerModel tempPlayer = DbPlayerModel.CreatePlayer(
                         player.NamePlayer,
-                        player.Position
+                        player.Position,
+                        player.TeamId
                      );
                      tempPlayers.Add(tempPlayer);
                   }
@@ -140,7 +144,7 @@ public static class TournamentEndpoint
          }
       });
       
-      group.MapDelete("/delete-tournament", (string tournamentName, TournamentDbFunctions tournamentDbFunctions) =>
+      group.MapDelete("/delete-tournament", (string tournamentName) =>
       {
          try
          {

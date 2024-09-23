@@ -1,5 +1,3 @@
-using Google.Protobuf.WellKnownTypes;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CartolaApi.Utils;
 using CartolaApi.Data.Functions;
@@ -18,6 +16,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<Hash>();
 builder.Services.AddScoped<UserDbFunctions>();
+builder.Services.AddScoped<TeamDbFunctions>(); // Register TeamDbFunctions
+builder.Services.AddScoped<TournamentDbFunctions>();
 
 var app = builder.Build();
 
