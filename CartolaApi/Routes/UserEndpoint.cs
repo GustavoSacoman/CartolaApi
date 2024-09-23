@@ -1,6 +1,7 @@
 ﻿using CartolaApi.Data.Functions;
-using CartolaApi.Models;
 using CartolaApi.Responses.JsonResponse;
+using CartolaApi.Routes.Models;
+using DbUserModel = CartolaApi.Data.Models.User;
 
 namespace CartolaApi.Routes;
 
@@ -9,16 +10,18 @@ public static class UserEndpoint
     public static void MapGroupUser(this WebApplication app)
     {
         var group = app.MapGroup("/user");
+        var userDbFunctions = new UserDbFunctions();
         
-        group.MapGet("/", (UserDbFunctions userDbFunctions) =>
+        group.MapGet("/", () =>
         {
-            List<User> users = userDbFunctions.GetUsers();
+            
             try
             {
+                List<DbUserModel> users = userDbFunctions.GetUsers();
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: users,
-                    status_code: 200
+                    statusCode: 200
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
             }
@@ -27,21 +30,31 @@ public static class UserEndpoint
                 var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                     status: "error",
                     data: ex.Message,
-                    status_code: 400
+                    statusCode: 400
                 );
                 return Results.Json(errorResponse, statusCode: errorStatusCode);
             }
         });
         
-        group.MapPost("/", (User user, UserDbFunctions userDbFunctions) =>
+        group.MapPost("/", (User user) =>
         {
             try
             {
-                userDbFunctions.CreateUser(user.Email, user.Password, user.Name, user.Phone);
+                Console.WriteLine(user.Email);
+                Console.WriteLine(user.Password);
+                Console.WriteLine(user.Name);
+                Console.WriteLine(user.Phone);
+                DbUserModel dbUser = DbUserModel.CreateUser(
+                    user.Name,
+                    user.Email,
+                    user.Password,
+                    user.Phone
+                );
+                userDbFunctions.CreateUser(dbUser.Email, dbUser.Password, dbUser.Name, dbUser.Phone);
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: user,
-                    status_code: 201
+                    statusCode: 201
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
 
@@ -51,14 +64,14 @@ public static class UserEndpoint
                 var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                     status: "error",
                     data: ex.Message,
-                    status_code: 400
+                    statusCode: 400
                 );
-                return Results.Json(errorResponse, statusCode: errorStatusCode); // 400 Bad Request
+                return Results.Json(errorResponse, statusCode: errorStatusCode);
             }
             
         });
 
-        group.MapPut("/", (User user, UserDbFunctions userDbFunctions) =>
+        group.MapPut("/", (User user) =>
         {
             try
             {
@@ -66,7 +79,7 @@ public static class UserEndpoint
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: "user updated successfully",
-                    status_code: 200
+                    statusCode: 200
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
             }
@@ -75,13 +88,13 @@ public static class UserEndpoint
                 var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                     status: "error",
                     data: ex.Message,
-                    status_code: 400
+                    statusCode: 400
                 );
                 return Results.Json(errorResponse, statusCode: errorStatusCode);
             }
         });
 
-        group.MapDelete("/", (string email, UserDbFunctions userDbFunctions) =>
+        group.MapDelete("/", (string email) =>
         {
             try
             {
@@ -89,7 +102,7 @@ public static class UserEndpoint
                 var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                     status: "success",
                     data: "user deleted successfully",
-                    status_code: 200
+                    statusCode: 200
                 );
                 return Results.Json(successResponse, statusCode: successStatusCode);
             }
@@ -98,7 +111,7 @@ public static class UserEndpoint
                 var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                     status: "error",
                     data: ex.Message,
-                    status_code: 400
+                    statusCode: 400
                 );
                 return Results.Json(errorResponse, statusCode: errorStatusCode);
             }

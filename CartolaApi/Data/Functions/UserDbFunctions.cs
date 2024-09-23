@@ -1,6 +1,7 @@
-﻿using CartolaApi.Models;
-using CartolaApi.Utils;
+﻿using CartolaApi.Utils;
+using CartolaApi.Data.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace CartolaApi.Data.Functions;
 
@@ -9,21 +10,40 @@ public class UserDbFunctions
     private readonly Hash _hash;
     private readonly AppDbContext _db;
 
-    public UserDbFunctions(Hash hash, AppDbContext db)
+    public UserDbFunctions()
     {
-        _hash = hash;
-        _db = db;
+        var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();
+
+        var connectionString = configuration.GetConnectionString("CartolaConnection");
+        if (connectionString == null)
+        {
+            throw new Exception("Database connection string not found");
+        }
+        
+        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+        optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        _db = new AppDbContext(optionsBuilder.Options);
+
+        _hash = new Hash();
     }
-    
-    
+
     public bool VerifyUserExistence(string email)
     {
-        var user = _db.Users.FirstOrDefault(user => user.Email == email);
+        var user = _db.Users.AsEnumerable().FirstOrDefault(user => user.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+        Console.Write(user?.Name);
+        Console.Write(email);
         return user != null;
     }
 
     public void CreateUser(string email, string password, string name, string phone)
     {
+        Console.WriteLine("Creating user...");
+        Console.WriteLine(email);
+        Console.WriteLine(password);
+        Console.WriteLine(name);
+        Console.WriteLine(phone);
         if (VerifyUserExistence(email))
         {
             throw new Exception("User already exists");
@@ -53,7 +73,7 @@ public class UserDbFunctions
         _db.SaveChanges();
     }
 
-    public void UpdateUser(string email, string? password, string? name, string? phone)
+    public void UpdateUser(string email, string? password, string? name, string phone)
     {
         if (!VerifyUserExistence(email))
         {
@@ -61,10 +81,14 @@ public class UserDbFunctions
         }
 
         var user = _db.Users.FirstOrDefault(user => user.Email == email);
+        if (user == null)
+        {
+            throw new Exception("User not found");
+        }
         
         if (phone != user.Phone)
         {
-            throw new Exception("Phone not validadted");
+            throw new Exception("Phone not validated");
         }
         
         if (password != null)
@@ -74,10 +98,6 @@ public class UserDbFunctions
         if (name != null)
         {
             user.Name = name;
-        }
-        if (phone != null)
-        {
-            user.Phone = phone;
         }
         _db.SaveChanges();
     }
