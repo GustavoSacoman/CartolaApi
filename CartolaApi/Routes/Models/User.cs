@@ -8,4 +8,3 @@ public class User
     public required string Phone { get; set; }
 }
 
-// tipo, aqui tem

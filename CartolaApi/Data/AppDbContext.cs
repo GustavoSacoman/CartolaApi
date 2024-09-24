@@ -1,5 +1,6 @@
 ﻿using CartolaApi.Data.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Match = CartolaApi.Data.DTOs.Match;
 
 public class AppDbContext : DbContext
 {
@@ -45,10 +46,24 @@ public class AppDbContext : DbContext
         builder.Entity<Player>()
             .Property(player => player.Id)
             .ValueGeneratedOnAdd();
+        
+        builder.Entity<Match>()
+            .HasKey(match => match.IdMatch);
+        builder.Entity<Match>()
+            .Property(match => match.IdMatch)
+            .ValueGeneratedOnAdd();
+
+        builder.Entity<Season>()
+            .HasKey(season => season.Id);
+        builder.Entity<Season>()
+            .Property(season => season.Id)
+            .ValueGeneratedOnAdd();
     }
 
     public DbSet<User> Users { get; set; }
     public DbSet<Player> Players { get; set; }
     public DbSet<Team> Teams { get; set; }
     public DbSet<TournamentDTO> Tournaments { get; set; }
+    public DbSet<Match> Matches { get; set; }
+    public DbSet<Season> Seasons { get; set; }
 }

@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using CartolaApi.Data.DTOs;
-using CartolaApi.Routes.Models;
 
 namespace CartolaApi.ProfileMapper;
 

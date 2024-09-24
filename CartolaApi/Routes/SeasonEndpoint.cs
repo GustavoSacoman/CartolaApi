@@ -1,120 +1,124 @@
-using AutoMapper;
+﻿using AutoMapper;
 using CartolaApi.Data.Functions;
+using CartolaApi.Responses.JsonResponse;
 using CartolaApi.Routes.Models;
 using Microsoft.AspNetCore.Mvc;
-using CartolaApi.Responses.JsonResponse;
-
-using dbMatchModel = CartolaApi.Data.DTOs.Match;
+using dbSeasonModel = CartolaApi.Data.DTOs.Season;
 
 namespace CartolaApi.Routes;
-public static class MatchEndpoint
-{
-     public static void MapGroupMatch(this WebApplication app)
+    public static class SeasonEndPoint
+    {
+        public static void MapGroupSeason(this WebApplication app)
         {
-         
-
-            var group = app.MapGroup("/match");
+            var group = app.MapGroup("/season");
+            var seasonDbFunctions = new SeasonDbFunctions();
             
-            var matchDbFunctions = new MatchDbFunctions();
-            
-            group.MapGet("/", ([FromServices]IMapper mapper) =>
+            group.MapGet("/", () =>
             {
                 try
                 {
-                    List<dbMatchModel> match = matchDbFunctions.GetMatches();
-                    var matchDtos = mapper.Map<List<Match>>(match);
+                    var season = seasonDbFunctions.GetSeasons();
                     var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                         status: "success",
-                        data: matchDtos,
+                        data: season,
                         statusCode: 200
                     );
                     return Results.Json(successResponse, statusCode: successStatusCode);
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
                     var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                         status: "error",
-                        data: ex.Message,
+                        data: e.Message,
                         statusCode: 400
                     );
                     return Results.Json(errorResponse, statusCode: errorStatusCode);
                 }
             });
-            
-            group.MapPost("/create-match", (Match match, [FromServices]IMapper mapper) =>
+
+            group.MapPost("/create-season", (Season season) =>
             {
                 try
                 {
-                    var dbMatch = mapper.Map<dbMatchModel>(match);
-                    matchDbFunctions.CreateMatch(dbMatch);
+                    dbSeasonModel dbSeason = dbSeasonModel.CreateSeason(
+                         season.Name,
+                        season.StartDate,
+                        season.FinalDate,
+                        season.tournamentId ?? null 
+                        );
+                 
+                    seasonDbFunctions.CreateSeason(dbSeason);
                     var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                         status: "success",
-                        data: match,
+                        data: "season created successfully",
                         statusCode: 201
                     );
                     return Results.Json(successResponse, statusCode: successStatusCode);
                 }
-                catch (Exception ex)
+                
+                catch (Exception e)
                 {
                     var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                         status: "error",
-                        data: ex.Message,
+                        data: e.Message,
                         statusCode: 400
                     );
                     return Results.Json(errorResponse, statusCode: errorStatusCode);
                 }
             });
-            
-            group.MapPut("/update-match", (
-                int matchId,
-                Match match,
-                [FromServices]IMapper mapper
-            ) =>
+
+            group.MapPut("/update-season", (int id, Season season, [FromServices] IMapper mapper) =>
             {
                 try
                 {
-                    var dbMatch = mapper.Map<dbMatchModel>(match);
-                    matchDbFunctions.UpdateMatch(dbMatch, matchId);
+                    var seasonDto = mapper.Map<dbSeasonModel>(season);
+                    seasonDbFunctions.UpdateSeason(id, seasonDto);
                     var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                         status: "success",
-                        data: match,
+                        data: "Season updated successfully",
                         statusCode: 200
                     );
                     return Results.Json(successResponse, statusCode: successStatusCode);
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
                     var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                         status: "error",
-                        data: ex.Message,
+                        data: e.Message,
                         statusCode: 400
                     );
                     return Results.Json(errorResponse, statusCode: errorStatusCode);
                 }
             });
-            
-            group.MapDelete("/delete-match", (int matchId) =>
+
+            group.MapDelete("/delete-season", (int id) =>
             {
-                try
+                try 
                 {
-                    matchDbFunctions.DeleteMatch(matchId);
+                    seasonDbFunctions.DeleteSeason(id);
                     var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
                         status: "success",
-                        data: "match deleted successfully",
+                        data: "season deleted successfully",
                         statusCode: 200
                     );
                     return Results.Json(successResponse, statusCode: successStatusCode);
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
                     var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
                         status: "error",
-                        data: ex.Message,
+                        data: e.Message,
                         statusCode: 400
                     );
                     return Results.Json(errorResponse, statusCode: errorStatusCode);
                 }
             });
-            
         }
     }
+
+
+
+
+
+
+

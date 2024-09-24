@@ -37,7 +37,10 @@ public class PlayerDbFunctions
         {
             player = _db.Players.FirstOrDefault(p => p.NamePlayer == playerName);
         }
-
+        else if (playerId != null)
+        {
+            player = _db.Players.FirstOrDefault(p => p.Id == playerId);
+        }   
         return player != null;
     }
     
