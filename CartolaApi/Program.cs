@@ -35,6 +35,7 @@ app.MapTeamEndpoints();
 app.MapGroupTournament();
 app.MapGroupUser();
 app.MapGroupMatch();
+app.MapGroupSeason();
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.Run();
