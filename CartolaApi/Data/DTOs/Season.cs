@@ -11,14 +11,14 @@ namespace CartolaApi.Data.DTOs;
         public DateTime? StartDate { get; set; }
         [MaxLength(255)] 
         public DateTime? FinalDate { get; set; }
-        [MaxLength(1000)]
-        public List<Tournament>? Tournaments { get; set;} = new List<Tournament>(); 
+       
+       // public List<Tournament>? Tournaments { get; set;} = new List<Tournament>(); 
 
     public static Season CreateSeason(
         string name,
         DateTime? startDate,
-        DateTime? finalDate,
-        List<Tournament>? tournaments
+        DateTime? finalDate
+       // List<Tournament>? tournaments
         )
     {
         return new Season
@@ -26,7 +26,7 @@ namespace CartolaApi.Data.DTOs;
             Name = name,
             StartDate = startDate,
             FinalDate = finalDate,
-            Tournaments = tournaments
+            //Tournaments = tournaments
         };
     }
 }

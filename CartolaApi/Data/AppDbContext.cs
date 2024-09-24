@@ -34,9 +34,9 @@ public class AppDbContext : DbContext
             .HasIndex(team => team.Id)
             .IsUnique();
 
-        builder.Entity<Tournament>()
+        builder.Entity<TournamentDTO>()
             .HasKey(tournament => tournament.Id);
-        builder.Entity<Tournament>()
+        builder.Entity<TournamentDTO>()
             .Property(tournament => tournament.Id)
             .ValueGeneratedOnAdd();
 
@@ -50,5 +50,5 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Player> Players { get; set; }
     public DbSet<Team> Teams { get; set; }
-    public DbSet<Tournament> Tournaments { get; set; }
+    public DbSet<TournamentDTO> Tournaments { get; set; }
 }

@@ -1,5 +1,7 @@
 ﻿using CartolaApi.Data.DTOs;
+using CartolaApi.Routes.Models;
 using Microsoft.EntityFrameworkCore;
+using Team = CartolaApi.Routes.Models.Team;
 
 namespace CartolaApi.Data.Functions;
 
@@ -26,37 +28,54 @@ public class TournamentDbFunctions
     }
     
     public bool VerifyTournamentExistence(int? tournamentId, string? tournamentName)
+{
+    if (tournamentId.HasValue)
     {
-        Tournament? tournament = null;
-
-        if (tournamentId != null && tournamentName != null)
-        {
-            tournament = _db.Tournaments.FirstOrDefault(t => t.Id == tournamentId);
-        }
-        else if (tournamentName != null)
-        {
-            tournament = _db.Tournaments.FirstOrDefault(t => t.TournamentName == tournamentName);
-        }
-
-        return tournament != null;
+        return _db.Tournaments.Any(t => t.Id == tournamentId.Value);
     }
-    
-    public List<Tournament> GetTournaments()
+    else if (!string.IsNullOrEmpty(tournamentName))
     {
+        return _db.Tournaments.Any(t => t.TournamentName.Equals(tournamentName, StringComparison.OrdinalIgnoreCase));
+    }
+
+    return false; // Se nenhum dos critérios for fornecido
+}
+
+    
+  public List<TournamentDTO> GetTournaments()
+{
+ 
         return _db.Tournaments.ToList();
-    }
+}
+
     
-    
-    public void CreateTournament(Tournament tournament)
+  public void CreateTournament(TournamentDTO tournamentDTO)
+{
+    try
     {
-        if (VerifyTournamentExistence(null, tournament.TournamentName))
+        // Verifica se o torneio já existe
+        if (VerifyTournamentExistence(tournamentDTO.Id, tournamentDTO.TournamentName))
         {
             throw new Exception("Tournament already exists");
         }
 
-        _db.Tournaments.Add(tournament);
+        // Cria o torneio
+        var tournament = new Tournament
+        {
+            Id = tournamentDTO.Id ?? 0,
+            TournamentName = tournamentDTO.TournamentName
+        };
+
+        _db.Tournaments.Add(tournamentDTO);
         _db.SaveChanges();
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error: {ex.Message}");
+        throw; // Re-lance a exceção após logar
+    }
+}
+
     
     public void DeleteTournament(int tournamentId)
     {
@@ -70,28 +89,20 @@ public class TournamentDbFunctions
         _db.SaveChanges();
     }
     
-    public void UpdateTournament(int tournamentId, string newTournamentName, List<Team>? teams, Team? team)
+    public void UpdateTournament(int tournamentId, string newTournamentName)
     {
         if (!VerifyTournamentExistence(tournamentId, null))
         {
             throw new Exception("Tournament not found");
         }
         var tournament = _db.Tournaments.FirstOrDefault(t => t.Id == tournamentId);
-        if (teams != null)
-        {
-            foreach (var t in teams)
-            {
-                tournament.Teams.Add(t);
-            }
-        }
-        if (team != null)
-        {
-            tournament.Teams.Add(team);
-        }
+        
         tournament.TournamentName = newTournamentName;
         _db.SaveChanges();
         
     }
+  
+
     
 }
-    
+
