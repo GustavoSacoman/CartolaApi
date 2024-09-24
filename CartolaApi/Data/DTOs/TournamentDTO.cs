@@ -7,7 +7,8 @@ namespace CartolaApi.Data.DTOs;
 public class TournamentDTO
 {
     public int? Id { get; set; }
-   
+    [MaxLength(255)]
+    [Required]
     public string TournamentName { get; set; }
 
     //public List<int> TeamsIds { get; set; }

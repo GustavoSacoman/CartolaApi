@@ -49,7 +49,7 @@ public class SeasonDbFunctions
         updatedSeason.Name = newSeason.Name;
         updatedSeason.StartDate = newSeason.StartDate;
         updatedSeason.FinalDate = newSeason.FinalDate;
-        updatedSeason.TournamentsId = newSeason.TournamentsId;
+       // updatedSeason.TournamentsId = newSeason.TournamentsId;
         _db.Update(updatedSeason);
         _db.SaveChanges();
     }
@@ -59,6 +59,7 @@ public class SeasonDbFunctions
             throw new Exception("Season doesn't exist");
         Season? season = _db.Seasons.FirstOrDefault(season => SeasonId == season.Id);
         _db.Seasons.Remove(season);
+        _db.SaveChanges();
     }
 
 }

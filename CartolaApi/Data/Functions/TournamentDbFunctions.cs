@@ -60,7 +60,7 @@ public class TournamentDbFunctions
         }
 
         // Cria o torneio
-        var tournament = new Tournament
+        var tournament = new TournamentDTO
         {
             Id = tournamentDTO.Id ?? 0,
             TournamentName = tournamentDTO.TournamentName

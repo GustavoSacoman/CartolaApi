@@ -47,7 +47,7 @@ public static class TournamentEndpoint
 });
 
 
- group.MapPost("/create-tournament", (Tournament tournament, [FromServices] IMapper mapper) =>
+ group.MapPost("/create-tournament", (TournamentDTO tournament, [FromServices] IMapper mapper) =>
 {
     try
     {
