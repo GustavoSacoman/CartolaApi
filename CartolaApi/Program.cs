@@ -18,7 +18,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<Hash>();
 builder.Services.AddScoped<UserDbFunctions>();
-builder.Services.AddScoped<TeamDbFunctions>(); // Register TeamDbFunctions
+builder.Services.AddScoped<TeamDbFunctions>();
 builder.Services.AddScoped<TournamentDbFunctions>();
 var app = builder.Build();
 
@@ -34,6 +34,7 @@ app.MapGroupPlayer();
 app.MapTeamEndpoints();
 app.MapGroupTournament();
 app.MapGroupUser();
+app.MapGroupMatch();
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.Run();
