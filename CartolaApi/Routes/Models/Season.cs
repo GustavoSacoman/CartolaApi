@@ -6,4 +6,3 @@
         public required DateTime FinalDate { get; set; }
         public int? tournamentId { get; set;}
 }
-

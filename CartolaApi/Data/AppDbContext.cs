@@ -1,6 +1,6 @@
 ﻿using CartolaApi.Data.DTOs;
 using Microsoft.EntityFrameworkCore;
-using Match = CartolaApi.Routes.Models.Match;
+using Match = CartolaApi.Data.DTOs.Match;
 
 public class AppDbContext : DbContext
 {

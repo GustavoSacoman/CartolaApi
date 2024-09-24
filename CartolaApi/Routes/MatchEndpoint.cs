@@ -1,5 +1,10 @@
-using CartolaApi.Models;
-using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using CartolaApi.Data.Functions;
+using CartolaApi.Routes.Models;
+using Microsoft.AspNetCore.Mvc;
+using CartolaApi.Responses.JsonResponse;
+
+using dbMatchModel = CartolaApi.Data.DTOs.Match;
 
 namespace CartolaApi.Routes;
 public static class MatchEndpoint
@@ -9,52 +14,107 @@ public static class MatchEndpoint
          
 
             var group = app.MapGroup("/match");
-
-            group.MapGet("/", async (AppDbContext db) =>
-            {
-               
-                return await db.Matches.Include(m => m.IdTournament).ToListAsync();
-            });
-
-            group.MapPost("/", async (Match match, AppDbContext db) =>
-            {
-                Console.WriteLine($"Match: {match}");
-
-                db.Matches.Add(match);
-                await db.SaveChangesAsync();
-
-                return Results.Created($"/match/{match.IdMatch}", match);
-            });
-
-            group.MapPut("/{id:int}", async (int id, Match matchAlterado, AppDbContext db) =>
-            {
             
-                var match = await db.Matches.FindAsync(id);
-                if (match is null)
-                {
-                    return Results.NotFound();
-                }
-
-                match.Date = matchAlterado.Date;
-                match.Result = matchAlterado.Result;
-                match.IdTeam1 = matchAlterado.IdTeam1;
-                match.IdTeam2 = matchAlterado.IdTeam2;
-                match.IdTournament = matchAlterado.IdTournament;
-
-                await db.SaveChangesAsync();
-
-                return Results.NoContent();
-            });
-
-            group.MapDelete("/{id:int}", async (int id, AppDbContext db) =>
+            var matchDbFunctions = new MatchDbFunctions();
+            
+            group.MapGet("/", ([FromServices]IMapper mapper) =>
             {
-                if (await db.Matches.FindAsync(id) is Match match)
+                try
                 {
-                    db.Matches.Remove(match);
-                    await db.SaveChangesAsync();
-                    return Results.NoContent();
+                    List<dbMatchModel> match = matchDbFunctions.GetMatches();
+                    var matchDtos = mapper.Map<List<Match>>(match);
+                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                        status: "success",
+                        data: matchDtos,
+                        statusCode: 200
+                    );
+                    return Results.Json(successResponse, statusCode: successStatusCode);
                 }
-                return Results.NotFound();
+                catch (Exception ex)
+                {
+                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                        status: "error",
+                        data: ex.Message,
+                        statusCode: 400
+                    );
+                    return Results.Json(errorResponse, statusCode: errorStatusCode);
+                }
             });
+            
+            group.MapPost("/create-match", (Match match, [FromServices]IMapper mapper) =>
+            {
+                try
+                {
+                    var dbMatch = mapper.Map<dbMatchModel>(match);
+                    matchDbFunctions.CreateMatch(dbMatch);
+                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                        status: "success",
+                        data: match,
+                        statusCode: 201
+                    );
+                    return Results.Json(successResponse, statusCode: successStatusCode);
+                }
+                catch (Exception ex)
+                {
+                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                        status: "error",
+                        data: ex.Message,
+                        statusCode: 400
+                    );
+                    return Results.Json(errorResponse, statusCode: errorStatusCode);
+                }
+            });
+            
+            group.MapPut("/update-match", (
+                int matchId,
+                Match match,
+                [FromServices]IMapper mapper
+            ) =>
+            {
+                try
+                {
+                    var dbMatch = mapper.Map<dbMatchModel>(match);
+                    matchDbFunctions.UpdateMatch(dbMatch, matchId);
+                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                        status: "success",
+                        data: match,
+                        statusCode: 200
+                    );
+                    return Results.Json(successResponse, statusCode: successStatusCode);
+                }
+                catch (Exception ex)
+                {
+                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                        status: "error",
+                        data: ex.Message,
+                        statusCode: 400
+                    );
+                    return Results.Json(errorResponse, statusCode: errorStatusCode);
+                }
+            });
+            
+            group.MapDelete("/delete-match", (int matchId) =>
+            {
+                try
+                {
+                    matchDbFunctions.DeleteMatch(matchId);
+                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                        status: "success",
+                        data: "match deleted successfully",
+                        statusCode: 200
+                    );
+                    return Results.Json(successResponse, statusCode: successStatusCode);
+                }
+                catch (Exception ex)
+                {
+                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                        status: "error",
+                        data: ex.Message,
+                        statusCode: 400
+                    );
+                    return Results.Json(errorResponse, statusCode: errorStatusCode);
+                }
+            });
+            
         }
     }
