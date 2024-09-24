@@ -32,8 +32,6 @@ public class UserDbFunctions
     public bool VerifyUserExistence(string email)
     {
         var user = _db.Users.AsEnumerable().FirstOrDefault(user => user.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
-        Console.Write(user?.Name);
-        Console.Write(email);
         return user != null;
     }
 
