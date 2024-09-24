@@ -41,14 +41,16 @@ public class SeasonDbFunctions
             throw new Exception("Season already exist");
         
         _db.Seasons.Add(season);
+        _db.SaveChanges();
     }
-    public void EditSeason(int SeasonId, Season newSeason)
+    public void UpdateSeason(int SeasonId, Season newSeason)
     {
-        Season season1 = _db.Seasons.FirstOrDefault(s => SeasonId == s.Id);
-        season1.Name = newSeason.Name;
-        season1.StartDate = newSeason.StartDate;
-        season1.FinalDate = newSeason.FinalDate;
-        season1.Tournaments = newSeason.Tournaments;
+        Season updatedSeason = _db.Seasons.FirstOrDefault(s => SeasonId == s.Id);
+        updatedSeason.Name = newSeason.Name;
+        updatedSeason.StartDate = newSeason.StartDate;
+        updatedSeason.FinalDate = newSeason.FinalDate;
+        updatedSeason.TournamentsId = newSeason.TournamentsId;
+        _db.Update(updatedSeason);
         _db.SaveChanges();
     }
     public void DeleteSeason(int SeasonId)
