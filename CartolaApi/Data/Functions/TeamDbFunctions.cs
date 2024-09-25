@@ -27,16 +27,18 @@ public class TeamDbFunctions
     public bool VerifyTeamExistence(int? teamId, string? teamName)
     {
         Team? team = null;
-
-        if (teamId != null && teamName != null)
+        
+        if (teamId != null)
         {
+        
             team = _db.Teams.FirstOrDefault(t => t.Id == teamId);
         }
         else if (teamName != null)
         {
+        
             team = _db.Teams.FirstOrDefault(t => t.Name == teamName);
         }
-
+        
         return team != null;
     }
     
@@ -102,7 +104,10 @@ public class TeamDbFunctions
     {
         if (!VerifyTeamExistence(teamId, null))
         {
+           
+
             throw new Exception("Team not found");
+            
         }
         Team team = _db.Teams.FirstOrDefault(team => team.Id == teamId);
         team.Name = updatedTeam.Name;
