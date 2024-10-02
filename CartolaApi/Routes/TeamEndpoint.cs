@@ -21,7 +21,7 @@ public static class TeamEndpoint
             try 
             {
                 var teams = teamDbFunctions.GetTeams();
-                var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: teams,
                     statusCode: 200
@@ -30,7 +30,7 @@ public static class TeamEndpoint
             }
             catch (Exception ex)
             {
-                var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
                     status: "error",
                     data: ex.Message,
                     statusCode: 400
@@ -45,7 +45,7 @@ public static class TeamEndpoint
             try
             {
                 var team = teamDbFunctions.GetTeam(id, name);
-                var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: team,
                     statusCode: 200
@@ -54,7 +54,7 @@ public static class TeamEndpoint
             }
             catch (Exception ex)
             {
-                var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
                     status: "error",
                     data: ex.Message,
                     statusCode: 400
@@ -69,7 +69,7 @@ public static class TeamEndpoint
             {
                 var dbTeam = mapper.Map<DbTeamModel>(team);
                 teamDbFunctions.CreateTeam(dbTeam);
-                var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: dbTeam,
                     statusCode: 200
@@ -78,7 +78,7 @@ public static class TeamEndpoint
             }
             catch (Exception ex)
             {
-                var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
                     status: "error",
                     data: ex.Message,
                     statusCode: 400
@@ -98,7 +98,7 @@ public static class TeamEndpoint
                 var dbTeamUpdated = mapper.Map<DbTeamModel>(updatedTeam);
                 teamDbFunctions.UpdateTeam(teamToUpateId, dbTeamUpdated);
                 var team = teamDbFunctions.GetTeam(teamToUpateId, null);
-                var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: team,
                     statusCode: 200
@@ -107,7 +107,7 @@ public static class TeamEndpoint
             }
             catch (Exception ex)
             {
-                var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
                     status: "error",
                     data: ex.Message,
                     statusCode: 400
@@ -122,7 +122,7 @@ public static class TeamEndpoint
             try
             {
                 teamDbFunctions.DeleteTeam(name);
-                var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: "Team deleted",
                     statusCode: 200
@@ -131,7 +131,7 @@ public static class TeamEndpoint
             }
             catch (Exception ex)
             {
-                var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
                     status: "error",
                     data: ex.Message,
                     statusCode: 400

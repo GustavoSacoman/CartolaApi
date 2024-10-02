@@ -23,7 +23,7 @@ public static class MatchEndpoint
                 {
                     List<dbMatchModel> match = matchDbFunctions.GetMatches();
                     var matchDtos = mapper.Map<List<Match>>(match);
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: matchDtos,
                         statusCode: 200
@@ -32,7 +32,7 @@ public static class MatchEndpoint
                 }
                 catch (Exception ex)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: ex.Message,
                         statusCode: 400
@@ -47,7 +47,7 @@ public static class MatchEndpoint
                 {
                     var dbMatch = mapper.Map<dbMatchModel>(match);
                     matchDbFunctions.CreateMatch(dbMatch);
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: match,
                         statusCode: 201
@@ -56,7 +56,7 @@ public static class MatchEndpoint
                 }
                 catch (Exception ex)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: ex.Message,
                         statusCode: 400
@@ -75,7 +75,7 @@ public static class MatchEndpoint
                 {
                     var dbMatch = mapper.Map<dbMatchModel>(match);
                     matchDbFunctions.UpdateMatch(dbMatch, matchId);
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: match,
                         statusCode: 200
@@ -84,7 +84,7 @@ public static class MatchEndpoint
                 }
                 catch (Exception ex)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: ex.Message,
                         statusCode: 400
@@ -98,7 +98,7 @@ public static class MatchEndpoint
                 try
                 {
                     matchDbFunctions.DeleteMatch(matchId);
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: "match deleted successfully",
                         statusCode: 200
@@ -107,7 +107,7 @@ public static class MatchEndpoint
                 }
                 catch (Exception ex)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: ex.Message,
                         statusCode: 400

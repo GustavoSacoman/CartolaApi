@@ -16,7 +16,7 @@ namespace CartolaApi.Routes;
                 try
                 {
                     var players = playerDbFunctions.GetPlayers();
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: players,
                         statusCode: 200
@@ -25,7 +25,7 @@ namespace CartolaApi.Routes;
                 }
                 catch (Exception e)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: e.Message,
                         statusCode: 400
@@ -44,7 +44,7 @@ namespace CartolaApi.Routes;
                         player.TeamId ?? null
                     );
                     playerDbFunctions.CreatePlayer(dbPlayer);
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: "player created successfully",
                         statusCode: 201
@@ -54,7 +54,7 @@ namespace CartolaApi.Routes;
                 
                 catch (Exception e)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: e.Message,
                         statusCode: 400
@@ -68,7 +68,7 @@ namespace CartolaApi.Routes;
                 try
                 {
                     playerDbFunctions.UpdatePlayer(id, newName, newPosition);
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: "player updated successfully",
                         statusCode: 200
@@ -77,7 +77,7 @@ namespace CartolaApi.Routes;
                 }
                 catch (Exception e)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: e.Message,
                         statusCode: 400
@@ -91,7 +91,7 @@ namespace CartolaApi.Routes;
                 try 
                 {
                     playerDbFunctions.DeletePlayer(id);
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: "player deleted successfully",
                         statusCode: 200
@@ -100,7 +100,7 @@ namespace CartolaApi.Routes;
                 }
                 catch (Exception e)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: e.Message,
                         statusCode: 400

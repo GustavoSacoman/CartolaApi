@@ -10,7 +10,7 @@ public class JsonResponse
     /// <param name="statusCode">O código de status HTTP a ser retornado com a resposta.</param>
     /// <returns>Uma tupla contendo o dicionário de resposta e o código de status.</returns>
     public static (Dictionary<string, object> Response, int StatusCode) 
-        JsonSuccessResponse(
+        Success(
         string status,
         object data,
         int statusCode
@@ -32,7 +32,7 @@ public class JsonResponse
     /// <param name="statusCode">O código de status HTTP a ser retornado com a resposta.</param>
     /// <returns>Uma tupla contendo o dicionário de resposta e o código de status.</returns>
     public static (Dictionary<string, object> Response, int StatusCode)
-        JsonErrorResponse(
+        Error(
         string status,
         object data,
         int statusCode

@@ -31,9 +31,6 @@ public class AppDbContext : DbContext
         builder.Entity<Team>()
             .Property(team => team.Id)
             .ValueGeneratedOnAdd();
-        builder.Entity<Team>()
-            .HasIndex(team => team.Id)
-            .IsUnique();
 
         builder.Entity<TournamentDTO>()
             .HasKey(tournament => tournament.Id);

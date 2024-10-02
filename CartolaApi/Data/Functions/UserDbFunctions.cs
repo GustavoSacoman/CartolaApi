@@ -42,6 +42,8 @@ public class UserDbFunctions
             throw new Exception("User already exists");
         }
 
+        user.Password = _hash.CreateHash(user.Password);
+        
         _db.Users.Add(user);
         _db.SaveChanges();
     }

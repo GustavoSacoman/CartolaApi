@@ -20,7 +20,7 @@ public static class UserEndpoint
             {
                 List<DbUserModel> users = userDbFunctions.GetUsers();
                 var userDtos = mapper.Map<List<User>>(users);
-                var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: userDtos,
                     statusCode: 200
@@ -29,7 +29,7 @@ public static class UserEndpoint
             }
             catch (Exception ex)
             {
-                var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
                     status: "error",
                     data: ex.Message,
                     statusCode: 400
@@ -44,7 +44,7 @@ public static class UserEndpoint
             {
                 var dbUser = mapper.Map<DbUserModel>(user);
                 userDbFunctions.CreateUser(dbUser);
-                var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: user,
                     statusCode: 201
@@ -53,7 +53,7 @@ public static class UserEndpoint
             }
             catch (Exception ex)
             {
-                var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
                     status: "error",
                     data: ex.Message,
                     statusCode: 400
@@ -68,7 +68,7 @@ public static class UserEndpoint
             {
                 var dbUser = mapper.Map<DbUserModel>(user);
                 userDbFunctions.UpdateUser(dbUser.Email, dbUser.Password, dbUser.Name, dbUser.Phone);
-                var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: "user updated successfully",
                     statusCode: 200
@@ -77,7 +77,7 @@ public static class UserEndpoint
             }
             catch (Exception ex)
             {
-                var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
                     status: "error",
                     data: ex.Message,
                     statusCode: 400
@@ -91,7 +91,7 @@ public static class UserEndpoint
             try
             {
                 userDbFunctions.DeleteUser(email);
-                var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: "user deleted successfully",
                     statusCode: 200
@@ -100,7 +100,7 @@ public static class UserEndpoint
             }
             catch (Exception ex)
             {
-                var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
                     status: "error",
                     data: ex.Message,
                     statusCode: 400

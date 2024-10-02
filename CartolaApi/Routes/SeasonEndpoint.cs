@@ -18,7 +18,7 @@ namespace CartolaApi.Routes;
                 try
                 {
                     var season = seasonDbFunctions.GetSeasons();
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: season,
                         statusCode: 200
@@ -27,7 +27,7 @@ namespace CartolaApi.Routes;
                 }
                 catch (Exception e)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: e.Message,
                         statusCode: 400
@@ -48,7 +48,7 @@ namespace CartolaApi.Routes;
                         );
                  
                     seasonDbFunctions.CreateSeason(dbSeason);
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: "season created successfully",
                         statusCode: 201
@@ -58,7 +58,7 @@ namespace CartolaApi.Routes;
                 
                 catch (Exception e)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: e.Message,
                         statusCode: 400
@@ -73,7 +73,7 @@ namespace CartolaApi.Routes;
                 {
                     var seasonDto = mapper.Map<dbSeasonModel>(season);
                     seasonDbFunctions.UpdateSeason(id, seasonDto);
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: "Season updated successfully",
                         statusCode: 200
@@ -82,7 +82,7 @@ namespace CartolaApi.Routes;
                 }
                 catch (Exception e)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: e.Message,
                         statusCode: 400
@@ -96,7 +96,7 @@ namespace CartolaApi.Routes;
                 try 
                 {
                     seasonDbFunctions.DeleteSeason(id);
-                    var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
                         data: "season deleted successfully",
                         statusCode: 200
@@ -105,7 +105,7 @@ namespace CartolaApi.Routes;
                 }
                 catch (Exception e)
                 {
-                    var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
                         status: "error",
                         data: e.Message,
                         statusCode: 400
