@@ -28,7 +28,7 @@ public static class TournamentEndpoint
         // Mapeie a lista de torneios para a lista de DTOs
         List<DbTournamentModel> tournamentDtos = mapper.Map<List<DbTournamentModel>>(tournaments);
 
-        var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+        var (successResponse, successStatusCode) = JsonResponse.Success(
             status: "success",
             data: tournamentDtos,
             statusCode: 200
@@ -37,7 +37,7 @@ public static class TournamentEndpoint
     }
     catch (Exception ex)
     {
-        var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+        var (errorResponse, errorStatusCode) = JsonResponse.Error(
             status: "error",
             data: ex.Message,
             statusCode: 400
@@ -52,21 +52,21 @@ public static class TournamentEndpoint
     try
     {
         // Mapeie o Tournament para TournamentDTO
-        var tournamentDTO = mapper.Map<DbTournamentModel>(tournament);
+        var tournamentDto = mapper.Map<DbTournamentModel>(tournament);
 
         // Crie o torneio no banco de dados
-        tournamentDbFunctions.CreateTournament(tournamentDTO);
+        tournamentDbFunctions.CreateTournament(tournamentDto);
 
-        var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+        var (successResponse, successStatusCode) = JsonResponse.Success(
             status: "success",
-            data: tournamentDTO,
+            data: tournamentDto,
             statusCode: 201
         );
         return Results.Json(successResponse, statusCode: successStatusCode);
     }
     catch (Exception ex)
     {
-        var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+        var (errorResponse, errorStatusCode) = JsonResponse.Error(
             status: "error",
             data: ex.Message,
             statusCode: 400
@@ -87,7 +87,7 @@ public static class TournamentEndpoint
               
             );
             
-            var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+            var (successResponse, successStatusCode) = JsonResponse.Success(
                status: "success",
                data: "Tournament updated successfully",
                statusCode: 200
@@ -96,7 +96,7 @@ public static class TournamentEndpoint
          }
          catch (Exception ex)
          {
-            var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+            var (errorResponse, errorStatusCode) = JsonResponse.Error(
                status: "error",
                data: ex.Message,
                statusCode: 400
@@ -111,7 +111,7 @@ public static class TournamentEndpoint
          try
          {
             tournamentDbFunctions.DeleteTournament(tournamentId);
-            var (successResponse, successStatusCode) = JsonResponse.JsonSuccessResponse(
+            var (successResponse, successStatusCode) = JsonResponse.Success(
                status: "success",
                data: $"Tournament {tournamentId} deleted",
                statusCode: 200
@@ -120,7 +120,7 @@ public static class TournamentEndpoint
          }
          catch (Exception ex)
          {
-            var (errorResponse, errorStatusCode) = JsonResponse.JsonErrorResponse(
+            var (errorResponse, errorStatusCode) = JsonResponse.Error(
                status: "error",
                data: ex.Message,
                statusCode: 400
