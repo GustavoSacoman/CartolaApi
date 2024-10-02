@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-namespace CartolaApi.Routes.Models;
+namespace CartolaApi.Router.v1.Models;
     public class Match
     {
         

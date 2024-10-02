@@ -1,22 +1,22 @@
 using AutoMapper;
 
 using CartolaApi.Responses.JsonResponse;
-using CartolaApi.Routes.Models;
-using CartolaApi.Data.Functions;
+using CartolaApi.Router.v1.Models;
 using Microsoft.AspNetCore.Mvc;
 using DbTournamentModel = CartolaApi.Data.DTOs.TournamentDTO;
 using DbTeamModel = CartolaApi.Data.DTOs.Team;
 using DbPlayerModel = CartolaApi.Data.DTOs.Player;
 using CartolaApi.Data.DTOs;
+using CartolaApi.Data.Services;
 
-namespace CartolaApi.Routes;
+namespace CartolaApi.Router.v1.endpoints;
 
 public static class TournamentEndpoint
 {
-   public static void MapGroupTournament(this WebApplication app)
+   public static void MapGroupTournament(this IEndpointRouteBuilder routes)
    {
-      var group = app.MapGroup("/tournament");
-      var tournamentDbFunctions = new TournamentDbFunctions();
+      var group = routes.MapGroup("/tournament");
+      var tournamentDbFunctions = new TournamentServices();
 
      group.MapGet("/", ([FromServices] IMapper mapper) =>
 {

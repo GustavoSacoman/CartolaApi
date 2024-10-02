@@ -6,8 +6,8 @@ public class SeasonProfile : Profile
 {
     public SeasonProfile()
     {
-        CreateMap<Routes.Models.Season, Data.DTOs.Season>().ReverseMap();
-        CreateMap<Data.DTOs.Season, Routes.Models.Season>().ReverseMap();
+        CreateMap<Router.v1.Models.Season, Data.DTOs.Season>().ReverseMap();
+        CreateMap<Data.DTOs.Season, Router.v1.Models.Season>().ReverseMap();
     }
 }
 

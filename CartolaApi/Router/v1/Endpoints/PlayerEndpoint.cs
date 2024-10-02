@@ -1,15 +1,15 @@
-﻿using CartolaApi.Data.Functions;
+﻿using CartolaApi.Data.Services;
 using CartolaApi.Responses.JsonResponse;
-using CartolaApi.Routes.Models;
+using CartolaApi.Router.v1.Models;
 using dbPlayerModel = CartolaApi.Data.DTOs.Player;
 
-namespace CartolaApi.Routes;
+namespace CartolaApi.Router.v1.endpoints;
     public static class PlayerEndpoint
     {
-        public static void MapGroupPlayer(this WebApplication app)
+        public static void MapGroupPlayer(this IEndpointRouteBuilder routes)
         {
-            var group = app.MapGroup("/player");
-            var playerDbFunctions = new PlayerDbFunctions();
+            var group = routes.MapGroup("/player");
+            var playerDbFunctions = new PlayerServices();
 
             group.MapGet("/", () =>
             {

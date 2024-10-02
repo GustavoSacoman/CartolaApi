@@ -1,12 +1,12 @@
 using AutoMapper;
-using CartolaApi.Data.Functions;
-using CartolaApi.Routes.Models;
+using CartolaApi.Data.Services;
+using CartolaApi.Router.v1.Models;
 using Microsoft.AspNetCore.Mvc;
 using CartolaApi.Responses.JsonResponse;
 
 using dbMatchModel = CartolaApi.Data.DTOs.Match;
 
-namespace CartolaApi.Routes;
+namespace CartolaApi.Router.v1.endpoints;
 public static class MatchEndpoint
 {
      public static void MapGroupMatch(this WebApplication app)
@@ -15,7 +15,7 @@ public static class MatchEndpoint
 
             var group = app.MapGroup("/match");
             
-            var matchDbFunctions = new MatchDbFunctions();
+            var matchDbFunctions = new MatchServices();
             
             group.MapGet("/", ([FromServices]IMapper mapper) =>
             {

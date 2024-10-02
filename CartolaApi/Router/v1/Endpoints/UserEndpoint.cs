@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
-using CartolaApi.Data.Functions;
+using CartolaApi.Data.Services;
 using CartolaApi.Responses.JsonResponse;
-using CartolaApi.Routes.Models;
+using CartolaApi.Router.v1.Models;
 using Microsoft.AspNetCore.Mvc;
 using DbUserModel = CartolaApi.Data.DTOs.User;
 
-namespace CartolaApi.Routes;
+namespace CartolaApi.Router.v1.endpoints;
 
 public static class UserEndpoint
 {
-    public static void MapGroupUser(this WebApplication app)
+    public static void MapGroupUser(IEndpointRouteBuilder routes)
     {
-        var group = app.MapGroup("/user");
-        var userDbFunctions = new UserDbFunctions();
+        var group = routes.MapGroup("/user");
+        var userDbFunctions = new UserServices();
 
         group.MapGet("/get-users", ([FromServices]IMapper mapper) =>
         {

@@ -1,20 +1,19 @@
 using AutoMapper;
-
+using CartolaApi.Data.Services;
 using DbTeamModel = CartolaApi.Data.DTOs.Team;
 using DbPlayerModel = CartolaApi.Data.DTOs.Player;
-using CartolaApi.Data.Functions;
 using CartolaApi.Responses.JsonResponse;
-using CartolaApi.Routes.Models;
+using CartolaApi.Router.v1.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CartolaApi.Routes;
+namespace CartolaApi.Router.v1.endpoints;
 public static class TeamEndpoint
 {
-    public static void MapTeamEndpoints(this WebApplication app)
+    public static void MapTeamEndpoints(this IEndpointRouteBuilder routes)
     
     {
-        var group = app.MapGroup("/teams");
-        var teamDbFunctions = new TeamDbFunctions();
+        var group = routes.MapGroup("/teams");
+        var teamDbFunctions = new TeamServices();
 
         group.MapGet("/", () =>
         {

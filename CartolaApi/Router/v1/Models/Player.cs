@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CartolaApi.Routes.Models;
+namespace CartolaApi.Router.v1.Models;
 public class Player
 {
     public string NamePlayer { get; set; }

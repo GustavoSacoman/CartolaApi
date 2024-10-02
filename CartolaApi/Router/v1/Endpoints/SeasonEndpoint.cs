@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
-using CartolaApi.Data.Functions;
+using CartolaApi.Data.Services;
 using CartolaApi.Responses.JsonResponse;
-using CartolaApi.Routes.Models;
+using CartolaApi.Router.v1.Models;
 using Microsoft.AspNetCore.Mvc;
 using dbSeasonModel = CartolaApi.Data.DTOs.Season;
 
-namespace CartolaApi.Routes;
+namespace CartolaApi.Router.v1.endpoints;
     public static class SeasonEndPoint
     {
-        public static void MapGroupSeason(this WebApplication app)
+        public static void MapGroupSeason(this IEndpointRouteBuilder routes)
         {
-            var group = app.MapGroup("/season");
-            var seasonDbFunctions = new SeasonDbFunctions();
+            var group = routes.MapGroup("/season");
+            var seasonDbFunctions = new SeasonServices();
             
             group.MapGet("/", () =>
             {

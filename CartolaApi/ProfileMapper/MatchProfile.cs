@@ -6,7 +6,7 @@ public class MatchProfile : Profile
 {
     public MatchProfile()
     {
-        CreateMap<Routes.Models.Match, Data.DTOs.Match>().ReverseMap();
-        CreateMap<Data.DTOs.Match, Routes.Models.Match>().ReverseMap();
+        CreateMap<Router.v1.Models.Match, Data.DTOs.Match>().ReverseMap();
+        CreateMap<Data.DTOs.Match, Router.v1.Models.Match>().ReverseMap();
     }
 }
