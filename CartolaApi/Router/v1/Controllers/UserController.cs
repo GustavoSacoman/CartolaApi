@@ -5,27 +5,34 @@ using CartolaApi.Router.v1.Models;
 using Microsoft.AspNetCore.Mvc;
 using DbUserModel = CartolaApi.Data.DTOs.User;
 
-namespace CartolaApi.Router.v1.endpoints;
-
-public static class UserEndpoint
+namespace CartolaApi.Router.v1.Controllers
 {
-    public static void MapGroupUser(IEndpointRouteBuilder routes)
+    [ApiController]
+    [Route("api/v1/[controller]")]
+    public class UserController : ControllerBase
     {
-        var group = routes.MapGroup("/user");
-        var userDbFunctions = new UserServices();
+        private readonly IMapper _mapper;
+        private readonly UserServices _userServices;
 
-        group.MapGet("/get-users", ([FromServices]IMapper mapper) =>
+        public UserController(IMapper mapper, UserServices userServices)
+        {
+            _mapper = mapper;
+            _userServices = userServices;
+        }
+
+        [HttpGet("get-users")]
+        public IActionResult GetUsers()
         {
             try
             {
-                List<DbUserModel> users = userDbFunctions.GetUsers();
-                var userDtos = mapper.Map<List<User>>(users);
+                List<DbUserModel> users = _userServices.GetUsers();
+                var userDtos = _mapper.Map<List<User>>(users);
                 var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: userDtos,
                     statusCode: 200
                 );
-                return Results.Json(successResponse, statusCode: successStatusCode);
+                return new JsonResult(successResponse) { StatusCode = successStatusCode };
             }
             catch (Exception ex)
             {
@@ -34,22 +41,23 @@ public static class UserEndpoint
                     data: ex.Message,
                     statusCode: 400
                 );
-                return Results.Json(errorResponse, statusCode: errorStatusCode);
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
             }
-        });
+        }
 
-        group.MapPost("/add-user", (User user, [FromServices]IMapper mapper) =>
+        [HttpPost("add-user")]
+        public IActionResult AddUser([FromBody] User user)
         {
             try
             {
-                var dbUser = mapper.Map<DbUserModel>(user);
-                userDbFunctions.CreateUser(dbUser);
+                var dbUser = _mapper.Map<DbUserModel>(user);
+                _userServices.CreateUser(dbUser);
                 var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: user,
                     statusCode: 201
                 );
-                return Results.Json(successResponse, statusCode: successStatusCode);
+                return new JsonResult(successResponse) { StatusCode = successStatusCode };
             }
             catch (Exception ex)
             {
@@ -58,22 +66,23 @@ public static class UserEndpoint
                     data: ex.Message,
                     statusCode: 400
                 );
-                return Results.Json(errorResponse, statusCode: errorStatusCode);
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
             }
-        });
+        }
 
-        group.MapPut("/update-user", (User user, [FromServices]IMapper mapper) =>
+        [HttpPut("update-user")]
+        public IActionResult UpdateUser([FromBody] User user)
         {
             try
             {
-                var dbUser = mapper.Map<DbUserModel>(user);
-                userDbFunctions.UpdateUser(dbUser.Email, dbUser.Password, dbUser.Name, dbUser.Phone);
+                var dbUser = _mapper.Map<DbUserModel>(user);
+                _userServices.UpdateUser(dbUser.Email, dbUser.Password, dbUser.Name, dbUser.Phone);
                 var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: "user updated successfully",
                     statusCode: 200
                 );
-                return Results.Json(successResponse, statusCode: successStatusCode);
+                return new JsonResult(successResponse) { StatusCode = successStatusCode };
             }
             catch (Exception ex)
             {
@@ -82,21 +91,22 @@ public static class UserEndpoint
                     data: ex.Message,
                     statusCode: 400
                 );
-                return Results.Json(errorResponse, statusCode: errorStatusCode);
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
             }
-        });
+        }
 
-        group.MapDelete("/delete-user", (string email) =>
+        [HttpDelete("delete-user")]
+        public IActionResult DeleteUser(string email)
         {
             try
             {
-                userDbFunctions.DeleteUser(email);
+                _userServices.DeleteUser(email);
                 var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: "user deleted successfully",
                     statusCode: 200
                 );
-                return Results.Json(successResponse, statusCode: successStatusCode);
+                return new JsonResult(successResponse) { StatusCode = successStatusCode };
             }
             catch (Exception ex)
             {
@@ -105,8 +115,8 @@ public static class UserEndpoint
                     data: ex.Message,
                     statusCode: 400
                 );
-                return Results.Json(errorResponse, statusCode: errorStatusCode);
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
             }
-        });
+        }
     }
 }

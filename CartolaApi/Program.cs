@@ -15,10 +15,14 @@ builder.Services.AddCors();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddControllers();
+
 builder.Services.AddSingleton<Hash>();
 builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<TeamServices>();
 builder.Services.AddScoped<TournamentServices>();
+builder.Services.AddScoped<PlayerServices>();
+
 var app = builder.Build();
 
 app.UseCors(builder => builder
@@ -29,6 +33,9 @@ app.UseCors(builder => builder
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.MapControllers();
+
 app.MapV1Routes();
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
