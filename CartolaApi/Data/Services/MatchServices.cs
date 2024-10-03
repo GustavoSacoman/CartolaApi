@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using CartolaApi.Data.DTOs;
 
-namespace CartolaApi.Data.Functions;
+namespace CartolaApi.Data.Services;
 
-public class MatchDbFunctions
+public class MatchServices
 {
     private readonly AppDbContext _db;
 
-    public MatchDbFunctions()
+    public MatchServices()
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")

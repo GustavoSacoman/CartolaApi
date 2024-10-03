@@ -5,8 +5,8 @@ public class TournamentProfile : Profile
 {
     public TournamentProfile()
     {
-        CreateMap<Routes.Models.Tournament, Data.DTOs.TournamentDTO>();
-        CreateMap<Data.DTOs.TournamentDTO, Routes.Models.Tournament>();
+        CreateMap<Router.v1.Models.Tournament, Data.DTOs.TournamentDTO>();
+        CreateMap<Data.DTOs.TournamentDTO, Router.v1.Models.Tournament>();
     }
 }
 

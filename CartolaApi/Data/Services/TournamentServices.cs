@@ -1,15 +1,15 @@
 ﻿using CartolaApi.Data.DTOs;
-using CartolaApi.Routes.Models;
+using CartolaApi.Router.v1.Models;
 using Microsoft.EntityFrameworkCore;
-using Team = CartolaApi.Routes.Models.Team;
+using Team = CartolaApi.Router.v1.Models.Team;
 
-namespace CartolaApi.Data.Functions;
+namespace CartolaApi.Data.Services;
 
-public class TournamentDbFunctions
+public class TournamentServices
 {
     private readonly AppDbContext _db;
 
-    public TournamentDbFunctions()
+    public TournamentServices()
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")

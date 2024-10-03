@@ -1,32 +1,37 @@
 using AutoMapper;
-
+using CartolaApi.Data.Services;
 using DbTeamModel = CartolaApi.Data.DTOs.Team;
-using DbPlayerModel = CartolaApi.Data.DTOs.Player;
-using CartolaApi.Data.Functions;
 using CartolaApi.Responses.JsonResponse;
-using CartolaApi.Routes.Models;
+using CartolaApi.Router.v1.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CartolaApi.Routes;
-public static class TeamEndpoint
+namespace CartolaApi.Router.v1.Controllers
 {
-    public static void MapTeamEndpoints(this WebApplication app)
-    
+    [ApiController]
+    [Route("api/v1/[controller]")]
+    public class TeamController : ControllerBase
     {
-        var group = app.MapGroup("/teams");
-        var teamDbFunctions = new TeamDbFunctions();
+        private readonly IMapper _mapper;
+        private readonly TeamServices _teamServices;
 
-        group.MapGet("/", () =>
+        public TeamController(IMapper mapper, TeamServices teamServices)
         {
-            try 
+            _mapper = mapper;
+            _teamServices = teamServices;
+        }
+
+        [HttpGet]
+        public IActionResult GetTeams()
+        {
+            try
             {
-                var teams = teamDbFunctions.GetTeams();
+                var teams = _teamServices.GetTeams();
                 var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: teams,
                     statusCode: 200
                 );
-                return Results.Json(successResponse, statusCode: successStatusCode);
+                return new JsonResult(successResponse) { StatusCode = successStatusCode };
             }
             catch (Exception ex)
             {
@@ -35,22 +40,22 @@ public static class TeamEndpoint
                     data: ex.Message,
                     statusCode: 400
                 );
-                return Results.Json(errorResponse, statusCode: errorStatusCode);
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
             }
-        });
+        }
 
-        
-        group.MapGet("/search-team", (int? id,string? name) =>
+        [HttpGet("search-team")]
+        public IActionResult GetTeam(int? id, string? name)
         {
             try
             {
-                var team = teamDbFunctions.GetTeam(id, name);
+                var team = _teamServices.GetTeam(id, name);
                 var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: team,
                     statusCode: 200
                 );
-                return Results.Json(successResponse, statusCode: successStatusCode);
+                return new JsonResult(successResponse) { StatusCode = successStatusCode };
             }
             catch (Exception ex)
             {
@@ -59,22 +64,23 @@ public static class TeamEndpoint
                     data: ex.Message,
                     statusCode: 400
                 );
-                return Results.Json(errorResponse, statusCode: errorStatusCode);
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
             }
-        });
+        }
 
-        group.MapPost("/include-team", (Team team, [FromServices]IMapper mapper) =>
+        [HttpPost("include-team")]
+        public IActionResult CreateTeam([FromBody] Team team)
         {
             try
             {
-                var dbTeam = mapper.Map<DbTeamModel>(team);
-                teamDbFunctions.CreateTeam(dbTeam);
+                var dbTeam = _mapper.Map<DbTeamModel>(team);
+                _teamServices.CreateTeam(dbTeam);
                 var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: dbTeam,
                     statusCode: 200
                 );
-                return Results.Json(successResponse, statusCode: successStatusCode);
+                return new JsonResult(successResponse) { StatusCode = successStatusCode };
             }
             catch (Exception ex)
             {
@@ -83,27 +89,24 @@ public static class TeamEndpoint
                     data: ex.Message,
                     statusCode: 400
                 );
-                return Results.Json(errorResponse, statusCode: errorStatusCode);
-            }            
-        });
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
+            }
+        }
 
-        group.MapPut("/update-team", (
-            int teamToUpateId,
-            Team updatedTeam,
-            [FromServices]IMapper mapper
-            ) =>
+        [HttpPut("update-team")]
+        public IActionResult UpdateTeam(int teamToUpdateId, [FromBody] Team updatedTeam)
         {
             try
             {
-                var dbTeamUpdated = mapper.Map<DbTeamModel>(updatedTeam);
-                teamDbFunctions.UpdateTeam(teamToUpateId, dbTeamUpdated);
-                var team = teamDbFunctions.GetTeam(teamToUpateId, null);
+                var dbTeamUpdated = _mapper.Map<DbTeamModel>(updatedTeam);
+                _teamServices.UpdateTeam(teamToUpdateId, dbTeamUpdated);
+                var team = _teamServices.GetTeam(teamToUpdateId, null);
                 var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: team,
                     statusCode: 200
                 );
-                return Results.Json(successResponse, statusCode: successStatusCode);
+                return new JsonResult(successResponse) { StatusCode = successStatusCode };
             }
             catch (Exception ex)
             {
@@ -112,22 +115,22 @@ public static class TeamEndpoint
                     data: ex.Message,
                     statusCode: 400
                 );
-                return Results.Json(errorResponse, statusCode: errorStatusCode);
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
             }
-        });
+        }
 
-        
-        group.MapDelete("/delete-team", (string name) =>
+        [HttpDelete("delete-team")]
+        public IActionResult DeleteTeam(string name)
         {
             try
             {
-                teamDbFunctions.DeleteTeam(name);
+                _teamServices.DeleteTeam(name);
                 var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: "Team deleted",
                     statusCode: 200
                 );
-                return Results.Json(successResponse, statusCode: successStatusCode);
+                return new JsonResult(successResponse) { StatusCode = successStatusCode };
             }
             catch (Exception ex)
             {
@@ -136,8 +139,8 @@ public static class TeamEndpoint
                     data: ex.Message,
                     statusCode: 400
                 );
-                return Results.Json(errorResponse, statusCode: errorStatusCode);
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
             }
-        });
+        }
     }
 }

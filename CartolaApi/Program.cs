@@ -1,8 +1,7 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using CartolaApi.Utils;
-using CartolaApi.Data.Functions;
-using CartolaApi.Routes;
+using CartolaApi.Data.Services;
+using CartolaApi.Router;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +15,14 @@ builder.Services.AddCors();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddControllers();
+
 builder.Services.AddSingleton<Hash>();
-builder.Services.AddScoped<UserDbFunctions>();
-builder.Services.AddScoped<TeamDbFunctions>();
-builder.Services.AddScoped<TournamentDbFunctions>();
+builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<TeamServices>();
+builder.Services.AddScoped<TournamentServices>();
+builder.Services.AddScoped<PlayerServices>();
+
 var app = builder.Build();
 
 app.UseCors(builder => builder
@@ -30,12 +33,10 @@ app.UseCors(builder => builder
 
 app.UseSwagger();
 app.UseSwaggerUI();
-app.MapGroupPlayer();
-app.MapTeamEndpoints();
-app.MapGroupTournament();
-app.MapGroupUser();
-app.MapGroupMatch();
-app.MapGroupSeason();
+
+app.MapControllers();
+
+app.MapV1Routes();
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.Run();

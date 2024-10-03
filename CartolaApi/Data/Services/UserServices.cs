@@ -3,14 +3,14 @@ using CartolaApi.Data.DTOs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 
-namespace CartolaApi.Data.Functions;
+namespace CartolaApi.Data.Services;
 
-public class UserDbFunctions
+public class UserServices
 {
     private readonly Hash _hash;
     private readonly AppDbContext _db;
 
-    public UserDbFunctions()
+    public UserServices()
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")

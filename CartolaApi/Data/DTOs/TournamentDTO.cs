@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
-using CartolaApi.Routes.Models;
+using CartolaApi.Router.v1.Models;
 
 namespace CartolaApi.Data.DTOs;
 

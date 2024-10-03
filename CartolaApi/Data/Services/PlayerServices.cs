@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using CartolaApi.Data.DTOs;
-namespace CartolaApi.Data.Functions;
+namespace CartolaApi.Data.Services;
 
-public class PlayerDbFunctions
+public class PlayerServices
 {
     private readonly AppDbContext _db;
     
-    public PlayerDbFunctions()
+    public PlayerServices()
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
