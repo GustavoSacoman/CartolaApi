@@ -71,7 +71,7 @@ namespace CartolaApi.Router.v1.Controllers
         }
 
         [HttpPut("{matchId}")]
-        public IActionResult UpdateMatch(int matchId, [FromBody] Match match)
+        public IActionResult UpdateMatch(int matchId, [FromBody] UpdateMatch match)
         {
             try
             {

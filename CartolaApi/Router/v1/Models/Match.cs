@@ -14,3 +14,12 @@ namespace CartolaApi.Router.v1.Models;
         public int IdTournament { get; set; }
 
     }
+
+    public class UpdateMatch
+    {
+        public DateTime Date { get; set; }
+        public string? Result { get; set; }
+        public int IdTeam1 { get; set; }
+        public int IdTeam2 { get; set; }
+        public int IdTournament { get; set; }
+    }
