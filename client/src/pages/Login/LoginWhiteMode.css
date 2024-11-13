@@ -156,14 +156,14 @@
 .login-box.light-mode .right-panel p,
 .login-box.light-mode .right-panel button {
   animation: fadeIn 0.6s ease-in-out forwards;
-  animation-delay: 1.8s;
+  animation-delay: 1.5s;
 }
 
 .login-box.light-mode.sign-up-mode .right-panel h3,
 .login-box.light-mode.sign-up-mode .right-panel p,
 .login-box.light-mode.sign-up-mode .right-panel button {
   animation: fadeIn 0.6s ease-in-out forwards;
-  animation-delay: 1.8s;
+  animation-delay: 1.5s;
 }
 
 .login-box.light-mode.sign-up-mode .left-panel h3,
@@ -177,7 +177,7 @@
 .login-box.light-mode:not(.sign-up-mode) .left-panel p,
 .login-box.light-mode:not(.sign-up-mode) .left-panel button {
   animation: fadeIn 0.6s ease-in-out forwards;
-  animation-delay: 1.8s;
+  animation-delay: 1.5s;
 }
 
 .login-box.light-mode:not(.sign-up-mode) .right-panel h3,
