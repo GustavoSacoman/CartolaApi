@@ -26,6 +26,22 @@
     opacity: 0.1;
   }
 }
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2)
+}
 
 .login-container.light-mode::before {
   background: linear-gradient(45deg, #ffffff, #f0e6ff, #e6ccff, #f5f0ff);
@@ -130,14 +146,12 @@
   }
 }
 
-/* Reset base state for all panel content */
 .login-box.light-mode .panel h3,
 .login-box.light-mode .panel p,
 .login-box.light-mode .panel button {
   opacity: 0;
 }
 
-/* Initial state - animate right panel */
 .login-box.light-mode .right-panel h3,
 .login-box.light-mode .right-panel p,
 .login-box.light-mode .right-panel button {
@@ -145,7 +159,6 @@
   animation-delay: 1.8s;
 }
 
-/* Sign Up mode - animate right panel */
 .login-box.light-mode.sign-up-mode .right-panel h3,
 .login-box.light-mode.sign-up-mode .right-panel p,
 .login-box.light-mode.sign-up-mode .right-panel button {
@@ -153,7 +166,6 @@
   animation-delay: 1.8s;
 }
 
-/* Sign Up mode - hide left panel */
 .login-box.light-mode.sign-up-mode .left-panel h3,
 .login-box.light-mode.sign-up-mode .left-panel p,
 .login-box.light-mode.sign-up-mode .left-panel button {
@@ -161,7 +173,6 @@
   opacity: 0;
 }
 
-/* Not in sign-up mode - animate left panel */
 .login-box.light-mode:not(.sign-up-mode) .left-panel h3,
 .login-box.light-mode:not(.sign-up-mode) .left-panel p,
 .login-box.light-mode:not(.sign-up-mode) .left-panel button {
@@ -169,7 +180,6 @@
   animation-delay: 1.8s;
 }
 
-/* Not in sign-up mode - hide right panel */
 .login-box.light-mode:not(.sign-up-mode) .right-panel h3,
 .login-box.light-mode:not(.sign-up-mode) .right-panel p,
 .login-box.light-mode:not(.sign-up-mode) .right-panel button {
