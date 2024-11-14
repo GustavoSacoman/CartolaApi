@@ -118,5 +118,42 @@ namespace CartolaApi.Router.v1.Controllers
                 return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
             }
         }
+        
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] UserLogin user)
+        {
+            try
+            {
+                var dbUser = _mapper.Map<DbUserModel>(user);
+                var userExists = _userServices.Login(dbUser.Email, dbUser.Password);
+                if (userExists)
+                {
+                    var (successResponse, successStatusCode) = JsonResponse.Success(
+                        status: "success",
+                        data: "user logged in successfully",
+                        statusCode: 200
+                    );
+                    return new JsonResult(successResponse) { StatusCode = successStatusCode };
+                }
+                else
+                {
+                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
+                        status: "error",
+                        data: "user not found",
+                        statusCode: 404
+                    );
+                    return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
+                }
+            }
+            catch (Exception ex)
+            {
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
+                    status: "error",
+                    data: ex.Message,
+                    statusCode: 400
+                );
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
+            }
+        }
     }
 }
