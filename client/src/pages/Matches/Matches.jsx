@@ -1,116 +1,76 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Matches.css';
 
-const Matches = () => {
-  const [formData, setFormData] = useState({
-    team1: '',
-    team2: '',
-    date: '',
-    tournament: '',
-    result: '',
-    id: '',
-  });
+function Matches() {
+  const [search, setSearch] = useState('');
+  const matches = [
+    { id: 1, teams: 'Team 1 X Team 3' },
+    { id: 2, teams: 'Team 2 X Team 1' },
+    { id: 3, teams: 'Team 3 X Team 1' },
+  ];
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Cadastro:', formData);
-  };
-
-  const handleEdit = () => {
-    console.log('Editando match ID:', formData.id);
-  };
-
-  const handleDelete = () => {
-    console.log('Deletando match ID:', formData.id);
-  };
+  const filteredMatches = matches.filter(match =>
+    match.teams.toLowerCase().includes(search.toLowerCase())
+  );
+  const navigate = useNavigate();
+  const handleBack = () => {
+    navigate('/matches'); // Redireciona para a página de lista de matches
+};
 
   return (
     <div className="match-form">
-      <h2>Cadastro Matches</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <div>
-            <label>Team 1</label>
-            <input
-              type="text"
-              name="team1"
-              value={formData.team1}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Team 2</label>
-            <input
-              type="text"
-              name="team2"
-              value={formData.team2}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
+      <h2>Matches</h2>
+      
+      {/* Campo de busca */}
+      <div className="input-group">
+        <input
+          type="text"
+          placeholder="Search by teams:"
+          value={search}
+          onChange={handleSearchChange}
+        />
+      </div>
 
-        <div className="input-group">
-          <div>
-            <label>Date</label>
-            <input
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Tournament</label>
-            <input
-              type="text"
-              name="tournament"
-              value={formData.tournament}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
+      {/* Lista de partidas */}
+      <div className="matches-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Teams</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredMatches.map(match => (
+              <tr key={match.id}>
+                <td>{match.teams}</td>
+                <td className="actions">
+                    <button className="edit-button" >Edit</button>
+                    <button class Name="delete-button" >Delete </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-        <div className="input-group">
-          <div>
-            <label>Result</label>
-            <input
-              type="text"
-              name="result"
-              value={formData.result}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>ID</label>
-            <input
-              type="number"
-              name="id"
-              value={formData.id}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
+      {/* Botões de ação */}
+      <div className="button-group">
 
-        <div className="button-group">
-          <button type="button" onClick={handleDelete}>
-            Excluir
-          </button>
-          <button type="button" onClick={handleEdit}>
-            Editar
-          </button>
-        </div>
-
-        <div className="button-group">
-          <button type="submit">Cadastrar</button>
-          <button type="button">Voltar</button>
-        </div>
-      </form>
+      <Link to="/CadastroMatches">
+          <button className="new-button">New</button>
+        </Link>
+        
+        <button className="new-button" onClick={handleBack}>Voltar</button>
+      </div>
     </div>
   );
-};
+}
 
 export default Matches;
