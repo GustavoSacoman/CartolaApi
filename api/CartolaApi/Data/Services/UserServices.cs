@@ -88,6 +88,22 @@ public class UserServices
         }
         _db.SaveChanges();
     }
+    
+    public bool Login(string email, string password)
+    {
+        var user = _db.Users.FirstOrDefault(user => user.Email == email);
+        if (user == null)
+        {
+            throw new Exception("User not found");
+        }
+
+        if (!_hash.CreateHash(password).Equals(user.Password))
+        {
+            throw new Exception("Invalid password");
+        }
+
+        return true;
+    }
 
     public List<User> GetUsers()
     {

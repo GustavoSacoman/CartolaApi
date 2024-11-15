@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap');
+
+@keyframes gradientBGLight {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floatingParticlesLight {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.1;
+  }
+  50% {
+    transform: translateY(-15px) rotate(180deg);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(0) rotate(360deg);
+    opacity: 0.1;
+  }
+}
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2)
+}
+
+.login-container.light-mode::before {
+  background: linear-gradient(45deg, #ffffff, #f0e6ff, #e6ccff, #f5f0ff);
+  opacity: 0.95;
+}
+
+.login-container.light-mode::after {
+  background-image: radial-gradient(circle, rgba(130, 28, 230, 0.1) 2px, transparent 3px);
+}
+
+.login-container.light-mode {
+  background: #ffffff;
+}
+
+.login-box.light-mode {
+  background: #f5f0ff;
+  color: #520255;
+  box-shadow: 0 14px 28px rgba(130, 28, 230, 0.1), 0 10px 10px rgba(130, 28, 230, 0.08);
+}
+
+.login-box.light-mode h2 {
+  color: #520255;
+}
+
+.login-box.light-mode input {
+  background: #ffffff;
+  border: 1px solid #e6ccff;
+  color: #520255;
+}
+
+.login-box.light-mode button {
+  background: #841ce6;
+  color: #ffffff;
+}
+
+.login-box.light-mode button:hover {
+  background: #6014a7;
+}
+
+.login-box.light-mode::before {
+  background-image: linear-gradient(-45deg, #f5f0ff 0%, #e6ccff 100%);
+}
+
+.login-box.light-mode .panel {
+  color: #520255;
+}
+
+.login-box.light-mode .form input {
+  background: #ffffff;
+  border: 1px solid #e6ccff;
+  color: #520255;
+}
+
+.login-box.light-mode .form input::placeholder {
+  color: #841ce6;
+  opacity: 0.7;
+}
+
+.login-box.light-mode .form button {
+  background-color: #841ce6;
+  color: #ffffff;
+}
+
+.login-box.light-mode .form button:hover {
+  background-color: #6014a7;
+}
+
+@media (max-width: 768px) {
+  .login-box.light-mode {
+    width: 90%;
+    min-height: 400px;
+  }
+}
+
+.login-container.light-mode {
+  transition: background 0.5s ease;
+}
+
+.login-container.light-mode::before {
+  transition: background 0.5s ease, opacity 0.5s ease;
+}
+
+.login-box.light-mode {
+  transition: background 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.login-box.light-mode h2,
+.login-box.light-mode input,
+.login-box.light-mode button,
+.login-box.light-mode .panel {
+  transition: color 0.5s ease, background 0.5s ease, border-color 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-box.light-mode .panel h3,
+.login-box.light-mode .panel p,
+.login-box.light-mode .panel button {
+  opacity: 0;
+}
+
+.login-box.light-mode .right-panel h3,
+.login-box.light-mode .right-panel p,
+.login-box.light-mode .right-panel button {
+  animation: fadeIn 0.6s ease-in-out forwards;
+  animation-delay: 1.5s;
+}
+
+.login-box.light-mode.sign-up-mode .right-panel h3,
+.login-box.light-mode.sign-up-mode .right-panel p,
+.login-box.light-mode.sign-up-mode .right-panel button {
+  animation: fadeIn 0.6s ease-in-out forwards;
+  animation-delay: 1.5s;
+}
+
+.login-box.light-mode.sign-up-mode .left-panel h3,
+.login-box.light-mode.sign-up-mode .left-panel p,
+.login-box.light-mode.sign-up-mode .left-panel button {
+  animation: none;
+  opacity: 0;
+}
+
+.login-box.light-mode:not(.sign-up-mode) .left-panel h3,
+.login-box.light-mode:not(.sign-up-mode) .left-panel p,
+.login-box.light-mode:not(.sign-up-mode) .left-panel button {
+  animation: fadeIn 0.6s ease-in-out forwards;
+  animation-delay: 1.5s;
+}
+
+.login-box.light-mode:not(.sign-up-mode) .right-panel h3,
+.login-box.light-mode:not(.sign-up-mode) .right-panel p,
+.login-box.light-mode:not(.sign-up-mode) .right-panel button {
+  animation: none;
+  opacity: 0;
+}
