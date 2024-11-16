@@ -1,27 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './Matches.css';
+import axios from 'axios';
 
 function Matches() {
-  const [search, setSearch] = useState('');
-  const matches = [
-    { id: 1, teams: 'Team 1 X Team 3' },
-    { id: 2, teams: 'Team 2 X Team 1' },
-    { id: 3, teams: 'Team 3 X Team 1' },
-  ];
+  const [search, setSearch] = useState(''); // Mantém o estado da busca
+  const [matches, setMatches] = useState([]); // Estado para armazenar as partidas
+
+  const navigate = useNavigate();
+
+  // Faz a requisição para buscar as partidas
+  useEffect(() => {
+    axios.get('http://localhost:5210/v1/api/v1/match')
+      .then(response => {
+        setMatches(response.data.data); // Supondo que os dados estejam na chave `data`
+      })
+      .catch(error => {
+        console.error('Erro ao buscar matches', error);
+      });
+  }, []);
+
+  function excluir(id) {
+    axios.delete(`http://localhost:5210/v1/api/v1/match/${id}`).then(() => {
+      // Refaz a requisição para atualizar a lista após exclusão
+      axios.get('http://localhost:5210/v1/api/v1/match')
+        .then(response => {
+          setMatches(response.data.data); // Atualiza a lista de partidas
+        })
+        .catch(error => {
+          console.error('Erro ao buscar matches', error);
+        });
+    });
+  }
 
   const handleSearchChange = (e) => {
-    setSearch(e.target.value);
+    setSearch(e.target.value); // Atualiza o valor da busca
   };
 
-  const filteredMatches = matches.filter(match =>
-    match.teams.toLowerCase().includes(search.toLowerCase())
-  );
-  const navigate = useNavigate();
+  const filteredMatches = matches.filter(match => {
+    return (
+      match.idTeam1.toString().includes(search) || match.idTeam2.toString().includes(search)
+    );
+  });
+
+  const handleEdit = (idMatch) => {
+    // Redireciona para a página de edição
+    navigate(`/edit-match/${idMatch}`);
+  };
+
   const handleBack = () => {
-    navigate('/matches'); // Redireciona para a página de lista de matches
-};
+    navigate('/matches'); // Redireciona para a página de lista de partidas
+  };
 
   return (
     <div className="match-form">
@@ -31,7 +61,7 @@ function Matches() {
       <div className="input-group">
         <input
           type="text"
-          placeholder="Search by teams:"
+          placeholder="Search by team ID:"
           value={search}
           onChange={handleSearchChange}
         />
@@ -43,16 +73,37 @@ function Matches() {
           <thead>
             <tr>
               <th>Teams</th>
+              <th>Result</th> {/* Coluna de resultado */}
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredMatches.map(match => (
-              <tr key={match.id}>
-                <td>{match.teams}</td>
+              <tr key={match.idMatch}>
+                <td>
+                  {/* Exibe os IDs dos times */}
+                  {`Team ${match.idTeam1} X Team ${match.idTeam2}`}
+                </td>
+                <td>
+                  {/* Exibe o resultado da partida */}
+                  {match.result}
+                </td>
                 <td className="actions">
-                    <button className="edit-button" >Edit</button>
-                    <button class Name="delete-button" >Delete </button>
+                  {/* Botão Edit */}
+                  <button
+                    className="edit-button"
+                    onClick={() => handleEdit(match.idMatch)}
+                  >
+                    Edit
+                  </button>
+                  
+                  {/* Botão Delete */}
+                  <button
+                    className="delete-button"
+                    onClick={() => excluir(match.idMatch)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
@@ -62,11 +113,9 @@ function Matches() {
 
       {/* Botões de ação */}
       <div className="button-group">
-
-      <Link to="/CadastroMatches">
+        <Link to="/cadastro-match">
           <button className="new-button">New</button>
         </Link>
-        
         <button className="new-button" onClick={handleBack}>Voltar</button>
       </div>
     </div>
