@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Matches.css';
-import axios from 'axios';
+import MatchService from '../../api/services/MatchService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CadastroMatches = () => {
   const [formData, setFormData] = useState({
@@ -14,16 +16,37 @@ const CadastroMatches = () => {
 
   const navigate = useNavigate();
 
-  // Atualiza o estado conforme o usuário insere os dados
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Submete os dados do formulário
+  const showError = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+  const showSuccess = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Estrutura os dados no formato esperado pela API
     const matchData = {
       date: formData.date,
       result: formData.result,
@@ -33,10 +56,9 @@ const CadastroMatches = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5210/v1/api/v1/match', matchData);
-      console.log('Partida cadastrada com sucesso:', response.data);
-      alert('Partida cadastrada com sucesso!');
-      // Limpa o formulário
+      const response = await MatchService.addMatch(matchData);
+      console.log('Partida cadastrada com sucesso:', response);
+      showSuccess('Partida cadastrada com sucesso!');
       setFormData({
         team1: '',
         team2: '',
@@ -44,21 +66,21 @@ const CadastroMatches = () => {
         tournament: '',
         result: '',
       });
-      // Redireciona para a lista de partidas
       navigate('/matches');
     } catch (error) {
-      console.error('Erro ao cadastrar partida:', error.response || error);
-      alert('Erro ao cadastrar partida. Verifique os dados e tente novamente.');
+      console.error('Erro ao cadastrar partida:', error);
+      showError('Erro ao cadastrar partida. Verifique os dados e tente novamente.');
     }
   };
 
   const handleBack = () => {
-    navigate('/matches'); // Volta para a página de lista de partidas
+    navigate('/matches');
   };
 
   return (
     <div className="match-form">
-      <h2>Cadastro Matches</h2>
+      <ToastContainer />
+      <h2>Cadastro de Partida</h2>
       <form onSubmit={handleSubmit}>
         <div className="input-group">
           <div>

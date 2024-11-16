@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import MatchService from '../../api/services/MatchService';
 import './Matches.css';
 
 const EditMatches = () => {
-  const { id } = useParams(); // Obtém o ID da partida da URL
+  const { id } = useParams(); // Usar o hook useParams para pegar o ID da URL
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -15,44 +15,18 @@ const EditMatches = () => {
     result: '',
   });
 
-  // Carrega os dados da partida para edição
-  useEffect(() => {
-    const fetchMatch = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5210/v1/api/v1/match`);
-        
-        // Filtra a partida com o ID correspondente
-        const match = response.data.data.find((match) => match.idMatch === parseInt(id));
-        
-        if (match) {
-          setFormData({
-            team1: match.idTeam1.toString(),
-            team2: match.idTeam2.toString(),
-            date: match.date,
-            tournament: match.idTournament.toString(),
-            result: match.result,
-          });
-        } else {
-          alert('Partida não encontrada.');
-          navigate('/matches');
-        }
-      } catch (error) {
-        console.error('Erro ao carregar os dados da partida:', error.response || error);
-        alert('Erro ao carregar os dados da partida. Tente novamente mais tarde.');
-        navigate('/matches'); // Redireciona para a lista de partidas
-      }
-    };
+  const [loading, setLoading] = useState(false); // Estado de carregamento
+  const [message, setMessage] = useState(''); // Mensagem de feedback
+  const [messageType, setMessageType] = useState(''); // Tipo de mensagem (erro ou sucesso)
 
-    fetchMatch();
-  }, [id, navigate]);
-
+  // Função para atualizar os dados do formulário
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Função para submeter o formulário de edição
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const updatedMatch = {
       date: formData.date,
       result: formData.result,
@@ -61,23 +35,45 @@ const EditMatches = () => {
       idTournament: parseInt(formData.tournament, 10),
     };
 
+    // Verifica se o ID da partida está presente
+    if (!id) {
+      setMessage('ID da partida não encontrado.');
+      setMessageType('error');
+      return;
+    }
+
+    setLoading(true); // Começa o carregamento durante a atualização
+
     try {
-      await axios.put(`http://localhost:5210/v1/api/v1/match/${id}`, updatedMatch);
-      alert('Partida atualizada com sucesso!');
-      navigate('/matches'); // Redireciona para a lista de partidas
+      // Chama o serviço para atualizar a partida
+      await MatchService.updateMatch(id, updatedMatch); // Passar o id obtido da URL
+      setMessage('Partida atualizada com sucesso!');
+      setMessageType('success');
+      navigate('/matches');
     } catch (error) {
-      console.error('Erro ao atualizar a partida:', error.response || error);
-      alert('Erro ao atualizar a partida. Verifique os dados e tente novamente.');
+      console.error('Erro ao atualizar a partida:', error);
+      setMessage('Erro ao atualizar a partida');
+      setMessageType('error');
+    } finally {
+      setLoading(false); // Finaliza o carregamento
     }
   };
 
+  // Função para voltar para a lista de partidas
   const handleBack = () => {
-    navigate('/matches'); // Volta para a lista de partidas
+    navigate('/matches');
   };
 
   return (
     <div className="match-form">
-      <h2>Editar Partida</h2>
+      <h2>Edit Match</h2>
+
+      {message && (
+        <div className={`message ${messageType}`}>
+          {message}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <div className="input-group">
           <div>
@@ -87,7 +83,7 @@ const EditMatches = () => {
               name="team1"
               value={formData.team1}
               onChange={handleChange}
-              placeholder="ID do Time 1"
+              placeholder="Team 1 ID"
               required
             />
           </div>
@@ -98,7 +94,7 @@ const EditMatches = () => {
               name="team2"
               value={formData.team2}
               onChange={handleChange}
-              placeholder="ID do Time 2"
+              placeholder="Team 2 ID"
               required
             />
           </div>
@@ -122,7 +118,7 @@ const EditMatches = () => {
               name="tournament"
               value={formData.tournament}
               onChange={handleChange}
-              placeholder="ID do Torneio"
+              placeholder="Tournament ID"
               required
             />
           </div>
@@ -136,15 +132,15 @@ const EditMatches = () => {
               name="result"
               value={formData.result}
               onChange={handleChange}
-              placeholder="Resultado"
+              placeholder="Result"
               required
             />
           </div>
         </div>
 
         <div className="button-group">
-          <button type="submit">Salvar Alterações</button>
-          <button type="button" className="new-button" onClick={handleBack}>Voltar</button>
+          <button type="submit" disabled={loading}>Save Changes</button>
+          <button type="button" onClick={handleBack} disabled={loading}>Back</button>
         </div>
       </form>
     </div>

@@ -2,62 +2,63 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './Matches.css';
-import axios from 'axios';
+import MatchService from '../../api/services/MatchService';
 
 function Matches() {
-  const [search, setSearch] = useState(''); // Mantém o estado da busca
-  const [matches, setMatches] = useState([]); // Estado para armazenar as partidas
+  const [search, setSearch] = useState(''); // Estado da busca
+  const [matches, setMatches] = useState([]); // Estado das partidas
 
   const navigate = useNavigate();
 
-  // Faz a requisição para buscar as partidas
+  // Busca as partidas na montagem do componente
   useEffect(() => {
-    axios.get('http://localhost:5210/v1/api/v1/match')
-      .then(response => {
-        setMatches(response.data.data); // Supondo que os dados estejam na chave `data`
-      })
-      .catch(error => {
-        console.error('Erro ao buscar matches', error);
-      });
+    const fetchMatches = async () => {
+      try {
+        const matchData = await MatchService.getMatches();
+        setMatches(matchData);
+      } catch (error) {
+        console.error('Error fetching matches:', error);
+      }
+    };
+
+    fetchMatches();
   }, []);
 
-  function excluir(id) {
-    axios.delete(`http://localhost:5210/v1/api/v1/match/${id}`).then(() => {
-      // Refaz a requisição para atualizar a lista após exclusão
-      axios.get('http://localhost:5210/v1/api/v1/match')
-        .then(response => {
-          setMatches(response.data.data); // Atualiza a lista de partidas
-        })
-        .catch(error => {
-          console.error('Erro ao buscar matches', error);
-        });
-    });
-  }
-
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value); // Atualiza o valor da busca
+  // Função para excluir uma partida
+  const deleteMatch = async (id) => {
+    try {
+      await MatchService.deleteMatch(id);
+      const updatedMatches = await MatchService.getMatches();
+      setMatches(updatedMatches);
+    } catch (error) {
+      console.error('Error deleting match:', error);
+    }
   };
 
-  const filteredMatches = matches.filter(match => {
-    return (
-      match.idTeam1.toString().includes(search) || match.idTeam2.toString().includes(search)
-    );
-  });
+  // Atualiza o valor do campo de busca
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
 
+  // Filtra as partidas com base na busca
+  const filteredMatches = matches.filter((match) =>
+    match.idTeam1.toString().includes(search) || match.idTeam2.toString().includes(search)
+  );
+
+  // Redireciona para a página de edição de partida
   const handleEdit = (idMatch) => {
-    // Redireciona para a página de edição
     navigate(`/edit-match/${idMatch}`);
   };
 
+  // Redireciona para a página de lista de partidas
   const handleBack = () => {
-    navigate('/matches'); // Redireciona para a página de lista de partidas
+    navigate('/matches');
   };
 
   return (
     <div className="match-form">
       <h2>Matches</h2>
-      
-      
+
       <div className="input-group">
         <input
           type="text"
@@ -67,40 +68,30 @@ function Matches() {
         />
       </div>
 
-      
       <div className="matches-table">
         <table>
           <thead>
             <tr>
               <th>Teams</th>
-              <th>Result</th> 
+              <th>Result</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredMatches.map(match => (
+            {filteredMatches.map((match) => (
               <tr key={match.idMatch}>
-                <td>
-                  
-                  {`Team ${match.idTeam1} X Team ${match.idTeam2}`}
-                </td>
-                <td>
-                  
-                  {match.result}
-                </td>
+                <td>{`Team ${match.idTeam1} X Team ${match.idTeam2}`}</td>
+                <td>{match.result}</td>
                 <td className="actions">
-                 
                   <button
                     className="edit-button"
                     onClick={() => handleEdit(match.idMatch)}
                   >
                     Edit
                   </button>
-                  
-                  
                   <button
                     className="delete-button"
-                    onClick={() => excluir(match.idMatch)}
+                    onClick={() => deleteMatch(match.idMatch)}
                   >
                     Delete
                   </button>
@@ -111,12 +102,11 @@ function Matches() {
         </table>
       </div>
 
-     
       <div className="button-group">
-        <Link to="/cadastro-match">
+        <Link to="/register-match">
           <button className="new-button">New</button>
         </Link>
-        <button className="new-button" onClick={handleBack}>Voltar</button>
+        <button className="new-button" onClick={handleBack}>Back</button>
       </div>
     </div>
   );
