@@ -57,7 +57,7 @@ function Matches() {
     <div className="match-form">
       <h2>Matches</h2>
       
-      {/* Campo de busca */}
+      
       <div className="input-group">
         <input
           type="text"
@@ -67,13 +67,13 @@ function Matches() {
         />
       </div>
 
-      {/* Lista de partidas */}
+      
       <div className="matches-table">
         <table>
           <thead>
             <tr>
               <th>Teams</th>
-              <th>Result</th> {/* Coluna de resultado */}
+              <th>Result</th> 
               <th>Actions</th>
             </tr>
           </thead>
@@ -81,15 +81,15 @@ function Matches() {
             {filteredMatches.map(match => (
               <tr key={match.idMatch}>
                 <td>
-                  {/* Exibe os IDs dos times */}
+                  
                   {`Team ${match.idTeam1} X Team ${match.idTeam2}`}
                 </td>
                 <td>
-                  {/* Exibe o resultado da partida */}
+                  
                   {match.result}
                 </td>
                 <td className="actions">
-                  {/* Botão Edit */}
+                 
                   <button
                     className="edit-button"
                     onClick={() => handleEdit(match.idMatch)}
@@ -97,7 +97,7 @@ function Matches() {
                     Edit
                   </button>
                   
-                  {/* Botão Delete */}
+                  
                   <button
                     className="delete-button"
                     onClick={() => excluir(match.idMatch)}
@@ -111,7 +111,7 @@ function Matches() {
         </table>
       </div>
 
-      {/* Botões de ação */}
+     
       <div className="button-group">
         <Link to="/cadastro-match">
           <button className="new-button">New</button>
