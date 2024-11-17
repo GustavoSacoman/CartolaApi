@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Carousel.css';
 
-const Carousel = ({ slides, autoPlayInterval = 5000 }) => {
+const Carousel = ({ slides, textColor = 'white', autoPlayInterval = 5000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const slideCount = slides.length;
   const timeoutRef = useRef(null);
@@ -48,8 +48,8 @@ const Carousel = ({ slides, autoPlayInterval = 5000 }) => {
           <div key={index} className="custom-carousel__slide">
             <img src={slide.image} alt={slide.title} className="custom-carousel__slide-img" />
             <div className="custom-carousel__slide-content">
-              <h2>{slide.title}</h2>
-              <p>{slide.description}</p>
+              <h2 style={{ color: textColor }}>{slide.title}</h2>
+              <p style={{ color: textColor }}>{slide.description}</p>
             </div>
           </div>
         ))}
