@@ -73,36 +73,39 @@ public class UserServices
             throw new Exception("User not found");
         }
         
-        if (phone != user.Phone)
+        if (name != null)
         {
-            throw new Exception("Phone not validated");
+            user.Name = name;
+        }
+        
+        if (phone != null && phone != user.Phone)
+        {
+            user.Phone = phone;
         }
         
         if (password != null)
         {
             user.Password = _hash.CreateHash(password);
         }
-        if (name != null)
-        {
-            user.Name = name;
-        }
+        
         _db.SaveChanges();
     }
     
-    public bool Login(string email, string password)
+    public Dictionary<string, string> Login(string email, string password)
     {
-        var user = _db.Users.FirstOrDefault(user => user.Email == email);
+        var user = _db.Users.FirstOrDefault(user => user.Email == email && user.Password == _hash.CreateHash(password));
         if (user == null)
         {
             throw new Exception("User not found");
         }
-
-        if (!_hash.CreateHash(password).Equals(user.Password))
+        Dictionary<string, string> data = new Dictionary<string, string>
         {
-            throw new Exception("Invalid password");
-        }
-
-        return true;
+            { "Email", user.Email },
+            { "Name", user.Name },
+            { "Phone", user.Phone }
+        };
+        
+        return data;
     }
 
     public List<User> GetUsers()

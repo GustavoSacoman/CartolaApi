@@ -71,7 +71,7 @@ namespace CartolaApi.Router.v1.Controllers
         }
 
         [HttpPut("update-user")]
-        public IActionResult UpdateUser([FromBody] User user)
+        public IActionResult UpdateUser([FromBody] UserUpdate user)
         {
             try
             {
@@ -125,24 +125,14 @@ namespace CartolaApi.Router.v1.Controllers
             try
             {
                 var dbUser = _mapper.Map<DbUserModel>(user);
-                var userExists = _userServices.Login(dbUser.Email, dbUser.Password);
-                if (userExists)
+                Dictionary<string,string> userdata = _userServices.Login(dbUser.Email, dbUser.Password);
                 {
                     var (successResponse, successStatusCode) = JsonResponse.Success(
                         status: "success",
-                        data: "user logged in successfully",
+                        data: userdata,
                         statusCode: 200
                     );
                     return new JsonResult(successResponse) { StatusCode = successStatusCode };
-                }
-                else
-                {
-                    var (errorResponse, errorStatusCode) = JsonResponse.Error(
-                        status: "error",
-                        data: "user not found",
-                        statusCode: 404
-                    );
-                    return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
                 }
             }
             catch (Exception ex)
