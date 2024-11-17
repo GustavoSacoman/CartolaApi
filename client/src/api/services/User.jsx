@@ -21,7 +21,12 @@ export const UserService = {
 
   updateUser: async (userData) => {
     try {
-      const response = await apiClient.put('/v1/User/update-user', userData);
+      const response = await apiClient.put('/v1/User/update-user', {
+        email: userData.email,
+        name: userData.name,
+        phone: userData.phone,
+        password: userData.password
+      });
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
