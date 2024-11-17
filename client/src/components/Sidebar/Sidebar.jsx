@@ -7,18 +7,17 @@ import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import PersonIcon from '@mui/icons-material/Person';
 import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { useAuth } from '../../context/AuthContext';
 
 const Sidebar = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated, setIsAuthenticated, logout } = useAuth();
 
   const handleAuthClick = () => {
     if (isAuthenticated) {
-      // Handle logout
-      setIsAuthenticated(false);
-      window.location.href = '/'; // Redirect to home after logout
+      logout();
+      window.location.href = '/login';
     } else {
-      // Handle login redirect
       window.location.href = '/login';
     }
   };
@@ -30,7 +29,7 @@ const Sidebar = () => {
         <h1>LOGO</h1>
       </div>
 
-      {/* Main Navigation */}
+      {}
       <div className="nav-links">
         <a href="/" className="nav-link">
           <HomeIcon />
