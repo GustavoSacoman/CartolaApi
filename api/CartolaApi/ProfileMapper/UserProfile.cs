@@ -10,6 +10,8 @@ public class UserProfile : Profile
         CreateMap<Data.DTOs.User, Router.v1.Models.User>().ReverseMap();
         CreateMap<Router.v1.Models.UserLogin, Data.DTOs.User>();
         CreateMap<Data.DTOs.User, Router.v1.Models.UserLogin>().ReverseMap();
+        CreateMap<Router.v1.Models.UserUpdate, Data.DTOs.User>();
+        CreateMap<Data.DTOs.User, Router.v1.Models.UserUpdate>().ReverseMap();
     }
 }
 
