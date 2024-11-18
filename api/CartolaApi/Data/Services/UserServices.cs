@@ -112,4 +112,32 @@ public class UserServices
     {
         return _db.Users.ToList();
     }
+    
+    public bool VerifyPhone(string email, string phone)
+    {
+        var user = _db.Users.FirstOrDefault(u => u.Email == email);
+        if (user == null)
+        {
+            throw new Exception("User not found");
+        }
+        
+        if (user.Phone != phone)
+        {
+            throw new Exception("Invalid phone number");
+        }
+        
+        return true;
+    }
+
+    public void ResetPassword(string email, string phone, string newPassword)
+    {
+        var user = _db.Users.FirstOrDefault(u => u.Email == email && u.Phone == phone);
+        if (user == null)
+        {
+            throw new Exception("Invalid credentials");
+        }
+        
+        user.Password = _hash.CreateHash(newPassword);
+        _db.SaveChanges();
+    }
 }

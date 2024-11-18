@@ -20,3 +20,16 @@ public class UserUpdate
     public string? Email { get; set; }
     public string? Phone { get; set; }
 }
+
+public class UserVerifyPhone
+{
+    public required string Email { get; set; }
+    public required string Phone { get; set; }
+}
+
+public class UserResetPassword
+{
+    public required string Email { get; set; }
+    public required string Phone { get; set; }
+    public required string NewPassword { get; set; }
+}
