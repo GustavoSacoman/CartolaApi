@@ -1,0 +1,463 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap');
+
+.home-container {
+  min-height: 100vh;
+  background: linear-gradient(45deg, #1a0033, #16002a, #1a0033, #2d014e);
+  background-size: 400% 400%;
+  animation: gradientBG 20s ease-in-out infinite;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+}
+
+.home-content {
+  padding: 2rem;
+  margin-left: 250px;
+  position: relative;
+  z-index: 2;
+}
+
+.welcome-title {
+  color: #fff;
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  animation: fadeInSlideUp 0.8s ease-out;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  animation: fadeInSlideUp 0.8s ease-out;
+  animation-delay: 0.2s;
+}
+
+.stat-card {
+  background: rgba(82, 2, 85, 0.4);
+  border-radius: 15px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100dvw;
+  height: 100dvh;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.stat-card:hover::before {
+  left: 100%;
+}
+
+.stat-icon {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+  transform: rotateY(180deg);
+}
+
+.stat-info h3 {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.stat-info p {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0;
+}
+
+.dashboard-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  animation: fadeInSlideUp 0.8s ease-out;
+  animation-delay: 0.4s;
+}
+
+.dashboard-card {
+  background: rgba(82, 2, 85, 0.4);
+  border-radius: 15px;
+  padding: 1.5rem;
+  height: 40dvh;
+  width: 30dvw;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.dashboard-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: 0.5s;
+}
+
+.dashboard-card:hover::after {
+  transform: translateX(100%);
+}
+
+.dashboard-card h2 {
+  color: #fff;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.top-players {
+  grid-row: span 2;
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  margin-bottom: 0.8rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.player-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: #841ce6;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.player-item:hover {
+  transform: translateX(5px) scale(1.02);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.player-item:hover::before {
+  transform: scaleY(1);
+}
+
+.player-rank {
+  width: 30px;
+  height: 30px;
+  background: #841ce6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.player-item:hover .player-rank {
+  transform: scale(1.1) rotate(360deg);
+}
+
+.player-info {
+  flex: 1;
+  margin-left: 1rem;
+}
+
+.player-info h3 {
+  color: #fff;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.player-info p {
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.player-score {
+  color: #841ce6;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.match-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.match-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(132, 28, 230, 0.1),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: 0.5s;
+}
+
+.match-item:hover::after {
+  transform: translateX(100%);
+}
+
+.match-teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.vs {
+  color: #841ce6;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+.match-date {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.highscore-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 7px;
+  margin-bottom: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.highscore-item:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 15px rgba(132, 28, 230, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.highscore-info h3 {
+  color: #fff;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.highscore-info p {
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.highscore-points {
+  color: #841ce6;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+    background-size: 100% 100%;
+  }
+  50% {
+    background-position: 100% 50%;
+    background-size: 200% 200%;
+  }
+  100% {
+    background-position: 0% 50%;
+    background-size: 100% 100%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 1200px) {
+    .dashboard-grid{
+        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        justify-content: center;
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        justify-content: center;
+        width: 100%;
+    }
+    .dashboard-card {
+        width: 90%;
+    }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .dashboard-card {
+    width: 75dvw;
+  }
+  .home-content {
+    margin-left: 60px;
+    padding: 1rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Custom Scrollbar Styles */
+.player-list,
+.matches-list,
+.highscores-list {
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Webkit browsers (Chrome, Safari, newer Edge) */
+.player-list::-webkit-scrollbar,
+.matches-list::-webkit-scrollbar,
+.highscores-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.player-list::-webkit-scrollbar-track,
+.matches-list::-webkit-scrollbar-track,
+.highscores-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.player-list::-webkit-scrollbar-thumb,
+.matches-list::-webkit-scrollbar-thumb,
+.highscores-list::-webkit-scrollbar-thumb {
+  background: rgba(132, 28, 230, 0.5);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.player-list::-webkit-scrollbar-thumb:hover,
+.matches-list::-webkit-scrollbar-thumb:hover,
+.highscores-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(132, 28, 230, 0.8);
+}
+
+/* Firefox */
+.player-list,
+.matches-list,
+.highscores-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(132, 28, 230, 0.5) rgba(255, 255, 255, 0.05);
+}
