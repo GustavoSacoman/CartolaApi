@@ -145,5 +145,53 @@ namespace CartolaApi.Router.v1.Controllers
                 return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
             }
         }
+
+        [HttpPost("verify-phone")]
+        public IActionResult VerifyPhone([FromBody] UserVerifyPhone user)
+        {
+            try
+            {
+                var isValid = _userServices.VerifyPhone(user.Email, user.Phone);
+                var (response, statusCode) = JsonResponse.Success(
+                    status: "success",
+                    data: "Phone verified successfully",
+                    statusCode: 200
+                );
+                return new JsonResult(response) { StatusCode = statusCode };
+            }
+            catch (Exception ex)
+            {
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
+                    status: "error",
+                    data: ex.Message,
+                    statusCode: 400
+                );
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
+            }
+        }
+
+        [HttpPost("reset-password")]
+        public IActionResult ResetPassword([FromBody] UserResetPassword user)
+        {
+            try
+            {
+                _userServices.ResetPassword(user.Email, user.Phone, user.NewPassword);
+                var (response, statusCode) = JsonResponse.Success(
+                    status: "success",
+                    data: "Password reset successfully",
+                    statusCode: 200
+                );
+                return new JsonResult(response) { StatusCode = statusCode };
+            }
+            catch (Exception ex)
+            {
+                var (errorResponse, errorStatusCode) = JsonResponse.Error(
+                    status: "error",
+                    data: ex.Message,
+                    statusCode: 400
+                );
+                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
+            }
+        }
     }
 }
