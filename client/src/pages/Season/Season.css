@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap');
+
+/* GERAL */
+body {
+    font-family: 'Pixelify Sans', sans-serif;
+    background-color: #1e1e2f;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.season-page {
+    display: flex;
+    height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 250px;
+    background-color: #2e2e44;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+    .sidebar .logo {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+
+        .sidebar ul li {
+            padding: 10px 0;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+            .sidebar ul li:hover {
+                background-color: #4e44d0;
+                border-radius: 5px;
+            }
+
+/* CONTEÚDO */
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* INFORMAÇÕES DA TEMPORADA */
+.season-info {
+    background-color: #2e2e44;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    animation: subtleSlideIn 0.5s ease-out;
+}
+
+.season-select {
+    margin-bottom: 20px;
+}
+
+    .season-select label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .season-select select {
+        width: 100%;
+        padding: 10px;
+        background-color: #3b3b5a;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .season-select select:focus {
+            background-color: #4e44d0;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+
+/* BOX DE INFORMAÇÕES */
+.info-box {
+    margin-top: 20px;
+    background-color: #2e2e44;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+    .info-box h3 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .info-box p {
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+/* TABELA DO TIME */
+.team-info {
+    margin-top: 20px;
+}
+
+    .team-info table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .team-info th,
+    .team-info td {
+        padding: 12px;
+        text-align: left;
+        background-color: #3b3b5a;
+        border-bottom: 1px solid #4e44d0;
+    }
+
+    .team-info th {
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .team-info td {
+        font-size: 14px;
+    }
+
+/* ANIMAÇÕES */
+@keyframes subtleSlideIn {
+    0% {
+        transform: translateY(20px);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
