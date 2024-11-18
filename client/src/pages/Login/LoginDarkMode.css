@@ -137,7 +137,7 @@
   z-index: 2;
 }
 
-h2 {
+.login-h2-base {
   margin-bottom: 30px;
   font-size: 33px;
 }

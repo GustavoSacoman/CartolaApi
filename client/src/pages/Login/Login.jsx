@@ -100,7 +100,7 @@ const Login = () => {
         <div className="forms-container">
           <div className="signin-signup">
             <form className="sign-in-form form" onSubmit={handleSignIn}>
-              <h2>Sign In</h2>
+              <h2 className="login-h2-base">Sign In</h2>
               <input
                 className="login-input-base" 
                 type="email" 
@@ -123,7 +123,7 @@ const Login = () => {
             </form>
 
             <form className="sign-up-form form" onSubmit={handleSignUp}>
-              <h2>Create Account</h2>
+              <h2 className="login-h2-base">Create Account</h2>
               <input
                 className="login-input-base"
                 type="text"
