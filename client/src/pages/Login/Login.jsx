@@ -56,10 +56,11 @@ const Login = () => {
       if (response.status === 'success') {
         setIsAuthenticated(true);
         setUser(response.data);
-        navigate('/home');
+        console.log(response.data);
+        navigate('/');
       }
     } catch (error) {
-      showError(error.message || 'Login failed');
+      showError(error.data || 'Login failed');
     }
   };
 
@@ -69,7 +70,8 @@ const Login = () => {
       const response = await UserService.addUser({
         email: formData.email,
         password: formData.password,
-        name: formData.name
+        name: formData.name,
+        phone: formData.phone
       });
       
       if (response.status === 'success') {
@@ -84,7 +86,7 @@ const Login = () => {
     <div className={`login-container ${!isDarkMode ? 'light-mode' : ''}`}>
       <ToastContainer />
       <div className={`login-box ${isSignUpMode ? 'sign-up-mode' : ''} ${!isDarkMode ? 'light-mode' : ''}`}>
-        <button 
+        <button class 
           className="theme-toggle"
           onClick={toggleTheme}
           style={{ 
@@ -98,8 +100,9 @@ const Login = () => {
         <div className="forms-container">
           <div className="signin-signup">
             <form className="sign-in-form form" onSubmit={handleSignIn}>
-              <h2>Sign In</h2>
-              <input 
+              <h2 className="login-h2-base">Sign In</h2>
+              <input
+                className="login-input-base" 
                 type="email" 
                 name="email"
                 placeholder="Email" 
@@ -107,7 +110,8 @@ const Login = () => {
                 onChange={handleInputChange}
                 required 
               />
-              <input 
+              <input
+                className="login-input-base" 
                 type="password"
                 name="password" 
                 placeholder="Password"
@@ -115,12 +119,13 @@ const Login = () => {
                 onChange={handleInputChange}
                 required 
               />
-              <button type="submit">Sign In</button>
+              <button className="login-button-base" type="submit">Sign In</button>
             </form>
 
             <form className="sign-up-form form" onSubmit={handleSignUp}>
-              <h2>Create Account</h2>
-              <input 
+              <h2 className="login-h2-base">Create Account</h2>
+              <input
+                className="login-input-base"
                 type="text"
                 name="name" 
                 placeholder="Name"
@@ -128,7 +133,8 @@ const Login = () => {
                 onChange={handleInputChange}
                 required 
               />
-              <input 
+              <input
+                className="login-input-base"
                 type="email"
                 name="email" 
                 placeholder="Email"
@@ -136,7 +142,17 @@ const Login = () => {
                 onChange={handleInputChange}
                 required 
               />
-              <input 
+              <input
+                className="login-input-base" 
+                type="tel"
+                name="phone"
+                placeholder="Phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                required 
+              />
+              <input
+                className="login-input-base" 
                 type="password"
                 name="password" 
                 placeholder="Password"
@@ -144,7 +160,7 @@ const Login = () => {
                 onChange={handleInputChange}
                 required 
               />
-              <button type="submit">Sign Up</button>
+              <button class type="submit">Sign Up</button>
             </form>
           </div>
         </div>
@@ -153,12 +169,12 @@ const Login = () => {
           <div className="panel left-panel">
             <h3>New Here?</h3>
             <p>Sign up and discover great opportunities!</p>
-            <button onClick={toggleMode}>Sign Up</button>
+            <button className="login-button-base" onClick={toggleMode}>Sign Up</button>
           </div>
           <div className="panel right-panel">
             <h3>One of Us?</h3>
             <p>Sign in and continue your journey with us!</p>
-            <button onClick={toggleMode}>Sign In</button>
+            <button className="login-button-base" onClick={toggleMode}>Sign In</button>
           </div>
         </div>
       </div>
