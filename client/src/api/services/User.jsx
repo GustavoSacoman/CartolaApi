@@ -54,6 +54,24 @@ export const UserService = {
     } catch (error) {
       throw error.response?.data || error.message;
     }
+  },
+
+  verifyPhone: async (userData) => {
+    try {
+      const response = await apiClient.post('/v1/User/verify-phone', userData);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error.message;
+    }
+  },
+
+  resetPassword: async (userData) => {
+    try {
+      const response = await apiClient.post('/v1/User/reset-password', userData);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error.message;
+    }
   }
 };
 
