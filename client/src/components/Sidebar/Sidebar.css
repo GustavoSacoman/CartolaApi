@@ -205,10 +205,38 @@
   text-decoration: none;
 }
 
+.login-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 14px;
+  background: rgba(115, 0, 157, 0.547);
+  border: 1px solid rgba(94, 255, 82, 0.2);
+  color: #f5f0ff;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  text-decoration: none;  
+}
+
 .logout-button:hover {
   background-color: rgba(255, 82, 82, 0.2);
   transform: translateX(5px);
   box-shadow: 0 4px 15px rgba(255, 82, 82, 0.15);
+}
+
+.login-button:hover {
+  background-color: rgba(115, 0, 157, 0.7);;
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(54, 1, 74, 0.547);
+}
+
+.login-button svg {
+  filter: drop-shadow(0 0 8px rgba(12, 190, 234, 0.3));
+  min-width: 24px;
+  margin-right: 15px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .logout-button svg {
@@ -223,6 +251,13 @@
   filter: drop-shadow(0 0 12px rgba(255, 82, 82, 0.4));
 }
 
+.login-button span {
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
 .logout-button span {
   opacity: 0;
   transform: translateX(-20px);
@@ -232,6 +267,11 @@
 }
 
 .sidebar:hover .logout-button span {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sidebar:hover .login-button span {
   opacity: 1;
   transform: translateX(0);
 }
@@ -262,6 +302,18 @@
 .sidebar.light-mode .logout-button {
   color: #ff5252;
   background-color: rgba(255, 82, 82, 0.05);
+}
+.sidebar.light-mode .login-button {
+  color: #d4db04;
+  background-color: rgba(82, 2, 85, 0.05);
+}
+
+.sidebar.light-mode .login-button:hover {
+  background-color: rgba(82, 2, 85, 0.1);
+}
+
+.sidebar.light-mode .login-button:hover {
+  background-color: rgba(82, 2, 85, 0.05);
 }
 
 .sidebar.light-mode .logout-button:hover {

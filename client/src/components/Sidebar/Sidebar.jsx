@@ -11,7 +11,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const Sidebar = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const { isAuthenticated, setIsAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
 
   const handleAuthClick = () => {
     if (isAuthenticated) {
@@ -59,7 +59,7 @@ const Sidebar = () => {
 
       {/* Bottom Section */}
       <div className="bottom-section">
-        <button className="logout-button" onClick={handleAuthClick}>
+        <button className={isAuthenticated ? 'logout-button' : 'login-button'} onClick={handleAuthClick}>
           <ExitToAppIcon />
           <span>{isAuthenticated ? 'Logout' : 'Sign In'}</span>
         </button>
