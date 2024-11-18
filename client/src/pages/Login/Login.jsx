@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './LoginDarkMode.css';
 import './LoginWhiteMode.css';
 import UserService from '../../api/services/User';
@@ -9,7 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated, setUser } = useAuth();
+  const { setIsAuthenticated, setUser, isAuthenticated } = useAuth();
   const [isSignUpMode, setIsSignUpMode] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [formData, setFormData] = useState({
@@ -17,6 +17,12 @@ const Login = () => {
     password: '',
     name: ''
   });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -56,7 +62,6 @@ const Login = () => {
       if (response.status === 'success') {
         setIsAuthenticated(true);
         setUser(response.data);
-        console.log(response.data);
         navigate('/');
       }
     } catch (error) {
@@ -91,7 +96,9 @@ const Login = () => {
           onClick={toggleTheme}
           style={{ 
             background: isDarkMode ? '#f5f0ff' : '#520255',
-            border: `2px solid ${isDarkMode ? '#520255' : '#f5f0ff'}`
+            border: `2px solid ${isDarkMode ? '#520255' : '#f5f0ff'}`,
+            transition: 'all 0.7s ease-in-out',
+            transform: isDarkMode ? 'rotate(360deg)' : 'rotate(0deg)'
           }}  
         >
           {isDarkMode ? '☀️' : '🌙'}
@@ -120,6 +127,7 @@ const Login = () => {
                 required 
               />
               <button className="login-button-base" type="submit">Sign In</button>
+              <a className="login-a-base" href="/password-reset">Forgot your password?</a>
             </form>
 
             <form className="sign-up-form form" onSubmit={handleSignUp}>
@@ -160,7 +168,7 @@ const Login = () => {
                 onChange={handleInputChange}
                 required 
               />
-              <button class type="submit">Sign Up</button>
+              <button className="login-button-base" type="submit">Sign Up</button>
             </form>
           </div>
         </div>

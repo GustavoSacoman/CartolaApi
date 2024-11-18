@@ -154,6 +154,7 @@
 }
 
 .login-button-base {
+  font-family: 'Pixelify Sans', sans-serif;
   margin: 20px 0;
   width: 150px;
   background: #841ce6;
@@ -203,7 +204,7 @@
   opacity: 0;
 }
 
-.panel h3 {
+.panel h3{
   font-size: 40px;
   font-weight: 600;
   margin-bottom: 10px;
@@ -287,6 +288,13 @@
 
 .sign-in-form {
   z-index: 2;
+}
+
+.login-a-base {
+  color: #fff;
+  animation: slideInFromBottom 0.5s ease-out forwards;
+  animation-delay: 1.3s;
+  opacity: 0;
 }
 
 .sign-up-form {
