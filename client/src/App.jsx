@@ -28,7 +28,7 @@ function App() {
           <Route path="/list-match" element={<ListMatch />} />
           <Route path="/edit-match/:idMatch" element={<EditMatch />} />
           <Route path="/players" element={<RegisterPlayer />} />
-          <Route path="/tournament" element={<Tournament />} />
+          <Route path="/tournaments" element={<Tournament />} />
         </Routes>
       </Router>
     </AuthProvider>
