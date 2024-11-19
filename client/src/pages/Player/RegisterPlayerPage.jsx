@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import SearchIcon from '@mui/icons-material/Search';
 import Sidebar from '../../components/Sidebar/Sidebar';
 
 const DEFAULT_FORM_VALUES = {
@@ -26,7 +25,6 @@ const Player = () => {
     try {
       const response = await RegisterPlayerService.getPlayers();
       setPlayers(response.data);
-      console.log(response.data);
     } catch (error) {
       showError(error);
     }
@@ -60,16 +58,16 @@ const Player = () => {
       teamId: 0,
     }
     if(playerData.namePlayer === '' || playerData.position === ''){
-        showError('Preencha todos os campos'); 
+        showError('Please Complete All Required Fields'); 
         return;
       }
     try{
       if(isEditing){
         await RegisterPlayerService.updatePlayer(editPlayerId, playerData);
-        showError('Jogador editado com sucesso');
+        showSuccess('The player has been successfully updated');
       }else{
         await RegisterPlayerService.addPlayer(playerData);
-        showError('Jogador cadastrado com sucesso');
+        showSuccess('The player has been successfully registered');
       }
       setFormData({ namePlayer: '', position: '',teamId: 0,});
       setIsEditing(false);
@@ -114,6 +112,7 @@ const Player = () => {
       await RegisterPlayerService.deletePlayer(id);
       const newPlayers = players.filter((player) => player.id !== id);
       setPlayers(newPlayers);
+      showSuccess('The player has been successfully deleted');
     } catch (error) {
       showError(error);
     }}
@@ -131,6 +130,17 @@ const Player = () => {
     });
   };
 
+  const showSuccess = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  };
   
   window.onload = getPlayers;
 
