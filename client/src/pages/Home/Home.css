@@ -267,7 +267,7 @@
 .vs {
   color: #841ce6;
   font-weight: bold;
-  animation: pulse 2s infinite;
+  animation: pulse-in 2s infinite;
 }
 
 .match-date {
@@ -339,7 +339,7 @@
   }
 }
 
-@keyframes pulse {
+@keyframes pulse-in {
   0% {
     transform: scale(1);
     opacity: 1;
