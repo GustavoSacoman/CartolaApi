@@ -81,7 +81,7 @@ function Tournament() {
     return (
         <>
             <Sidebar />
-            <div>
+            <div className='container'>
                 <div className="form-container">
                     <h1>Tournament</h1>
                     <input

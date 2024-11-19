@@ -137,89 +137,103 @@ const Player = () => {
   return (
     <>
       <Sidebar/>
-    
-    <div className='player-main'>   
-      <div className='player-container'> 
-        <section className='player-container-register'>
-          <h1 id='player-title'>{isEditing ? 'Edit Players' : 'Register Players'}</h1>
-            <div className='player-form-container'>
-              <div className='player-register'>
+      <div className='player-page'>   
+        <div className='player-card'> 
+          <section className='player-form-section'>
+            <h1 className='player-title'>{isEditing ? 'Edit Player' : 'Register Player'}</h1>
+            <div className='player-form'>
+              <div className='form-group'>
                 <input 
-                type="text" 
-                name="name" 
-                value={formData.namePlayer}
-                placeholder=" " 
-                onChange={(e) => setFormData({ ...formData, namePlayer: e.target.value })}
-                required />
-                <label className='player-floating-label'>Name:</label>
+                  type="text" 
+                  name="name" 
+                  value={formData.namePlayer}
+                  placeholder=" " 
+                  className='form-input'
+                  onChange={(e) => setFormData({ ...formData, namePlayer: e.target.value })}
+                  required 
+                />
+                <label className='form-label'>Name</label>
               </div>
-              <div className='player-register'>
-              
+              <div className='form-group'>
                 <input 
-                type="text"
-                name="position"
-                value={formData.position}
-                placeholder=" " 
-                onChange={(e) => setFormData({ ...formData, position: e.target.value })}
-                required />
-                <label className='player-floating-label'>Position:</label>
+                  type="text"
+                  name="position"
+                  value={formData.position}
+                  placeholder=" " 
+                  className='form-input'
+                  onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+                  required 
+                />
+                <label className='form-label'>Position</label>
               </div>
             </div>
-        </section>
-        <section className='palyer-container-list'>
-          <div className='player-list-bar'>
-            <div id='player-list-title'><h2>PLAYERS</h2></div>
-              <div>
-              <SearchIcon/>
-                <input type='text'
-                name='search'
-                id='search'
-                className='player-input-field'
-                placeholder="Search player" 
-                value={searchQuery}
-                onChange={(e) => handleInputChange(e)}
-                onKeyDown={handleKeyDown}
-                required />
-            </div>
-          </div>
-          <div className='player-list-player'>
-            {players.map((player) => (
-              <div className='player-player-container' key={player.id}>
-                <button className='player' id={player.id}>
-                  <div className="player-info">
-                    <div>Name:</div>
-                    <span className="player-name">{player.namePlayer}</span>
-                    <div>Position:</div>
-                    <span className="player-position"> {player.position}</span>
-                  </div>
-                </button>
-                <div className='player-button-group' id={player.id + "player-button-excluir"}>
-                  <button className='player-img-edit' id={player.id + "thrash"} onClick={() => editPlayer(player.id)}>
-                    <EditIcon/>
-                  </button>
-                  <button className='player-img-delete' id={player.id} onClick={()=>deletePlayer(player.id)}>
-                    <DeleteOutlineIcon/>
-                  </button></div>
-              </div>
-))}
-          </div> 
-        </section>
-        <section className='player-buttons'>
-          <button type="button" onClick={handleCancel}>
-            Cancel
-          </button>
-          <button type="button" onClick={handleSubmit}>
-            {isEditing ? 'Edit' : 'Register'}
-          </button>
-        </section>
-      </div>
-      <ToastContainer />
+          </section>
 
-      
-    </div>
+          <section className='player-list-section'>
+            <div className='search-bar'>
+              <h2 className='player-title'>Players</h2>
+              <div className='search-wrapper'>
+                <input 
+                  type='text'
+                  name='search'
+                  className='search-input'
+                  placeholder="Search player" 
+                  value={searchQuery}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                />
+              </div>
+            </div>
+
+            <div className='player-list'>
+              {players.map((player) => (
+                <div className='player-item' key={player.id}>
+                  <div className="player-details">
+                    <div>Name:</div>
+                    <span>{player.namePlayer}</span>
+                    <div>Position:</div>
+                    <span>{player.position}</span>
+                  </div>
+                  <div className='player-actions'>
+                    <button 
+                      className='action-button' 
+                      onClick={() => editPlayer(player.id)}
+                    >
+                      <EditIcon/>
+                    </button>
+                    <button 
+                      className='action-button delete' 
+                      onClick={() => deletePlayer(player.id)}
+                    >
+                      <DeleteOutlineIcon/>
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div> 
+          </section>
+
+          <section className='form-buttons'>
+            <button 
+              type="button" 
+              className='btn btn-secondary' 
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
+            <button 
+              type="button" 
+              className='btn btn-primary' 
+              onClick={handleSubmit}
+            >
+              {isEditing ? 'Save Changes' : 'Register Player'}
+            </button>
+          </section>
+        </div>
+        <ToastContainer />
+      </div>
     </>
   );
-
 };
 
 export default Player;
