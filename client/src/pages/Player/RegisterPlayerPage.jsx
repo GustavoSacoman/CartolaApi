@@ -25,7 +25,6 @@ const Player = () => {
     try {
       const response = await RegisterPlayerService.getPlayers();
       setPlayers(response.data);
-      console.log(response.data);
     } catch (error) {
       showError(error);
     }
@@ -59,16 +58,16 @@ const Player = () => {
       teamId: 0,
     }
     if(playerData.namePlayer === '' || playerData.position === ''){
-        showError('Preencha todos os campos'); 
+        showError('Please Complete All Required Fields'); 
         return;
       }
     try{
       if(isEditing){
         await RegisterPlayerService.updatePlayer(editPlayerId, playerData);
-        showSuccess('Jogador editado com sucesso');
+        showSuccess('The player has been successfully updated');
       }else{
         await RegisterPlayerService.addPlayer(playerData);
-        showSuccess('Jogador cadastrado com sucesso');
+        showSuccess('The player has been successfully registered');
       }
       setFormData({ namePlayer: '', position: '',teamId: 0,});
       setIsEditing(false);
@@ -113,7 +112,7 @@ const Player = () => {
       await RegisterPlayerService.deletePlayer(id);
       const newPlayers = players.filter((player) => player.id !== id);
       setPlayers(newPlayers);
-      showSuccess('Jogador deletado com sucesso');
+      showSuccess('The player has been successfully deleted');
     } catch (error) {
       showError(error);
     }}
