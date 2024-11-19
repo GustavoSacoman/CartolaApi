@@ -69,7 +69,7 @@ namespace CartolaApi.Router.v1.Controllers;
             }
         }
 
-        [HttpPut("update-player")]
+        [HttpPut("update-player/{id}")]
         public IActionResult UpdatePlayer(int id, [FromBody] Player player)
         {
             try
@@ -93,7 +93,7 @@ namespace CartolaApi.Router.v1.Controllers;
             }
         }
 
-        [HttpDelete("delete-player")]
+        [HttpDelete("delete-player/{id}")]
         public IActionResult DeletePlayer(int id)
         {
             try

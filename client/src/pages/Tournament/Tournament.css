@@ -1,0 +1,226 @@
+.container {
+    min-height: 100vh;
+    background: linear-gradient(45deg, #1a0033, #16002a, #1a0033, #2d014e);
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease-in-out infinite;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.container::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 2px, transparent 3px);
+    background-size: 50px 50px;
+    animation: floatingParticles 15s infinite ease-in-out;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.form-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+    padding: 2rem;
+    background: rgba(21, 9, 30, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: pulse 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.form-container h1 {
+    font-family: 'Jersey 10', sans-serif;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(213, 128, 255, 0.5);
+}
+
+.form-container input{
+    display: block;
+    margin: 0 auto;
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 1.2rem;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 80%;
+}
+
+@keyframes pulse {
+    0% {box-shadow: 0 0 5px rgba(213, 128, 255, 0.5);}
+    25% {box-shadow: 0 0 15px rgba(213, 128, 255, 0.7);}
+    36% {box-shadow: 0 0 15px rgba(213, 128, 255, 0.6);}
+    50% {box-shadow: 0 0 15px rgba(213, 128, 255, 0.4);}
+    64% {box-shadow: 0 0 15px rgba(213, 128, 255, 0.3);}
+    75% {box-shadow: 0 0 15px rgba(213, 128, 255, 0.2);}
+    100% {box-shadow: 0 0 5px rgba(213, 128, 255, 0.1);}
+}
+
+
+.form-container input:focus {
+    outline: none;
+    border: 2px solid #841ce6;
+    box-shadow: 0 0 10px rgba(132, 28, 230, 0.3);
+    transition: all 1.3s ease;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+}
+
+.button-group button {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #841ce6, #b89bff);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.button-group button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(132, 28, 230, 0.3);
+    background: linear-gradient(45deg, #6014a7, #9b7dff);
+}
+
+.button-group button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.tournament-table {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: rgba(21, 9, 30, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tournament-table th {
+    background: rgba(132, 28, 230, 0.2);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 1.2rem;
+    border-bottom: 2px solid rgba(213, 128, 255, 0.3);
+}
+
+.tournament-table td {
+    padding: 1rem;
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.tournament-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.tournament-table tbody tr:hover {
+    background: rgba(132, 28, 230, 0.1);
+    transform: translateX(5px);
+}
+
+.tournament-table td button {
+    padding: 0.6rem 1.2rem;
+    margin: 0 0.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tournament-table td button:first-child {
+    background: rgba(26, 115, 232, 0.2);
+    color: #fff;
+}
+
+.tournament-table td button:last-child {
+    background: rgba(244, 67, 54, 0.2);
+    color: #fff;
+}
+
+.tournament-table td button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tournament-table td button:first-child:hover {
+    background: rgba(26, 115, 232, 0.3);
+}
+
+.tournament-table td button:last-child:hover {
+    background: rgba(244, 67, 54, 0.3);
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes floatingParticles {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+    50% { transform: translateY(-15px) rotate(180deg); opacity: 0.3; }
+    100% { transform: translateY(0) rotate(360deg); opacity: 0.2; }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .form-container {
+        padding: 1.5rem;
+    }
+    
+    .form-container h1 {
+        font-size: 2rem;
+    }
+    
+    .button-group button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .tournament-table th,
+    .tournament-table td {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+}

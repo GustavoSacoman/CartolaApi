@@ -66,7 +66,7 @@ public class PlayerServices
         {
             throw new Exception("Player not found");
         }
-        if (playerId == null)
+        if (playerName != null)
         {
             return _db.Players.FirstOrDefault(player => player.NamePlayer == playerName);
         }

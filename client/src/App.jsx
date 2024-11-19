@@ -19,7 +19,7 @@ function App() {
         <Routes>
           <Route 
             path="/" 
-            element={<Login />} /* TODO: Change to Home */
+            element={<Home />}
           />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
@@ -27,10 +27,10 @@ function App() {
           <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="/register-match" element={<RegisterMatch />} />
           <Route path="/list-match" element={<ListMatch />} />
-          <Route path="/edit-match/:idMatch" element={<EditMatch />} />
+          <Route path="/edit-match/:id" element={<EditMatch />} />
           <Route path="/players" element={<RegisterPlayer />} />
           <Route path="/tournaments" element={<Tournament />} />
-          <Route path="/seasons" element={<Seasons />} />
+            <Route path="/seasons" element={<Seasons />} />
         </Routes>
       </Router>
     </AuthProvider>

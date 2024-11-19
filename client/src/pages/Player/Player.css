@@ -1,0 +1,333 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Open+Sans:ital@0;1&display=swap');
+
+/* Animation Keyframes */
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floatingParticles {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-15px) rotate(180deg);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(0) rotate(360deg);
+    opacity: 0.2;
+  }
+}
+
+/* Layout */
+.player-page {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(45deg, #54069e, #16002a, #1a0033, #3e046b);
+  background-size: 400% 400%;
+  animation: gradientBackground 20s ease-in-out infinite;
+  display: grid;
+  place-items: center;
+}
+
+.player-page::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 2px, transparent 3px);
+  background-size: 50px 50px;
+  animation: floatingParticles 15s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.player-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 800px;
+  background: rgba(21, 9, 30, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Header */
+.player-title {
+  color: #1a73e8;
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  font-family: "Jersey 10", serif;
+}
+
+.player-form-section {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  align-items: center;
+  justify-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Form */
+.player-form {
+  margin-bottom: 2rem;
+  gap: 2.5rem;
+  display: flex;
+  flex-direction: inherit;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-group {
+  position: relative;
+  width: 100%;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #1a73e8;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.form-label {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  font-family: "Jersey 10", serif;
+}
+
+.form-input:focus + .form-label,
+.form-input:not(:placeholder-shown) + .form-label {
+  top: -0.5rem;
+  left: 0.5rem;
+  font-size: 0.875rem;
+  color: #1a73e8;
+  background: rgba(21, 9, 30, 0.85);
+  padding: 0 0.5rem;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.search-wrapper:focus-within {
+  width: 400px;
+  animation: expandSearch 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes expandSearch {
+  0% {
+    width: 200px;
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    width: 400px;
+    opacity: 1;
+  }
+}
+
+/* Add a subtle glow effect when focused */
+.search-wrapper:focus-within .search-input {
+  box-shadow: 0 0 15px rgba(26, 115, 232, 0.2);
+}
+
+/* Add a smooth transition for the input field */
+.search-input {
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(4px);
+  outline: none;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &:focus {
+    border-color: #1a73e8;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 20px rgba(26, 115, 232, 0.15);
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+}
+
+/* Player List */
+.player-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 2rem;
+}
+
+.player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.player-item:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.player-details {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  color: #fff;
+}
+
+.player-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  background: rgba(26, 115, 232, 0.3);
+  transform: scale(1.1);
+}
+
+.action-button.delete:hover {
+  background: rgba(244, 67, 54, 0.3);
+}
+
+/* Form Buttons */
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: #1a73e8;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Scrollbar */
+.player-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.player-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.player-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.player-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .player-form {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+  
+  .player-card {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .player-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+}
