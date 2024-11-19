@@ -23,6 +23,7 @@ builder.Services.AddScoped<TeamServices>();
 builder.Services.AddScoped<TournamentServices>();
 builder.Services.AddScoped<PlayerServices>();
 builder.Services.AddScoped<MatchServices>();
+builder.Services.AddScoped<SeasonServices>();
 
 var app = builder.Build();
 

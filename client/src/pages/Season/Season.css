@@ -1,160 +1,261 @@
 @import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap');
 
-/* GERAL */
 body {
-    font-family: 'Pixelify Sans', sans-serif;
-    background-color: #1e1e2f;
-    color: #fff;
-    margin: 0;
-    padding: 0;
+  font-family: 'Pixelify Sans', sans-serif;
+  background-color: #1e1e2f;
+  color: #fff;
+  margin: 0;
+  padding: 0;
 }
 
 .season-page {
-    display: flex;
-    height: 100vh;
+  display: flex;
+  height: 100vh;
 }
 
-/* SIDEBAR */
-.sidebar {
-    width: 250px;
-    background-color: #2e2e44;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+.profile-container {
+  display: flex;
+  flex: 1;
+  padding: 20px;
 }
 
-    .sidebar .logo {
-        width: 100%;
-        height: auto;
-        margin-bottom: 20px;
-    }
+.profile-content {
+  flex: 1;
+  padding: 20px;
+}
 
-    .sidebar ul {
-        list-style: none;
-        padding: 0;
-    }
+.profile-card {
+  background-color: #2e2e44;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  animation: subtleSlideIn 0.5s ease-out;
+}
 
-        .sidebar ul li {
-            padding: 10px 0;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 16px;
-            letter-spacing: 1px;
-        }
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-            .sidebar ul li:hover {
-                background-color: #4e44d0;
-                border-radius: 5px;
-            }
+.profile-info {
+  display: flex;
+  align-items: center;
+}
 
-/* CONTEÚDO */
+.profile-avatar {
+  background-color: #4e44d0;
+  border-radius: 50%;
+  padding: 10px;
+  margin-right: 15px;
+}
+
+.profile-info h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.edit-button {
+  background-color: #4e44d0;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #3b3b9a;
+}
+
+.edit-button.discard-button {
+  background-color: #d32f2f;
+}
+
 .content {
-    flex: 1;
-    padding: 20px;
+  margin-top: 20px;
 }
 
 .title {
-    font-size: 32px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-/* INFORMAÇÕES DA TEMPORADA */
 .season-info {
-    background-color: #2e2e44;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    animation: subtleSlideIn 0.5s ease-out;
+  background-color: #3b3b5a;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
 }
 
 .season-select {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
-    .season-select label {
-        display: block;
-        margin-bottom: 10px;
-        font-size: 16px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .season-select select {
-        width: 100%;
-        padding: 10px;
-        background-color: #3b3b5a;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-        .season-select select:focus {
-            background-color: #4e44d0;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-            outline: none;
-        }
-
-/* BOX DE INFORMAÇÕES */
-.info-box {
-    margin-top: 20px;
-    background-color: #2e2e44;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+.season-select label {
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-    .info-box h3 {
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-
-    .info-box p {
-        font-size: 16px;
-        margin: 10px 0;
-    }
-
-/* TABELA DO TIME */
-.team-info {
-    margin-top: 20px;
+.season-select select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #3b3b5a;
+  color: white;
+  font-size: 16px;
 }
 
-    .team-info table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+.season-item {
+  background-color: #3b3b5a;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
 
-    .team-info th,
-    .team-info td {
-        padding: 12px;
-        text-align: left;
-        background-color: #3b3b5a;
-        border-bottom: 1px solid #4e44d0;
-    }
+.season-item p {
+  margin: 5px 0;
+}
 
-    .team-info th {
-        font-size: 16px;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
+.season-item button {
+  padding: 5px 10px;
+  background-color: #ff3b3b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+}
 
-    .team-info td {
-        font-size: 14px;
-    }
+.season-item button:hover {
+  background-color: #d32f2f;
+}
 
-/* ANIMAÇÕES */
+.season-edit {
+  background-color: #2e2e44;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.season-edit h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.season-edit input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #3b3b5a;
+  color: white;
+  font-size: 16px;
+}
+
+.season-edit button {
+  padding: 10px 20px;
+  background-color: #4e44d0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.season-edit button:hover {
+  background-color: #3b3b9a;
+}
+
+.new-season-form {
+  margin-top: 20px;
+  background-color: #3b3b5a;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.new-season-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #3b3b5a;
+  color: white;
+  font-size: 16px;
+}
+
+.new-season-form button {
+  padding: 10px 20px;
+  background-color: #4e44d0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.new-season-form button:hover {
+  background-color: #3b3b9a;
+}
+
+.delete-season-button {
+  background-color: #ff3b3b;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.delete-season-button:hover {
+  background-color: #d32f2f;
+}
+
+.edit-season-button {
+  background-color: #4e44d0;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+.edit-season-button:hover {
+  background-color: #3b3b9a;
+}
+
+
+
+.error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+}
+
 @keyframes subtleSlideIn {
-    0% {
-        transform: translateY(20px);
-        opacity: 0.8;
-    }
-
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  0% {
+    transform: translateY(20px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
