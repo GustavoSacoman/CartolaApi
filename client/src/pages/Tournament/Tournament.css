@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle, #1c1c2e, #2e003e);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.form-container {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background: radial-gradient(circle, #302235, #2e003e);
+    border: 2px solid #d580ff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-container h1 {
+    font-family: 'Jersey 10', sans-serif;
+    text-align: center;
+    padding: 10px;
+    font-size: 40px;
+}
+
+.form-container input[type="text"] {
+    max-width: 380px;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #d580ff;
+    background-color: #2e003e;
+    color: #fff;
+    font-size: 16px;
+}
+
+.form-container input[type="text"]:focus {
+    outline: none;
+    border-color: #b89bff;
+    background-color: #3e004e;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.button-group button {
+    padding: 12px 26px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #b89bff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button-group button:hover {
+    background-color: #d580ff;
+}
+
+.tournament-table {
+    width: 100%;
+    margin-top: 30px;
+    border-collapse: collapse;
+}
+
+.tournament-table th,
+.tournament-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #d580ff;
+}
+
+.tournament-table th {
+    background-color: #302235;
+}
+
+.tournament-table tbody tr:hover {
+    background-color: #3e004e;
+}
+
+.tournament-table td button {
+    padding: 5px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tournament-table td button:hover {
+    background-color: #d580ff;
+}
