@@ -1,164 +1,76 @@
-.custom-carousel {
-  position: relative;
-  width: 90%;
-  max-width: 40vw;
-  height: 35vh;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin: 40px auto;
-  background-color: #f5f5f5;
-  transition: all 0.3s ease-in-out;
+.carousel-wrapper {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.custom-carousel__button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.7);
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 10;
-  opacity: 0;
-  visibility: hidden;
+.carousel-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
 }
 
-.custom-carousel:hover .custom-carousel__button {
-  opacity: 1;
-  visibility: visible;
+.carousel-image {
+    max-width: 100%;
+    max-height: 60vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
 }
 
-.custom-carousel__button:hover {
-  background: rgba(78, 78, 78, 0.9);
-  animation: 1s ease-in-out;
-  animation-duration: 1s;
+/* Modern Navigation Buttons */
+.p-carousel .p-carousel-prev,
+.p-carousel .p-carousel-next {
+    width: 3rem;
+    height: 3rem;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    border-radius: 50%;
+    border: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 5;
 }
 
-.custom-carousel__button span {
-  color: #333;
-  font-size: 20px;
-  line-height: 1;
-  user-select: none;
+.p-carousel .p-carousel-prev { left: 1rem; }
+.p-carousel .p-carousel-next { right: 1rem; }
+
+.carousel-wrapper:hover .p-carousel-prev,
+.carousel-wrapper:hover .p-carousel-next {
+    opacity: 1;
 }
 
-.custom-carousel__button--prev {
-  left: 12px;
+.p-carousel .p-carousel-prev:hover,
+.p-carousel .p-carousel-next:hover {
+    background: rgba(0, 0, 0, 0.5);
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.custom-carousel__button--next {
-  right: 12px;
+/* Remove any fixed heights from carousel elements */
+.p-carousel, 
+.p-carousel-container,
+.p-carousel-items-container,
+.p-carousel-items-content {
+    height: auto !important;
 }
 
-.custom-carousel__track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  height: 100%;
-}
-
-.custom-carousel__slide {
-  min-width: 100%;
-  position: relative;
-}
-
-.custom-carousel__slide-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.custom-carousel__slide-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 20px;
-  color: white;
-}
-
-.custom-carousel__slide-content:hover {
-  background: rgba(202, 202, 202, 0.1);
-  transform: translateY(5px);
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2
-  );
-
-}
-
-.custom-carousel__slide-content h2 {
-  margin: 0 0 8px 0;
-  font-size: 24px;
-}
-
-.custom-carousel__slide-content p {
-  margin: 0;
-  font-size: 16px;
-  opacity: 0.9;
-}
-
-.custom-carousel__dots {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-}
-
-.custom-carousel__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.6);
-  cursor: pointer;
-  transition: background 0.3s, transform 0.3s;
-}
-
-.custom-carousel__dot.active {
-  background: #333;
-  transform: scale(1.2);
-}
-
-.custom-carousel__button:focus {
-  outline: none;
-}
-
-.custom-carousel__button:focus-visible {
-  outline: 2px solid #333;
-  outline-offset: 2px;
-}
-
-@media (max-width: 768px) {
-  .custom-carousel {
-    height: 300px;
-  }
-
-  .custom-carousel__slide-content h2 {
-    font-size: 20px;
-  }
-
-  .custom-carousel__slide-content p {
-    font-size: 14px;
-  }
-
-  .custom-carousel__button {
-    width: 32px;
-    height: 32px;
-  }
-
-  .custom-carousel__button span {
-    font-size: 18px;
-  }
-
-  .custom-carousel__dot {
-    width: 8px;
-    height: 8px;
-  }
-}
+/* Style the arrow icons inside buttons */
+.p-carousel .p-carousel-prev-icon,
+.p-carousel .p-carousel-next-icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+} 
