@@ -1,15 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap');
 
-/* FORMULÁRIO */
+/* CENTRALIZANDO TUDO NA PÁGINA */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #1a0033;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
 .match-form {
     background-color: #1a0033;
     color: #f5f0ff;
     padding: 20px;
     border-radius: 10px;
     max-width: 600px;
-    margin: 40px auto;
+    width: 100%; /* Garantir que o formulário ocupe toda a largura disponível */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    font-family: 'Pixelify Sans', sans-serif;
     animation: subtleSlideIn 0.5s ease-out;
 }
 
@@ -42,13 +51,13 @@
 
 .input-group input {
     width: 100%;
-    padding: 6px; /* Menor padding */
+    padding: 6px;
     border: none;
     border-radius: 5px;
     background-color: #2e2e44;
     color: #f5f0ff;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    font-size: 14px; /* Tamanho de fonte ajustado */
+    font-size: 14px;
 }
 
 .input-group input:focus {
@@ -101,6 +110,7 @@
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     animation: subtleSlideIn 0.6s ease-out;
+    width: 100%;
 }
 
 .matches-table table {
@@ -165,7 +175,7 @@
 }
 
 .matches-table .actions button.delete-button {
-    background-color:  #d13c7f
+    background-color: #d13c7f;
 }
 
 .matches-table .actions button.delete-button:hover {

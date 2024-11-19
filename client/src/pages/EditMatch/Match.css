@@ -1,15 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap');
 
-/* FORMULÁRIO */
+/* CENTRALIZANDO TUDO NA PÁGINA */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #1a0033;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
 .match-form {
-    background-color: #2a0044; /* Alterado para um roxo mais intenso */
+    background-color: #1a0033;
     color: #f5f0ff;
     padding: 20px;
     border-radius: 10px;
     max-width: 600px;
-    margin: 40px auto;
+    width: 100%; /* Garantir que o formulário ocupe toda a largura disponível */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    font-family: 'Pixelify Sans', sans-serif;
     animation: subtleSlideIn 0.5s ease-out;
 }
 
@@ -45,14 +54,14 @@
     padding: 6px;
     border: none;
     border-radius: 5px;
-    background-color: #3b0051; /* Alterado para roxo mais escuro */
+    background-color: #2e2e44;
     color: #f5f0ff;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     font-size: 14px;
 }
 
 .input-group input:focus {
-    background-color: #4c0066; /* Roxo mais brilhante ao focar */
+    background-color: #3b3b5a;
     box-shadow: 0 0 10px rgba(245, 240, 255, 0.3);
     outline: none;
 }
@@ -65,7 +74,7 @@
 }
 
 .button-group button {
-    background-color: #6a39f7; /* Roxo intenso */
+    background-color: #5a4df2;
     border: none;
     border-radius: 5px;
     color: #fff;
@@ -76,12 +85,12 @@
 
 .button-group button:hover {
     transform: scale(1.1);
-    background-color: #5b33e6; /* Roxo mais escuro no hover */
+    background-color: #4e44d0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .button-group button:nth-child(2) {
-    background-color: #f25a5a;
+    background-color: #d13c7f;
 }
 
 .button-group button:nth-child(2):hover {
@@ -96,11 +105,12 @@
     border-collapse: collapse;
     font-family: 'Pixelify Sans', sans-serif;
     color: #f5f0ff;
-    background-color: #2a0044; /* Roxo intenso para o fundo da tabela */
+    background-color: #1a0033;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     animation: subtleSlideIn 0.6s ease-out;
+    width: 100%;
 }
 
 .matches-table table {
@@ -115,18 +125,18 @@
 }
 
 .matches-table th {
-    background-color: #3b0051; /* Roxo mais escuro */
+    background-color: #2e2e44;
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
-    border-bottom: 2px solid #6a39f7; /* Roxo mais claro na borda */
+    border-bottom: 2px solid #5a4df2;
     opacity: 0;
     animation: fadeIn 0.8s ease-out forwards 0.3s;
 }
 
 .matches-table td {
-    background-color: #3b0051; /* Roxo mais escuro nas células */
-    border-bottom: 1px solid #5a0064; /* Roxo claro na borda */
+    background-color: #2e2e44;
+    border-bottom: 1px solid #3a3a55;
     transition: background-color 0.3s ease;
 }
 
@@ -146,7 +156,7 @@
 }
 
 .matches-table .actions button {
-    background-color: #6a39f7; /* Roxo intenso para botões */
+    background-color: #5a4df2;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -160,7 +170,7 @@
 }
 
 .matches-table .actions button:hover {
-    background-color: #5b33e6;
+    background-color: #4e44d0;
     transform: scale(1.1);
 }
 
