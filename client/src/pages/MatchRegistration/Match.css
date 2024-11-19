@@ -2,8 +2,8 @@
 
 /* FORMULÁRIO */
 .match-form {
-    background-color: #1e1e2f;
-    color: #fff;
+    background-color: #1a0033;
+    color: #f5f0ff;
     padding: 20px;
     border-radius: 10px;
     max-width: 600px;
@@ -20,6 +20,7 @@
     font-weight: bold;
 }
 
+/* CAMPOS DE INPUT */
 .input-group {
     display: flex;
     justify-content: space-between;
@@ -41,17 +42,18 @@
 
 .input-group input {
     width: 100%;
-    padding: 3px;
+    padding: 6px; /* Menor padding */
     border: none;
     border-radius: 5px;
     background-color: #2e2e44;
-    color: #fff;
+    color: #f5f0ff;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 14px; /* Tamanho de fonte ajustado */
 }
 
 .input-group input:focus {
     background-color: #3b3b5a;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(245, 240, 255, 0.3);
     outline: none;
 }
 
@@ -79,11 +81,11 @@
 }
 
 .button-group button:nth-child(2) {
-    background-color: #f25a5a;
+    background-color: #d13c7f;
 }
 
 .button-group button:nth-child(2):hover {
-    background-color: #d04646;
+    background-color: #b4356e;
     transform: scale(1.1);
 }
 
@@ -93,8 +95,8 @@
     max-width: 800px;
     border-collapse: collapse;
     font-family: 'Pixelify Sans', sans-serif;
-    color: #fff;
-    background-color: #1e1e2f;
+    color: #f5f0ff;
+    background-color: #1a0033;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -106,7 +108,7 @@
     border-collapse: collapse;
 }
 
-.matches-table th, 
+.matches-table th,
 .matches-table td {
     padding: 12px 20px;
     text-align: left;
@@ -117,7 +119,7 @@
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
-    border-bottom: 2px solid #4e44d0;
+    border-bottom: 2px solid #5a4df2;
     opacity: 0;
     animation: fadeIn 0.8s ease-out forwards 0.3s;
 }
@@ -128,20 +130,18 @@
     transition: background-color 0.3s ease;
 }
 
-
 .matches-table th.actions {
-    text-align: right; 
+    text-align: right;
 }
 
-
 .matches-table td.actions {
-    text-align: right; 
-    padding-right: 10px; 
+    text-align: right;
+    padding-right: 10px;
 }
 
 .matches-table .actions {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     gap: 10px;
 }
 
@@ -150,9 +150,9 @@
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 4px 8px; 
-    font-size: 10px; 
-    line-height: 1.3; 
+    padding: 4px 8px;
+    font-size: 10px;
+    line-height: 1.3;
     height: 24px;
     width: auto;
     cursor: pointer;
@@ -161,15 +161,15 @@
 
 .matches-table .actions button:hover {
     background-color: #4e44d0;
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
 .matches-table .actions button.delete-button {
-    background-color: #f25a5a;
+    background-color:  #d13c7f
 }
 
 .matches-table .actions button.delete-button:hover {
-    background-color: #d04646;
+    background-color: #b4356e;
 }
 
 /* ANIMAÇÕES */
@@ -177,18 +177,6 @@
     0% {
         transform: translateY(20px);
         opacity: 0.8;
-    }
-    25% {
-        transform: translateY(15px);
-        opacity: 0.9;
-    }
-    50% {
-        transform: translateY(10px);
-        opacity: 0.95;
-    }
-    75% {
-        transform: translateY(5px);
-        opacity: 0.98;
     }
     100% {
         transform: translateY(0);
@@ -199,9 +187,6 @@
 @keyframes fadeIn {
     0% {
         opacity: 0;
-    }
-    50% {
-        opacity: 0.5;
     }
     100% {
         opacity: 1;
