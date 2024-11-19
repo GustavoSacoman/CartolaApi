@@ -66,7 +66,7 @@
 
 
 .sidebar {
-  width: 80px;
+  width: 10vh;
   height: 100vh;
   background-color: #1a0033;
   color: #f5f0ff;
@@ -82,7 +82,7 @@
 }
 
 .sidebar:hover {
-  width: 20vh;
+  width: 25vh;
   background-color: #2a004d;
 }
 
