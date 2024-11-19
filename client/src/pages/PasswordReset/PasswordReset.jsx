@@ -102,8 +102,9 @@ const PasswordReset = () => {
 
         {step === 1 ? (
           <form className="reset-form" onSubmit={handleVerification}>
-            <h2>Reset Password</h2>
-            <input
+            <div className='reset-form-container'>
+              <h2>Reset Password</h2>
+              <input
               className="reset-input"
               type="email"
               name="email"
@@ -120,15 +121,18 @@ const PasswordReset = () => {
               value={formData.phone}
               onChange={handleInputChange}
               required
-            />
-            <button className="reset-button" type="submit">Verify</button>
-            <button 
+              />
+            </div>
+            <div className='reset-form-buttons'>
+              <button className="reset-button" type="submit">Verify</button>
+              <button 
               className="reset-button" 
               type="button"
               onClick={() => navigate('/login')}
             >
-              Back to Login
-            </button>
+                Back to Login
+              </button>
+            </div>
           </form>
         ) : (
           <form className="reset-form" onSubmit={handlePasswordReset}>
