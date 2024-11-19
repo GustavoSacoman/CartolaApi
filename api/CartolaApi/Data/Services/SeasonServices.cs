@@ -49,7 +49,7 @@ public class SeasonServices
         updatedSeason.Name = newSeason.Name;
         updatedSeason.StartDate = newSeason.StartDate;
         updatedSeason.FinalDate = newSeason.FinalDate;
-       // updatedSeason.TournamentsId = newSeason.TournamentsId;
+       
         _db.Update(updatedSeason);
         _db.SaveChanges();
     }

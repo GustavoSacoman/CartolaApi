@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using CartolaApi.Data.Services;
 using CartolaApi.Responses.JsonResponse;
-using CartolaApi.Router.v1.Models;
+using CartolaApi.Data.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using dbSeasonModel = CartolaApi.Data.DTOs.Season;
+
 
 namespace CartolaApi.Router.v1.Controllers
 {
@@ -11,15 +12,14 @@ namespace CartolaApi.Router.v1.Controllers
     [Route("api/v1/[controller]")]
     public class SeasonController : ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly SeasonServices _seasonServices;
 
-        public SeasonController(IMapper mapper, SeasonServices seasonServices)
+        public SeasonController(SeasonServices seasonServices)
         {
-            _mapper = mapper;
             _seasonServices = seasonServices;
         }
 
+        // GET: api/v1/season
         [HttpGet]
         public IActionResult GetSeasons()
         {
@@ -44,44 +44,47 @@ namespace CartolaApi.Router.v1.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult CreateSeason([FromBody] Season season)
-        {
-            try
-            {
-                dbSeasonModel dbSeason = dbSeasonModel.CreateSeason(
-                    season.Name,
-                    season.StartDate,
-                    season.FinalDate,
-                    season.tournamentId ?? null
-                );
+        // POST: api/v1/season
+[HttpPost]
 
-                _seasonServices.CreateSeason(dbSeason);
-                var (successResponse, successStatusCode) = JsonResponse.Success(
-                    status: "success",
-                    data: "season created successfully",
-                    statusCode: 201
-                );
-                return new JsonResult(successResponse) { StatusCode = successStatusCode };
-            }
-            catch (Exception e)
-            {
-                var (errorResponse, errorStatusCode) = JsonResponse.Error(
-                    status: "error",
-                    data: e.Message,
-                    statusCode: 400
-                );
-                return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
-            }
-        }
+public IActionResult CreateSeason([FromBody] Season season)
+{
+    try
+    {
+        Console.WriteLine("Dados recebidos pelo backend:");
+        Console.WriteLine($"Name: {season.Name}, StartDate: {season.StartDate}, FinalDate: {season.FinalDate}");
 
+        _seasonServices.CreateSeason(season);
+
+        var (successResponse, successStatusCode) = JsonResponse.Success(
+            status: "success",
+            data: "Season created successfully",
+            statusCode: 201
+        );
+        return new JsonResult(successResponse) { StatusCode = successStatusCode };
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine("Erro no backend: " + e.Message);
+        var (errorResponse, errorStatusCode) = JsonResponse.Error(
+            status: "error",
+            data: e.Message,
+            statusCode: 400
+        );
+        return new JsonResult(errorResponse) { StatusCode = errorStatusCode };
+    }
+}
+
+
+
+        // PUT: api/v1/season/{id}
         [HttpPut("{id}")]
         public IActionResult UpdateSeason(int id, [FromBody] Season season)
         {
             try
             {
-                var seasonDto = _mapper.Map<dbSeasonModel>(season);
-                _seasonServices.UpdateSeason(id, seasonDto);
+                season.Id = id;  // Ensures the correct ID is used
+                _seasonServices.UpdateSeason(id, season);
                 var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
                     data: "Season updated successfully",
@@ -100,6 +103,7 @@ namespace CartolaApi.Router.v1.Controllers
             }
         }
 
+        // DELETE: api/v1/season/{id}
         [HttpDelete("{id}")]
         public IActionResult DeleteSeason(int id)
         {
@@ -108,7 +112,7 @@ namespace CartolaApi.Router.v1.Controllers
                 _seasonServices.DeleteSeason(id);
                 var (successResponse, successStatusCode) = JsonResponse.Success(
                     status: "success",
-                    data: "season deleted successfully",
+                    data: "Season deleted successfully",
                     statusCode: 200
                 );
                 return new JsonResult(successResponse) { StatusCode = successStatusCode };
@@ -125,3 +129,4 @@ namespace CartolaApi.Router.v1.Controllers
         }
     }
 }
+

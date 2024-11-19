@@ -9,6 +9,7 @@ import ListMatch from './pages/ListMatch/ListMatch';
 import EditMatch from './pages/EditMatch/EditMatch';
 import RegisterPlayer from './pages/Player/RegisterPlayerPage';
 import Tournament from './pages/Tournament/Tournament';
+import Seasons from './pages/Season/Season';
 import { AuthProvider } from './context/AuthContext';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/edit-match/:id" element={<EditMatch />} />
           <Route path="/players" element={<RegisterPlayer />} />
           <Route path="/tournaments" element={<Tournament />} />
+            <Route path="/seasons" element={<Seasons />} />
         </Routes>
       </Router>
     </AuthProvider>
