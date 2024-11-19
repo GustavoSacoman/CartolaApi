@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import MatchService from '../../api/services/MatchService';
-import './Match.css';
+import '../../pages/RegisterMatch/Match.css';
 import Sidebar from '../../components/Sidebar/Sidebar';
 
 const EditMatch = () => {
@@ -89,9 +89,10 @@ const EditMatch = () => {
   };
 
   return (
-    <div>
+    <>
       <Sidebar />
-      <div className="match-form">
+      <div className="match-container">
+        <div className="match-form">
         <h2>Edit Match</h2>
         {message && (
           <div className={`message ${messageType}`}>
@@ -169,7 +170,8 @@ const EditMatch = () => {
           </div>
         </form>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

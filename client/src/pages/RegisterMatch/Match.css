@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap');
 
 /* CENTRALIZANDO TUDO NA PÁGINA */
-body {
+.match-container {
     display: flex;
     justify-content: center;
     align-items: center;
