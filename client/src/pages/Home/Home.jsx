@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
+import Carousel from '../../components/Carousel/Carousel';
 import './Home.css';
 import PersonIcon from '@mui/icons-material/Person';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
@@ -8,6 +8,11 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import MatchService from '../../api/services/MatchService';
 import { useAuth } from '../../context/AuthContext';
+
+
+import YourFavoriteTeam from '../../assets/homepage/YourFavoriteTeam.webp'
+import BetNow from '../../assets/homepage/BetNow.webp'
+
 const Home = () => {
   const [topPlayers, setTopPlayers] = useState([]);
   const [upcomingMatches, setUpcomingMatches] = useState([]);
@@ -15,12 +20,24 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
 
+  const slides = [
+    {
+      image: YourFavoriteTeam,
+      title: 'Cheer for your favorite team',
+      description: 'A emotional experience',
+    },
+    {
+      image: BetNow,
+      title: 'Bet now',
+      description: 'Bet on your favorite matches',
+    },
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const matchesData = await MatchService.getMatches();
-        setUpcomingMatches(matchesData.slice(0, 5)); // Get first 5 matches
-
+        setUpcomingMatches(matchesData.slice(0, 5));
         // Mock data for now - replace with actual API calls
         setTopPlayers([
           { id: 1, name: "Player One", score: 2500, team: "Team Alpha" },
@@ -47,10 +64,12 @@ const Home = () => {
   }, []);
 
   return (
-    <><Sidebar />
+    <>
+    <Sidebar />
     <div className="home-container">
+      <h1 className="welcome-title">{user ? `Welcome to Cartola, ${user.Name}` : 'Welcome to Cartola'}</h1>
+      <Carousel slides={slides} />  
       <div className="home-content">
-        <h1 className="welcome-title">{user ? `Welcome to Cartola, ${user.Name}` : 'Welcome to Cartola'}</h1>
         
         <div className="stats-grid">
           <div className="stat-card">
