@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import SearchIcon from '@mui/icons-material/Search';
 import Sidebar from '../../components/Sidebar/Sidebar';
 
 const DEFAULT_FORM_VALUES = {
@@ -66,10 +65,10 @@ const Player = () => {
     try{
       if(isEditing){
         await RegisterPlayerService.updatePlayer(editPlayerId, playerData);
-        showError('Jogador editado com sucesso');
+        showSuccess('Jogador editado com sucesso');
       }else{
         await RegisterPlayerService.addPlayer(playerData);
-        showError('Jogador cadastrado com sucesso');
+        showSuccess('Jogador cadastrado com sucesso');
       }
       setFormData({ namePlayer: '', position: '',teamId: 0,});
       setIsEditing(false);
@@ -114,6 +113,7 @@ const Player = () => {
       await RegisterPlayerService.deletePlayer(id);
       const newPlayers = players.filter((player) => player.id !== id);
       setPlayers(newPlayers);
+      showSuccess('Jogador deletado com sucesso');
     } catch (error) {
       showError(error);
     }}
@@ -131,6 +131,17 @@ const Player = () => {
     });
   };
 
+  const showSuccess = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  };
   
   window.onload = getPlayers;
 
