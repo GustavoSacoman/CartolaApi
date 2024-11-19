@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import './Match.css';
+import '../../pages/RegisterMatch/Match.css';
 import MatchService from '../../api/services/MatchService';
 import Sidebar from '../../components/Sidebar/Sidebar';
 
@@ -51,8 +51,9 @@ function ListMatch() {
   );
 
   return (
-    <div>
+    <>
       <Sidebar />
+      <div className="match-container">
       <div className="match-form">
         <h2>Match</h2>
         <div className="input-group">
@@ -102,8 +103,9 @@ function ListMatch() {
           </Link>
           <button className="new-button" onClick={handleBack}>Back</button>
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -80,82 +80,84 @@ const MatchRegistration = () => {
   };
 
   return (
-    <div>
+    <>
       <Sidebar/> 
+      <div className="match-container">
         <div className="match-form">
-          <ToastContainer />
-          <h2>Match registration</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="input-group">
-              <div>
-                <label>Team 1</label>
-                <input
-                  type="text"
-                  name="team1"
-                  value={formData.team1}
-                  onChange={handleChange}
-                  placeholder="ID do Time 1"
-                  required
-                />
+            <ToastContainer />
+            <h2>Match registration</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="input-group">
+                <div>
+                  <label>Team 1</label>
+                  <input
+                    type="text"
+                    name="team1"
+                    value={formData.team1}
+                    onChange={handleChange}
+                    placeholder="ID do Time 1"
+                    required
+                  />
+                </div>
+                <div>
+                  <label>Team 2</label>
+                  <input
+                    type="text"
+                    name="team2"
+                    value={formData.team2}
+                    onChange={handleChange}
+                    placeholder="ID do Time 2"
+                    required
+                  />
+                </div>
               </div>
-              <div>
-                <label>Team 2</label>
-                <input
-                  type="text"
-                  name="team2"
-                  value={formData.team2}
-                  onChange={handleChange}
-                  placeholder="ID do Time 2"
-                  required
-                />
-              </div>
-            </div>
 
-            <div className="input-group">
-              <div>
-                <label>Date</label>
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  required
-                />
+              <div className="input-group">
+                <div>
+                  <label>Date</label>
+                  <input
+                    type="date"
+                    name="date"
+                    value={formData.date}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <label>Tournament</label>
+                  <input
+                    type="text"
+                    name="tournament"
+                    value={formData.tournament}
+                    onChange={handleChange}
+                    placeholder="ID do Torneio"
+                    required
+                  />
+                </div>
               </div>
-              <div>
-                <label>Tournament</label>
-                <input
-                  type="text"
-                  name="tournament"
-                  value={formData.tournament}
-                  onChange={handleChange}
-                  placeholder="ID do Torneio"
-                  required
-                />
-              </div>
-            </div>
 
-            <div className="input-group">
-              <div>
-                <label>Result</label>
-                <input
-                  type="text"
-                  name="result"
-                  value={formData.result}
-                  onChange={handleChange}
-                  placeholder="Resultado"
-                  required
-                />
+              <div className="input-group">
+                <div>
+                  <label>Result</label>
+                  <input
+                    type="text"
+                    name="result"
+                    value={formData.result}
+                    onChange={handleChange}
+                    placeholder="Resultado"
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="button-group">
-              <button type="submit">Register</button>
-              <button type="button" className="new-button" onClick={handleBack}>Back</button>
-            </div>
-          </form>
-        </div>
-    </div>
+              <div className="button-group">
+                <button type="submit">Register</button>
+                <button type="button" className="new-button" onClick={handleBack}>Back</button>
+              </div>
+            </form>
+          </div>
+     </div>
+    </>
   );
 };
 
